@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/trflagg/MakeItSo/issues"
   },
-  "homepage": "https://github.com/trflagg/MakeItSo"
+  "homepage": "https://github.com/trflagg/MakeItSo",
+  "dependencies": {
+    "koa": "~0.8.2",
+    "koa-router": "^3.2.3"
+  }
 }
