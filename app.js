@@ -1,9 +1,10 @@
 /**
- * Index.js
+ * app.js
  *
  * Starts app.
  */
 
+var fs = require('fs');
 var router = require('koa-router');
 var koa = require('koa');
 var app = koa();
@@ -14,18 +15,15 @@ var app = koa();
  */
 app.use(router(app));
 
+
 /**
- * Routes
+ * Load controllers in /controllers
  */
-app.get('/', index);
+fs.readdirSync('./controllers').forEach(function (file) {
+	require('./controllers/' + file).init(app);
+});
 
 
 // Start!
 app.listen(3000);
 
-
-function *index() {
-	this.body = "Make It So";
-
-	return;
-}
