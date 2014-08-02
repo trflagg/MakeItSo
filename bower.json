@@ -1,0 +1,22 @@
+{
+  "name": "MakeItSo",
+  "version": "0.0.0",
+  "homepage": "https://github.com/trflagg/MakeItSo",
+  "authors": [
+    "Taylor Flagg <trflagg@gmail.com>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "None",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}
