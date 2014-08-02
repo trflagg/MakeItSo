@@ -4,6 +4,9 @@
  * What happens when you first go to the site.
  */
 
+var render = require('../render');
+
+
 exports.init = function(app) {
 	app.get('/', index);
 }
@@ -14,7 +17,11 @@ exports.init = function(app) {
  * Show a welcome message.
  */
 function *index() {
-	this.body = "Make It So";
+	this.body = yield render('index.html', {
+		controller: 'index',
+		ship: {
+			id: 5
+		}
+	});
 
-	return;
 }

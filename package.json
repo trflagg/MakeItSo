@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/trflagg/MakeItSo",
   "dependencies": {
+    "co-views": "^0.2.0",
     "koa": "~0.8.2",
-    "koa-router": "^3.2.3"
+    "koa-router": "^3.2.3",
+    "swig": "^1.4.1"
   }
 }
