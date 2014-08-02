@@ -6,6 +6,7 @@
 
 var fs = require('fs')
 	, router = require('koa-router')
+	, serve = require('koa-static')
 	, koa = require('koa');
 
 var app = koa();
@@ -14,6 +15,7 @@ var app = koa();
 /**
  * Middleware
  */
+app.use(serve('public'));
 app.use(router(app));
 
 /**
