@@ -5,6 +5,124 @@ body
     color: #999;
 }
 
+*:focus
+{
+    outline: none;
+
+}
+
+h1 {
+    font-family: 'Audiowide', sans-serif;
+    font-size: 64px;
+    letter-spacing: -7px;
+}
+
+h2 {
+    font-family: 'Coda', sans-serif;
+}
+
+p {
+    font-size: 20px;
+    font-family: 'Coda', sans-serif;
+}
+
+input[type="text"] {
+    background: #000;
+    color: #999;
+    font-size:30px;
+    height: 1.5em;
+    width: 12em;
+    padding-left: .5em;
+    padding-right: .5em;
+    font-family: 'Coda', sans;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -o-border-radius: 30px;
+    border-radius: 30px;
+    border: 3px solid #999;
+}
+
+@media (max-width: 480px) {
+    input[type="text"] {
+        font-size: 18px;
+    }
+}
+
+input[type="text"]:focus {
+    color: rgba(82, 168, 236, 0.8);
+    -moz-box-shadow: 0px 0px 15px 4px rgba(82, 168, 236, 0.8);
+    -webkit-box-shadow: 0px 0px 15px 4px rgba(82, 168, 236, 0.8);
+    -o-box-shadow: 0px 0px 15px 4px rgba(82, 168, 236, 0.8);
+    box-shadow: 0px 0px 15px 4px rgba(82, 168, 236, 0.8);
+    -moz-text-shadow: 1px 1px 5px 4px rgba(82, 168, 236, 0.8);
+    -webkit-text-shadow: 1px 1px 5px 4px rgba(82, 168, 236, 0.8);
+    -o-text-shadow: 1px 1px 5px 4px rgba(82, 168, 236, 0.8);
+    text-shadow: 1px 1px 5px 4px rgba(82, 168, 236, 0.8);
+}
+
+button {
+    font-family: Coda;
+    font-size: 30px;
+    color: #999;
+    background: black;
+    height: 1.7em;
+    width: 15em;
+    text-align: center;
+    margin-top: 1em;
+    border: 3px solid #999;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -o-border-radius: 30px;
+    border-radius: 30px;
+}
+
+@media (max-width: 480px) {
+    button{
+        font-size: 20px;
+    }
+}
+button:hover {
+    color: rgba(82, 168, 236, 0.8);
+    border-color: rgba(82, 168, 236, 0.8);
+    -moz-box-shadow: 0px 0px 15px 4px rgba(82, 168, 236, 0.8);
+    -webkit-box-shadow: 0px 0px 15px 4px rgba(82, 168, 236, 0.8);
+    -o-box-shadow: 0px 0px 15px 4px rgba(82, 168, 236, 0.8);
+    box-shadow: 0px 0px 15px 4px rgba(82, 168, 236, 0.8);
+    -moz-text-shadow: 1px 1px 5px 4px rgba(82, 168, 236, 0.8);
+    -webkit-text-shadow: 1px 1px 5px 4px rgba(82, 168, 236, 0.8);
+    -o-text-shadow: 1px 1px 5px 4px rgba(82, 168, 236, 0.8);
+    text-shadow: 1px 1px 5px 4px rgba(82, 168, 236, 0.8);
+}
+
+select {
+    font-size: 30px;
+    font-family: "Coda";
+    color: black;
+    background-color: #999;
+    border: 1px solid black;
+}
+
+.centerDiv {
+    text-align: center;
+}
+
+.error {
+    color: #b94a48;
+}
+
+.prompt p
+{
+    text-align: center;
+    font-family: 'Coda', sans;
+    -webkit-transition: opacity 1s linear;
+    -moz-transition: opacity 1s linear;
+    -o-transition: opacity 1s linear;
+    transition: opacity 1s linear;
+}
+
+/**
+ * titleScreen
+ */
 #titleScreen
 {
     position: relative;
@@ -29,3 +147,5 @@ body
 {
     margin-top: -0.5em;
 }
+
+

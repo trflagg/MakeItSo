@@ -21,8 +21,6 @@ define(['backbone'], function(Backbone) {
          * @return {None}
          */
         initialize: function() {
-            console.dir(this);
-            console.log("Make It So!");
         }
 
         /**

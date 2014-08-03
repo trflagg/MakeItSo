@@ -21,6 +21,7 @@
     "requirejs": "~2.1.14",
     "backbone": "~1.1.2",
     "underscore": "~1.6.0",
-    "jquery": "~2.1.1"
+    "jquery": "~2.1.1",
+    "requirejs-doT": "~0.1.2"
   }
 }

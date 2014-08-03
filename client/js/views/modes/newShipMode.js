@@ -5,7 +5,12 @@
  *
  */
 
-define(['./mode'], function(Mode) {
+define(['./mode'
+        , 'doT!/templates/newShip'
+
+], function(Mode
+            , template
+) {
 
     var newShipMode = Mode.extend({
 
@@ -16,7 +21,18 @@ define(['./mode'], function(Mode) {
          * @return {None}
          */
         init: function() {
-            console.log('Welcome Captain, please enter your name: ');
+            this.template = template;
+            this.render();
+        }
+
+        /**
+         * render()
+         *
+         * draw the view
+         * @return {html}
+         */
+        , render: function() {
+            return $(this.el).html(this.template());
         }
     });
 

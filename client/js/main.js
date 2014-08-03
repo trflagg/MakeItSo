@@ -10,6 +10,10 @@ require.config({
         'jquery': '../bower-components/jquery/dist/jquery'
         , 'underscore': '../bower-components/underscore/underscore'
         , 'backbone': '../bower-components/backbone/backbone'
+
+        , 'doTCompiler': '../bower-components/doT/doT'
+        , 'text': '../bower-components/requirejs-text/text'
+        , 'doT': '../bower-components/requirejs-doT/doT'
     }
 });
 

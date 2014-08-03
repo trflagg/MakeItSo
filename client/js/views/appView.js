@@ -51,9 +51,18 @@ define(['backbone'
          */
         , modeChanged: function() {
 
+
             switch(this.model.get('mode')) {
                 case 'newShip':
-                    this.mode = new NewShipMode();
+
+                    // fade out old mode.
+                    $('#contents').fadeOut('slow', function() {
+                        this.mode = new NewShipMode({
+                            el: $("#contents")
+                        });
+
+                        $("#contents").fadeIn('slow');
+                    });
                     break;
             }
         }
