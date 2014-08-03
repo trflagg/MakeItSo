@@ -36,6 +36,6 @@ function *index() {
  */
 function *start() {
     this.body = {
-        mode: 'new_player'
+        mode: 'newShip'
     }
 }

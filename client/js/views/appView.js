@@ -8,9 +8,11 @@
 
 define(['backbone'
         , '../models/appModel'
+        , '../views/modes/newShipMode'
 
 ], function(Backbone
             , AppModel
+            , NewShipMode
 ) {
 
     var appView = Backbone.View.extend({
@@ -23,7 +25,7 @@ define(['backbone'
          */
         initialize: function() {
             this.model = new AppModel();
-            this.listenTo(this.model, 'change', this.modelChanged);
+            this.listenTo(this.model, 'change:mode', this.modeChanged);
 
             // start the app
             this.start();
@@ -42,15 +44,17 @@ define(['backbone'
         }
 
         /**
-         * modelChanged()
+         * modeChanged()
          *
-         * fired when the model changes
+         * fired when the mode changes
          * @return {None}
          */
-        , modelChanged: function() {
+        , modeChanged: function() {
 
-            if (this.model.hasChanged('mode')) {
-                console.log(this.model.get('mode'));
+            switch(this.model.get('mode')) {
+                case 'newShip':
+                    this.mode = new NewShipMode();
+                    break;
             }
         }
 
