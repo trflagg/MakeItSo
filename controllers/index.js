@@ -9,6 +9,7 @@ var render = require('../render');
 
 exports.init = function(app) {
 	app.get('/', index);
+    app.get('/start', start);
 }
 
 /**
@@ -24,4 +25,16 @@ function *index() {
 		}
 	});
 
+}
+
+/**
+ * start()
+ *
+ * returns starting mode
+ * @return {json}
+ */
+function *start() {
+    this.body = {
+        mode: 'new_player'
+    }
 }
