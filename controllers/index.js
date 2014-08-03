@@ -13,9 +13,10 @@ exports.init = function(app) {
 }
 
 /**
- * index
+ * index()
  *
- * Show a welcome message.
+ * send index.html.
+ * @return {html}
  */
 function *index() {
 	this.body = yield render('index.html', {

@@ -1,7 +1,7 @@
 /**
  * app.js
  *
- * Starts app.
+ * Loads middleware and controllers and starts the app.
  */
 
 var fs = require('fs')
