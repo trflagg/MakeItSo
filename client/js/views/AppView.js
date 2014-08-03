@@ -1,10 +1,18 @@
 
-define(['backbone'], function(Backbone) {
+define(['backbone'
+		, '../models/appModel'
 
+], function(Backbone
+			, AppModel
+) {
+	
 	var appView = Backbone.View.extend({
+
+		/**
+		 * initialize the view
+		 */
 		initialize: function() {
-			console.dir(this);
-			console.log("Make It So!");
+			this.model = new AppModel();
 		}
 	})
 
