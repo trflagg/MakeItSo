@@ -8,7 +8,7 @@ var render = require('../render');
 
 
 exports.init = function(app) {
-	app.get('/', index);
+    app.get('/', index);
     app.get('/start', start);
 }
 
@@ -19,12 +19,12 @@ exports.init = function(app) {
  * @return {html}
  */
 function *index() {
-	this.body = yield render('index.html', {
-		controller: 'index',
-		ship: {
-			id: 5
-		}
-	});
+    this.body = yield render('index.html', {
+        controller: 'index',
+        ship: {
+            id: 5
+        }
+    });
 
 }
 

@@ -5,9 +5,9 @@
  */
 
 var fs = require('fs')
-	, router = require('koa-router')
-	, serve = require('koa-static')
-	, koa = require('koa');
+    , router = require('koa-router')
+    , serve = require('koa-static')
+    , koa = require('koa');
 
 var app = koa();
 
@@ -22,7 +22,7 @@ app.use(router(app));
  * Load controllers in /controllers
  */
 fs.readdirSync('./controllers').forEach(function (file) {
-	require('./controllers/' + file).init(app);
+    require('./controllers/' + file).init(app);
 });
 
 
