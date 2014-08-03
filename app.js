@@ -15,7 +15,7 @@ var app = koa();
 /**
  * Middleware
  */
-app.use(serve('public'));
+app.use(serve('client'));
 app.use(router(app));
 
 /**
