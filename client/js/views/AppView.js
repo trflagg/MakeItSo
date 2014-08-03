@@ -12,14 +12,14 @@ define(['backbone'
 ], function(Backbone
 			, AppModel
 ) {
-	
+
 	var appView = Backbone.View.extend({
 
 		/**
 		 * initialize()
-		 * 
+		 *
 		 * initialize the view
-		 * @return {None} 
+		 * @return {None}
 		 */
 		initialize: function() {
 			this.model = new AppModel();

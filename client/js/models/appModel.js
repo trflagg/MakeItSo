@@ -2,7 +2,7 @@
  * appModel.js
  *
  * Model used by appView.
- * 
+ *
  */
 
 define(['backbone'], function(Backbone) {
@@ -16,9 +16,9 @@ define(['backbone'], function(Backbone) {
 
 		/**
 		 * initialize()
-		 * 
+		 *
 		 * initialize the model
-		 * @return {None} 
+		 * @return {None}
 		 */
 		initialize: function() {
 			console.dir(this);

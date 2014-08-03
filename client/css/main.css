@@ -1,5 +1,5 @@
 /* general styles */
-body 
+body
 {
 	background-color: #000;
 	color: #999;
@@ -10,7 +10,7 @@ body
 	position: relative;
 }
 
-#titleScreen h1 
+#titleScreen h1
 {
 	font-family: 'Audiowide', sans;
 	font-size: 250px;

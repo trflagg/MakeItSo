@@ -2,7 +2,7 @@
  * main.js
  *
  * The client-side entry point.
- * 
+ *
  */
 
 require.config({
