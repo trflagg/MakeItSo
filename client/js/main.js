@@ -15,7 +15,7 @@ require.config({
 });
 
 
-require(['backbone'], function(Backbone) {
-	console.dir(Backbone);
-	console.log('Make It So!');
+require(['views/AppView'], function(AppView) {
+
+	var appView = new AppView();
 })
