@@ -22,6 +22,7 @@ define(['./screen'
          */
         init: function() {
             this.template = template;
+            this.render();
         }
 
         /**

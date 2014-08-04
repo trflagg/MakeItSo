@@ -149,3 +149,23 @@ select {
 }
 
 
+/**
+ * newShipMode
+ */
+.stars {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+}
+#starBackground {
+    background: url(../images/starBackground.png) repeat;
+    z-index: -1;
+}
+
+#starMidfield {
+    background: url(../images/starMidfield.png) repeat;
+}
+
+#starForward {
+    background: url(../images/starForward.png) repeat;
+}
+

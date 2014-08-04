@@ -1,0 +1,7 @@
+<div id="newShipMode">
+    <div id="starBackground" class="stars"></div>
+    <div id="starMidfield" class="stars"></div>
+    <div id="starForward" class="stars"></div>
+    <div id="screens">
+    </div>
+</div>
