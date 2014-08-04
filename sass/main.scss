@@ -121,57 +121,5 @@ select {
     transition: opacity 1s linear;
 }
 
-/**
- * titleScreen
- */
-#titleScreen
-{
-    position: relative;
-
-    h1
-    {
-        font-family: 'Audiowide', sans;
-        font-size: 250px;
-        letter-spacing: -.1em;
-        display: block;
-        margin: 0em;
-        margin-left: .3em;
-    }
-
-    #firstRow
-    {
-        margin-top: 0em;
-    }
-
-    #secondRow
-    {
-        margin-top: -0.5em;
-    }
-}
-
-
-/**
- * newShipMode
- */
-#newShipMode {
-    .stars {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-    }
-    #starBackground {
-        background: url(../images/starBackground.png) repeat;
-        z-index: -1;
-    }
-
-    #starMidfield {
-        background: url(../images/starMidfield.png) repeat;
-    }
-
-    #starForward {
-        background: url(../images/starForward.png) repeat;
-    }
-}
-
-#nameEntry {
-    margin-top: 100px;
-}
+@import "_titleScreen";
+@import "_newShipMode";

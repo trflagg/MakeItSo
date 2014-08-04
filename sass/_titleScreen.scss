@@ -1,0 +1,28 @@
+/**
+ * titleScreen
+ */
+#titleScreen
+{
+    position: relative;
+
+    h1
+    {
+        font-family: 'Audiowide', sans;
+        font-size: 250px;
+        letter-spacing: -.1em;
+        display: block;
+        margin: 0em;
+        margin-left: .3em;
+    }
+
+    #firstRow
+    {
+        margin-top: 0em;
+    }
+
+    #secondRow
+    {
+        margin-top: -0.5em;
+    }
+}
+
