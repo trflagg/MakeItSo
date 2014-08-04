@@ -6,10 +6,10 @@
  */
 
 define(['./mode'
-        , 'doT!/templates/newShip'
+        , '../screens/enterNameScreen'
 
 ], function(Mode
-            , template
+            , EnterNameScreen
 ) {
 
     var newShipMode = Mode.extend({
@@ -21,19 +21,24 @@ define(['./mode'
          * @return {None}
          */
         init: function() {
-            this.template = template;
+            // start with enterName
+            this.screen = new EnterNameScreen({
+                el: this.el
+            });
+
             this.render();
         }
 
         /**
          * render()
          *
-         * draw the view
+         * draw current screen.
          * @return {html}
          */
         , render: function() {
-            return $(this.el).html(this.template());
+            return this.screen.render();
         }
+
     });
 
     return newShipMode;
