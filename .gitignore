@@ -4,3 +4,7 @@
 /node_modules/
 
 client/bower-components/
+
+.sass-cache/
+
+client/css/

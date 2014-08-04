@@ -19,6 +19,7 @@ h1 {
 
 h2 {
     font-family: 'Coda', sans-serif;
+    line-height: 0.3em;
 }
 
 p {
@@ -126,46 +127,51 @@ select {
 #titleScreen
 {
     position: relative;
-}
 
-#titleScreen h1
-{
-    font-family: 'Audiowide', sans;
-    font-size: 250px;
-    letter-spacing: -.1em;
-    display: block;
-    margin: 0em;
-    margin-left: .3em;
-}
+    h1
+    {
+        font-family: 'Audiowide', sans;
+        font-size: 250px;
+        letter-spacing: -.1em;
+        display: block;
+        margin: 0em;
+        margin-left: .3em;
+    }
 
-#titleScreen #firstRow
-{
-    margin-top: 0em;
-}
+    #firstRow
+    {
+        margin-top: 0em;
+    }
 
-#titleScreen #secondRow
-{
-    margin-top: -0.5em;
+    #secondRow
+    {
+        margin-top: -0.5em;
+    }
 }
 
 
 /**
  * newShipMode
  */
-.stars {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-}
-#starBackground {
-    background: url(../images/starBackground.png) repeat;
-    z-index: -1;
+#newShipMode {
+    .stars {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+    }
+    #starBackground {
+        background: url(../images/starBackground.png) repeat;
+        z-index: -1;
+    }
+
+    #starMidfield {
+        background: url(../images/starMidfield.png) repeat;
+    }
+
+    #starForward {
+        background: url(../images/starForward.png) repeat;
+    }
 }
 
-#starMidfield {
-    background: url(../images/starMidfield.png) repeat;
+#nameEntry {
+    margin-top: 100px;
 }
-
-#starForward {
-    background: url(../images/starForward.png) repeat;
-}
-
