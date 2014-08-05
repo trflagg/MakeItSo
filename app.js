@@ -9,7 +9,7 @@ var fs = require('fs')
     , serve = require('koa-static')
     , koa = require('koa');
 
-var app = koa();
+var app = module.exports = koa();
 
 
 /**
@@ -27,5 +27,5 @@ fs.readdirSync('./controllers').forEach(function (file) {
 
 
 // Start!
-app.listen(3000);
+if (!module.parent) app.listen(3000);
 
