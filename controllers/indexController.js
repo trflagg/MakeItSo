@@ -1,5 +1,5 @@
 /**
- * index.js
+ * indexController.js
  *
  * What happens when you first go to the site.
  */
