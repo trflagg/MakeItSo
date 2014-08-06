@@ -17,17 +17,6 @@ define(['backbone'], function(Backbone) {
          */
         initialize: function() {
 
-            this.init();
-        }
-
-        /**
-         * init()
-         *
-         * to be overridden by subclasses
-         * @return {None}
-         */
-        , init: function() {
-            // noop
         }
 
     });

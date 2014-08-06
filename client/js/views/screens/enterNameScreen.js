@@ -13,14 +13,15 @@ define(['./screen'
 ) {
 
     var enterNameScreen = Screen.extend({
-
         /**
          * init()
          *
          * initialize this mode
          * @return {None}
          */
-        init: function() {
+        initialize: function() {
+            Screen.prototype.initialize();
+
             this.template = template;
             this.render();
         }
