@@ -1,9 +1,14 @@
 #!/bin/bash
 
+sudo mongod &
+MONGO_PID=$!;
+
 sass --watch sass:client/css &
 SASS_PID=$!;
 
+# wait on nodemon
 nodemon --harmony app.js
 
 kill $SASS_PID;
-echo 'SASS Killed'
+
+sudo kill $MONGO_PID;
