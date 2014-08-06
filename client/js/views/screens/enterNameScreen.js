@@ -31,6 +31,18 @@ define(['./screen'
         }
 
         /**
+         * activate()
+         *
+         * called when screen is shown to user
+         * @return {None}
+         */
+        , activate: function() {
+            Screen.prototype.activate();
+
+            this.$("#nameInput").focus();
+        }
+
+        /**
          * render()
          *
          * draw the view

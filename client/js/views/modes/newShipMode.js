@@ -50,6 +50,9 @@ define(['./mode'
             $newScreen.attr('id','screen'+this.screens.length);
 
             this.$("#screens").append($newScreen);
+
+            // for now (because we only have 1) activate right away
+            newScreen.activate();
         }
 
 

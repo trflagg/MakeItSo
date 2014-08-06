@@ -19,6 +19,15 @@ define(['backbone'], function(Backbone) {
 
         }
 
+        /**
+         * activate()
+         *
+         * called when screen is shown to user
+         * @return {None}
+         */
+        , activate: function() {
+            // noop
+        }
 
         /**
          * keyDown()
