@@ -10,6 +10,7 @@ var render = require('../render');
 exports.init = function(app) {
     app.get('/', index);
     app.get('/start', start);
+    app.get('/delete-cookie', deleteCookie);
 }
 
 /**
@@ -47,3 +48,13 @@ function *start() {
     };
 }
 
+/**
+ * deleteCookie()
+ *
+ * resets the app cookie.
+ * @return {String}
+ */
+function *deleteCookie() {
+    this.cookies.set('id', null);
+    this.body = "Cookie deleted";
+}
