@@ -7,7 +7,7 @@
 var render = require('../render')
     , bodyParser = require('koa-body');
 
-module.exports = function(app) {
+module.exports = function(app, db) {
 
     app.put('/profile', bodyParser(), addProfile);
     function *addProfile() {

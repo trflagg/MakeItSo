@@ -6,7 +6,7 @@
 
 var render = require('../render');
 
-module.exports = function(app) {
+module.exports = function(app, db) {
     /**
      * index()
      *
