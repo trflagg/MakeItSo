@@ -7,6 +7,7 @@
 var fs = require('fs')
     , router = require('koa-router')
     , serve = require('koa-static')
+    , session = require('koa-session')
     , koa = require('koa');
 
 var app = module.exports = koa();
@@ -17,6 +18,9 @@ var app = module.exports = koa();
  */
 app.use(serve('client'));
 app.use(router(app));
+
+app.keys = ['secret session cookie string'];
+app.use(session());
 
 /**
  * Load controllers in /controllers
