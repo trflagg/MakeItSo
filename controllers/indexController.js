@@ -30,7 +30,20 @@ function *index() {
  * @return {json}
  */
 function *start() {
-    this.body = {
-        mode: 'newShip'
+
+    var id = this.cookies.get('id');
+    var mode = null;
+
+    if (id) {
+        mode = 'selectShip';
     }
+    else {
+        mode = 'newShip';
+        this.cookies.set('id', 'something');
+    }
+
+    this.body = {
+        'mode': mode
+    };
 }
+
