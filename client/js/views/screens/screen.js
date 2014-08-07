@@ -42,6 +42,7 @@ define(['backbone'], function(Backbone) {
             if (event.keyCode === 13) {
                 if (this.valid()) {
                     // submit and move on
+                    this.submit();
                 }
                 else {
 

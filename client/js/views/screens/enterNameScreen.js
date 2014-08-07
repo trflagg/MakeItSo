@@ -60,7 +60,7 @@ define(['./screen'
          * @return {Boolean} if the event should bubble down to subclass
          */
         , keyDown: function(event) {
-            if (Screen.prototype.keyDown(event)) {
+            if (Screen.prototype.keyDown.call(this, event)) {
                 if(this.valid()) {
                     $("#nameInstructions").fadeIn(2000);
                 }
@@ -80,6 +80,19 @@ define(['./screen'
             var name = $("#nameInput").val();
 
             return name.length >= 3;
+        }
+
+        , submit: function() {
+            var name = $("#nameInput").val();
+
+            $.ajax({
+                url: '/profile'
+                , type: 'PUT'
+                , contentType: 'application/json'
+                , data: JSON.stringify({
+                    'name': name
+                })
+            });
         }
     });
 
