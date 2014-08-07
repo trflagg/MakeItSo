@@ -7,19 +7,17 @@
 var render = require('../render')
     , bodyParser = require('koa-body');
 
+module.exports = function(app) {
 
-exports.init = function(app) {
     app.put('/profile', bodyParser(), addProfile);
-}
+    function *addProfile() {
+        var json = this.request.body;
 
+        console.dir(json);
 
-function *addProfile() {
-    var json = this.request.body;
-
-    console.dir(json);
-
-    this.body = {
-        success: 'true'
+        this.body = {
+            success: 'true'
+        }
     }
 }
 

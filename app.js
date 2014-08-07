@@ -26,7 +26,7 @@ app.use(session());
  * Load controllers in /controllers
  */
 fs.readdirSync('./controllers').forEach(function (file) {
-    require('./controllers/' + file).init(app);
+    require('./controllers/' + file)(app);
 });
 
 
