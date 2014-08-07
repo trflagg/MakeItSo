@@ -36,7 +36,6 @@ module.exports = function(app, db) {
         }
         else {
             mode = 'newShip';
-            this.cookies.set('id', 'something');
         }
 
         this.body = {

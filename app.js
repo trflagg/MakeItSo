@@ -6,7 +6,7 @@
 
 var fs = require('fs')
 
-    , Db = require('argieDB/db')
+    , Db = require('argieDB/co-db')
     , environment = require('argieDB/environment-local')
 
     , router = require('koa-router')

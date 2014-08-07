@@ -9,15 +9,41 @@ var render = require('../render')
 
 module.exports = function(app, db) {
 
+    /**
+     * PUT /profile
+     *
+     * make a new profile with sent data
+     * @return {json}
+     */
     app.put('/profile', bodyParser(), addProfile);
-    function *addProfile() {
-        var json = this.request.body;
+    function *addProfile(next) {
+        var body = this.request.body;
 
-        console.dir(json);
+        // make new profile
+        var profile = db.create('Profile');
+        profile.name = body.name;
 
-        this.body = {
-            success: 'true'
+        try {
+            // save
+            yield db.save('Profile', profile)
+
+            // set cookie based on new profile id
+            this.cookies.get('id');
+            this.cookies.set('id', profile._id);
+
+            // return id
+            this.body = {
+                id: profile._id
+                , success: 'true'
+            }
         }
+        catch (e) {
+            this.body = {
+                success: 'false'
+                , error: e.message
+            }
+        }
+
     }
 }
 
