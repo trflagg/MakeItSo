@@ -30,14 +30,14 @@ describe('Profile object', function() {
     it('should fail to save if name is too short', function(done) {
         profile.name = 'yo';
         db.save('Profile', profile, function(err, saved_profile) {
-            err.should.equal('name must be at least 3 characters.');
+            err.message.should.equal('name must be at least 3 characters.');
             done();
         });
     });
     it('should fail to save if name is not only letters', function(done) {
         profile.name = 'yo.p';
         db.save('Profile', profile, function(err, saved_profile) {
-            err.should.equal('name may only contain uppercase and lowercase letters.');
+            err.message.should.equal('name may only contain uppercase and lowercase letters.');
             done();
         });
     });
