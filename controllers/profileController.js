@@ -41,7 +41,7 @@ module.exports = function(app, db) {
         catch (e) {
             this.body = {
                 success: 'false'
-                , error: e.message
+                , error: e
             }
         }
 

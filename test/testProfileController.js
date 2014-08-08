@@ -30,6 +30,34 @@ describe('Profile controller', function() {
             });
         });
 
+
+        it('should fail if name isnt long enough', function(done) {
+            agent
+            .put('http://localhost:3000/profile')
+            .send({name: 'wr'})
+            .end(function(err, result) {
+                result.status.should.equal(200);
+                result.body.error.should
+                    .equal('name must be at least 3 characters.');
+                result.body.success.should.equal('false');
+                done();
+            });
+        });
+
+
+        it('should fail if name isnt all letters', function(done) {
+            agent
+            .put('http://localhost:3000/profile')
+            .send({name: 'm8t'})
+            .end(function(err, result) {
+                result.status.should.equal(200);
+                result.body.error.should
+                    .equal('name may only contain uppercase and lowercase letters.');
+                result.body.success.should.equal('false');
+                done();
+            });
+        });
+
         it('should create a new profile if given a name', function(done) {
             agent
             .put('http://localhost:3000/profile')
