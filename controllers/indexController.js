@@ -28,11 +28,12 @@ module.exports = function(app, db) {
     app.get('/start', start);
     function *start() {
 
-        var id = this.cookies.get('id');
+        var profile = this.cookies.get('profile');
         var mode = null;
 
-        if (id) {
+        if (profile) {
             mode = 'selectShip';
+            this.session.profile = profile;
         }
         else {
             mode = 'newShip';

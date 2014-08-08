@@ -28,9 +28,10 @@ module.exports = function(app, db) {
             // save
             yield db.save('Profile', profile)
 
-            // set cookie based on new profile id
-            this.cookies.get('id');
-            this.cookies.set('id', profile._id);
+            // set cookie and session based on new profile id
+            this.cookies.get('profile');
+            this.cookies.set('profile', profile._id);
+            this.session.profile = profile._id;
 
             // return id
             this.body = {

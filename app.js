@@ -32,11 +32,10 @@ fs.readdirSync('./models').forEach(function(file) {
 /**
  * Middleware
  */
-app.use(serve('client'));
-app.use(router(app));
-
 app.keys = ['secret session cookie string'];
 app.use(session());
+app.use(serve('client'));
+app.use(router(app));
 
 /**
  * Load controllers in /controllers
