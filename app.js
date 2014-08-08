@@ -9,6 +9,7 @@ var fs = require('fs')
     , Db = require('argieDB/co-db')
     , environment = require('argieDB/environment-local')
 
+    , logger = require('koa-logger')
     , router = require('koa-router')
     , serve = require('koa-static')
     , session = require('koa-session')
@@ -32,6 +33,7 @@ fs.readdirSync('./models').forEach(function(file) {
 /**
  * Middleware
  */
+app.use(logger());
 app.keys = ['secret session cookie string'];
 app.use(session());
 app.use(serve('client'));
