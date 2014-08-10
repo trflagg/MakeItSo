@@ -47,14 +47,13 @@ module.exports = function(db) {
     });
 
     Profile.prototype.validate = function() {
-        if (!this._name)
-            throw new Error(message='name must be set.');
+        if (this._name) {
+            if (this._name.length < 3)
+                throw new Error(message='name must be at least 3 characters.');
 
-        if (this._name.length < 3)
-            throw new Error(message='name must be at least 3 characters.');
-
-        if (!/^[a-zA-Z]+$/.test(this._name))
-            throw new Error(message='name may only contain uppercase and lowercase letters.');
+            if (!/^[a-zA-Z]+$/.test(this._name))
+                throw new Error(message='name may only contain uppercase and lowercase letters.');
+        }
     };
 
     db.register('Profile', Profile);

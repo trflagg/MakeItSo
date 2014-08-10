@@ -67,8 +67,6 @@ describe('Profile controller', function() {
                 result.status.should.equal(200);
                 result.body.success.should.equal('true');
                 result.body.should.have.property('id');
-                result.headers.should.have.property('set-cookie');
-                result.headers['set-cookie'][0].should.startWith('profile=');
                 done();
             });
         });

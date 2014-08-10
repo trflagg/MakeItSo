@@ -5,6 +5,7 @@
  */
 
 var render = require('../render');
+var ObjectID = require('mongodb').ObjectID;
 
 module.exports = function(app, db) {
     /**
@@ -28,20 +29,49 @@ module.exports = function(app, db) {
     app.get('/start', start);
     function *start() {
 
-        var profile = this.cookies.get('profile');
-        var mode = null;
+        try {
+            var profile_id = this.cookies.get('profile');
+            var mode = null;
+            if (profile_id) {
+                // has cookie. Load it and set session.
+                try {
+                    var profile = yield db.load('Profile', {_id: new ObjectID(profile_id)});
+                    mode = 'selectShip';
+                    this.session.profile = profile_id;
+                }
+                catch(e) {
+                    // Don't send thrown error message since
+                    // it contains db id and it would be best to shield that
+                    // from user as much as possible
+                    if (e.name === 'NotFoundError') {
+                        throw new Error('Cookie profile_id not found in db.');
+                    }
+                    else {
+                        throw e;
+                    }
+                }
+            }
+            else {
+                // no cookie. Make new profile and set session.
+                var profile = db.create('Profile');
+                yield db.save('Profile', profile);
+                this.session.profile = profile_id;
 
-        if (profile) {
-            mode = 'selectShip';
-            this.session.profile = profile;
-        }
-        else {
-            mode = 'newShip';
-        }
+                this.cookies.get('profile');
+                this.cookies.set('profile', profile._id);
+                this.session.profile = profile._id;
 
-        this.body = {
-            'mode': mode
-        };
+                mode = 'newShip';
+            }
+            this.body = {
+                mode: mode
+            };
+
+        } catch(e) {
+            this.body = {
+                error: e.message
+            };
+        }
     }
 
     /**
