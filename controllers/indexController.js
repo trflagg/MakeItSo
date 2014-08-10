@@ -23,7 +23,23 @@ module.exports = function(app, db) {
     /**
      * start()
      *
-     * returns starting mode
+     * sets session and returns starting mode
+     *
+     * /start with no cookie:
+     *   create new profile
+     *   save to db and get id
+     *   set session to id
+     *   set cookie 'profile' to id
+     *   reply { mode: 'newShip' } // should change this to newProfile
+     *
+     * /start with cookie:
+     *   look up profile in db with id in cookie
+     *   if exists:
+     *     set session
+     *     reply { mode: 'selectShip'}
+     *   doesn't exist:
+     *      reply { error: 'Cookie profile_id not found in db.'}
+
      * @return {json}
      */
     app.get('/start', start);
