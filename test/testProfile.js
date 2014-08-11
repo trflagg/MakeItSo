@@ -1,15 +1,18 @@
 var should = require('should')
     , assert = require('assert')
-    , Db = require('argieDB/db')
-    , environment = require('argieDB/environment-local')
-    , db = new Db(environment);
+    , helpers = require('./helpers');
 
 describe('Profile object', function() {
-    var profile;
-    var id;
+    var profile
+        , id
+        , db;
+
+    before(function() {
+        db = helpers.getDb();
+        require('../models/profile')(db);
+    });
 
     it('should make a new object', function() {
-        var Profile = require('../models/profile')(db);
         profile = db.create('Profile');
         assert.equal(profile._name, null);
         assert.equal(profile._handiness, null);

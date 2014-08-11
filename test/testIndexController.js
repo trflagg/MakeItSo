@@ -30,6 +30,7 @@ describe('Index controller', function() {
             .end(function(err, result) {
                 result.body.should.eql({
                     mode: 'newShip'
+                    , id: result.body.id
                 });
                 result.headers.should.have.property('set-cookie');
                 result.headers['set-cookie'][0].should.startWith('profile=');
@@ -47,6 +48,7 @@ describe('Index controller', function() {
             .end(function(err, result) {
                 result.body.should.eql({
                     mode: 'selectShip'
+                    , id: result.body.id
                 });
                 result.headers.should.have.property('set-cookie');
                 result.headers['set-cookie'][0].should.startWith('koa:sess=');

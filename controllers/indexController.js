@@ -30,13 +30,13 @@ module.exports = function(app, db) {
      *   save to db and get id
      *   set session to id
      *   set cookie 'profile' to id
-     *   reply { mode: 'newShip' } // should change this to newProfile
+     *   reply { mode: 'newShip', id: <profile id> } // should change this to newProfile
      *
      * /start with cookie:
      *   look up profile in db with id in cookie
      *   if exists:
      *     set session
-     *     reply { mode: 'selectShip'}
+     *     reply { mode: 'selectShip', id: <profile id>}
      *   doesn't exist:
      *      reply { error: 'Cookie profile_id not found in db.'}
 
@@ -71,16 +71,14 @@ module.exports = function(app, db) {
                 // no cookie. Make new profile and set session.
                 var profile = db.create('Profile');
                 yield db.save('Profile', profile);
-                this.session.profile = profile_id;
-
                 this.cookies.get('profile');
                 this.cookies.set('profile', profile._id);
                 this.session.profile = profile._id;
-
                 mode = 'newShip';
             }
             this.body = {
                 mode: mode
+                , id: profile._id
             };
 
         } catch(e) {
@@ -98,7 +96,7 @@ module.exports = function(app, db) {
      */
     app.get('/delete-cookie', deleteCookie);
     function *deleteCookie() {
-        this.cookies.set('id', null);
+        this.cookies.set('profile', null);
         this.body = "Cookie deleted";
     }
 }
