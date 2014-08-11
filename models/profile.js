@@ -54,6 +54,13 @@ module.exports = function(db) {
             if (!/^[a-zA-Z]+$/.test(this._name))
                 throw new Error(message='name may only contain uppercase and lowercase letters.');
         }
+
+        if (this._handiness) {
+            if (this._handiness !== 'right' &&
+                this._handiness !== 'left') {
+                throw new Error(message='handiness must be either right or left.');
+            }
+        }
     };
 
     db.register('Profile', Profile);

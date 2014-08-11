@@ -45,8 +45,18 @@ describe('Profile object', function() {
         });
     });
 
+    it('should fail to save if handiness is not right or left', function(done) {
+        profile.name = 'Taylor'
+        profile.handiness = 'something';
+        db.save('Profile', profile, function(err, saved_profile) {
+            err.message.should.equal('handiness must be either right or left.');
+            done();
+        });
+    });
+
     it('should save to the db', function(done) {
         profile.name = 'Taylor';
+        profile.handiness = 'right';
         db.save('Profile', profile, function(err, saved_profile) {
             assert.equal(err, null);
             saved_profile.should.not.equal(null);
@@ -58,7 +68,8 @@ describe('Profile object', function() {
     it('should load from the db', function(done) {
         db.load('Profile', {id: id}, function(err, loaded_profile) {
             assert.equal(err, null);
-            loaded_profile.name.should.equal('Taylor')
+            loaded_profile.name.should.equal('Taylor');
+            loaded_profile.handiness.should.equal('right');
             done();
         })
     })

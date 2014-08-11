@@ -99,5 +99,52 @@ describe('Profile controller', function() {
             });
         });
 
+        it('fails if handiness is not right or left', function(done) {
+            agent
+            .post('http://localhost:3000/profile/'+id)
+            .type('form')
+            .send({ handiness: 'blah' })
+            .end(function(err, result) {
+                (err === null).should.be.true;
+                result.status.should.equal(200);
+                result.body.error.should.equal('handiness must be either right or left.');
+                done();
+            });
+        });
+
+        it('successfully modifies handiness', function(done) {
+            agent
+            .post('http://localhost:3000/profile/'+id)
+            .send({ handiness: 'left' })
+            .end(function(err, result) {
+                (err === null).should.be.true;
+                result.status.should.equal(200);
+                result.body.success.should.equal('true');
+
+                db.load('Profile', {_id: new ObjectID(id)}, function(err, foundProfile) {
+                    assert.equal(err, null);
+                    foundProfile.handiness.should.equal('left');
+                    done();
+                });
+            });
+        });
+
+        it('successfully modifies both', function(done) {
+            agent
+            .post('http://localhost:3000/profile/'+id)
+            .send({ name: 'Jerry', handiness: 'right' })
+            .end(function(err, result) {
+                (err === null).should.be.true;
+                result.status.should.equal(200);
+                result.body.success.should.equal('true');
+
+                db.load('Profile', {_id: new ObjectID(id)}, function(err, foundProfile) {
+                    assert.equal(err, null);
+                    foundProfile.name.should.equal('Jerry');
+                    foundProfile.handiness.should.equal('right');
+                    done();
+                });
+            });
+        });
     });
 });
