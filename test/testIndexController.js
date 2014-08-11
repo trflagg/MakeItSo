@@ -29,7 +29,7 @@ describe('Index controller', function() {
             .get('http://localhost:3000/start')
             .end(function(err, result) {
                 result.body.should.eql({
-                    mode: 'newShip'
+                    mode: 'newProfile'
                     , id: result.body.id
                 });
                 result.headers.should.have.property('set-cookie');

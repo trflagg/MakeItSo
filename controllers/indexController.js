@@ -74,7 +74,7 @@ module.exports = function(app, db) {
                 this.cookies.get('profile');
                 this.cookies.set('profile', profile._id);
                 this.session.profile = profile._id;
-                mode = 'newShip';
+                mode = 'newProfile';
             }
             this.body = {
                 mode: mode
