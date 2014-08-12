@@ -39,7 +39,8 @@ module.exports = function(app, db) {
             }
         } catch(e) {
             this.body = {
-                error: e.message
+                success: 'false'
+                , error: e.message
             };
         }
     }

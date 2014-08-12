@@ -88,13 +88,23 @@ define(['./screen'
             var name = $("#nameInput").val();
 
             $.ajax({
-                url: '/profile'
-                , type: 'PUT'
+                url: '/profile/'+this.model.get('id')
+                , type: 'POST'
+                , context: this
                 , contentType: 'application/json'
                 , data: JSON.stringify({
                     'name': name
                 })
-            });
+            }).fail(function(jqHXR) {
+                $("#nameError").html(jqHXR.responseText);
+            }).done(function(data) {
+                if (data.success === "true") {
+                    this.model.set('name', name);
+                    nextScreen();
+                } else {
+                    $("#nameError").html(data.error);
+                }
+            })
         }
     });
 

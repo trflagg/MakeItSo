@@ -37,6 +37,7 @@ define(['backbone'], function(Backbone) {
                 , url: '/start'
 
             }).done(function(data) {
+                appModel.set('id', data.id);
                 appModel.set('mode', data.mode);
             })
         }

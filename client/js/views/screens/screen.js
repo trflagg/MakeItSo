@@ -55,6 +55,15 @@ define(['backbone'], function(Backbone) {
         }
 
         /**
+         * next()
+         *
+         * move to the next screen
+         */
+        , next: function() {
+
+        }
+
+        /**
          * valid()
          *
          * generic validation function to be implemented by subclass

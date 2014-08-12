@@ -48,6 +48,8 @@ module.exports = function(app, db) {
         try {
             var profile_id = this.cookies.get('profile');
             var mode = null;
+            // turn off cookie
+            // if (false) {
             if (profile_id) {
                 // has cookie. Load it and set session.
                 try {

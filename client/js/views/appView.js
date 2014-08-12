@@ -57,11 +57,15 @@ define(['backbone'
             switch(this.model.get('mode')) {
                 case 'newProfile':
 
+                    var appModel = this.model;
+
                     // fade out old mode.
                     $('#contents').fadeOut('slow', function() {
+                        var newProfile = new ProfileModel();
+                        newProfile.set('id', appModel.get('id'));
                         this.mode = new EditOptionsMode({
                             el: $("#contents")
-                            , model: new ProfileModel()
+                            , model: newProfile
                         });
 
                         $("#contents").fadeIn('slow');
