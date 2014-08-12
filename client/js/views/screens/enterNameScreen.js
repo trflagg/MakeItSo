@@ -49,7 +49,9 @@ define(['./screen'
          * @return {html}
          */
         , render: function() {
-            return $(this.el).html(this.template());
+            return $(this.el).html(this.template({
+                name: this.model.get('name')
+            }));
         }
 
         /**

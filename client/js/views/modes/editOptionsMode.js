@@ -45,6 +45,7 @@ define(['./mode'
             var $newScreen = $('<div>');
             var newScreen = new screenClass({
                 el: $newScreen
+                , model: this.model
             });
             this.screens.push(newScreen);
             $newScreen.attr('id','screen'+this.screens.length);

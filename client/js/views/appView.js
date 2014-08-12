@@ -9,10 +9,12 @@
 define(['backbone'
         , '../models/appModel'
         , '../views/modes/editOptionsMode'
+        , '../models/profileModel'
 
 ], function(Backbone
             , AppModel
             , EditOptionsMode
+            , ProfileModel
 ) {
 
     var appView = Backbone.View.extend({
@@ -59,6 +61,7 @@ define(['backbone'
                     $('#contents').fadeOut('slow', function() {
                         this.mode = new EditOptionsMode({
                             el: $("#contents")
+                            , model: new ProfileModel()
                         });
 
                         $("#contents").fadeIn('slow');

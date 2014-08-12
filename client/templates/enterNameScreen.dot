@@ -1,7 +1,7 @@
 <div id="nameEntry" class="centerDiv">
     <h2>Welcome Captain,</h2>
     <h2>please enter your name:</h2>
-    <input id="nameInput", type="text", size=50 />
+    <input id="nameInput", type="text", size=50 value="{{= it.name }}"/>
 
     <p id="nameError" class="error"></p>
     <div id="nameInstructions" class="prompt" style="display:none">
