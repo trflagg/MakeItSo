@@ -8,11 +8,11 @@
 
 define(['backbone'
         , '../models/appModel'
-        , '../views/modes/newShipMode'
+        , '../views/modes/editOptionsMode'
 
 ], function(Backbone
             , AppModel
-            , NewShipMode
+            , EditOptionsMode
 ) {
 
     var appView = Backbone.View.extend({
@@ -57,7 +57,7 @@ define(['backbone'
 
                     // fade out old mode.
                     $('#contents').fadeOut('slow', function() {
-                        this.mode = new NewShipMode({
+                        this.mode = new EditOptionsMode({
                             el: $("#contents")
                         });
 

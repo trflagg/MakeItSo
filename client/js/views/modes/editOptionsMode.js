@@ -1,5 +1,5 @@
 /**
- * newShipMode.js
+ * editOptionsMode.js
  *
  * Mode for the user to select options to set up his new ship.
  *
@@ -7,14 +7,14 @@
 
 define(['./mode'
         , '../screens/enterNameScreen'
-        , 'doT!/templates/newShipMode'
+        , 'doT!/templates/editOptionsMode'
 
 ], function(Mode
             , EnterNameScreen
             , template
 ) {
 
-    var newShipMode = Mode.extend({
+    var editOptionsMode = Mode.extend({
 
         /**
          * init()
@@ -58,5 +58,5 @@ define(['./mode'
 
     });
 
-    return newShipMode;
+    return editOptionsMode;
 });
