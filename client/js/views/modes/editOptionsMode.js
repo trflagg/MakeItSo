@@ -7,10 +7,12 @@
 
 define(['./mode'
         , '../screens/enterNameScreen'
+        , '../screens/askHandinessScreen'
         , 'doT!/templates/editOptionsMode'
 
 ], function(Mode
             , EnterNameScreen
+            , AskHandinessScreen
             , template
 ) {
 
@@ -24,11 +26,16 @@ define(['./mode'
          */
         init: function() {
             this.screens = [];
+            this.currentScreen = 0;
             this.template = template;
             this.render();
 
-            // start with enterName
+            // default list of screens.
             this.addScreen(EnterNameScreen);
+            this.addScreen(AskHandinessScreen);
+
+            // start with the first one.
+            this.displayScreen(this.screens[this.currentScreen]);
         }
 
         /**
@@ -47,15 +54,22 @@ define(['./mode'
                 el: $newScreen
                 , model: this.model
             });
+            newScreen.setMode(this);
             this.screens.push(newScreen);
             $newScreen.attr('id','screen'+this.screens.length);
-
-            this.$("#screens").append($newScreen);
-
-            // for now (because we only have 1) activate right away
-            newScreen.activate();
         }
 
+        , displayScreen: function(nextScreen) {
+            this.$("#screens").append(nextScreen.el);
+            nextScreen.activate();
+        }
+
+        , nextScreen: function() {
+            this.currentScreen++;
+            if (this.currentScreen < this.screens.length) {
+                this.displayScreen(this.screens[this.currentScreen]);
+            }
+        }
 
     });
 

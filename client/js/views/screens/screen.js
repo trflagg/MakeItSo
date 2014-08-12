@@ -16,6 +16,7 @@ define(['backbone'], function(Backbone) {
          * @return {None}
          */
         initialize: function() {
+            this.mode = null;
 
         }
 
@@ -33,13 +34,17 @@ define(['backbone'], function(Backbone) {
             this.mode = mode;
         }
 
+        , setMode: function(mode) {
+            this.mode = mode;
+        }
+
         /**
          * next()
          *
          * move to the next screen
          */
         , next: function() {
-
+            this.mode.nextScreen();
         }
 
     });

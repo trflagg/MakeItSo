@@ -1,0 +1,20 @@
+
+<div id="askHandiness" class="centerDiv">
+    <h2>Captain {{= it.name }},</h2>
+    <h2>please select one:</h2>
+    <div id="handiDiv">
+        <button id="leftHand"
+                {{? it.handiness == "left"}}
+                    class="active"
+                {{?}}>
+                left handed
+        </button>
+        <button id="rightHand"
+                {{? it.handiness == "right"}}
+                    class="active"
+                {{?}}>
+                right handed
+        </button>
+    </div>
+    <p id="handinessError" class="error"></p>
+</div>
