@@ -10,13 +10,13 @@ var render = require('../render')
 
 module.exports = function(app, db) {
     /**
-     * POST /profile/:id
+     * PUT /profile/:id
      *
      * modify profile with :id
      *
      * @return { json }
      */
-    app.post('/profile/:id'
+    app.put('/profile/:id'
             , bodyParser()
             , idMatchesSession(db)
             , editProfile);

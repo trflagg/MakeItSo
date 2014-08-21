@@ -16,13 +16,13 @@ describe('Profile controller', function() {
         require('../models/profile')(db);
     });
 
-    describe('POST /profile/:id', function() {
+    describe('PUT /profile/:id', function() {
         it('fails if no session', function(done) {
             var agent = request.agent();
             var id;
 
             agent
-            .post('http://localhost:3000/profile/53e7979a5447fd82a8e3300b')
+            .put('http://localhost:3000/profile/53e7979a5447fd82a8e3300b')
             .send({ name: 'Manny' })
             .end(function(err, result) {
                 (err === null).should.be.true;
@@ -45,7 +45,7 @@ describe('Profile controller', function() {
 
         it('fails if :id doesnt match session', function(done) {
             agent
-            .post('http://localhost:3000/profile/53e7979a5447fd82a8e3300b')
+            .put('http://localhost:3000/profile/53e7979a5447fd82a8e3300b')
             .type('form')
             .send({ name: 'Lenny' })
             .end(function(err, result) {
@@ -58,7 +58,7 @@ describe('Profile controller', function() {
 
         it('fails if name is too short', function(done) {
             agent
-            .post('http://localhost:3000/profile/'+id)
+            .put('http://localhost:3000/profile/'+id)
             .type('form')
             .send({ name: 'Le' })
             .end(function(err, result) {
@@ -71,7 +71,7 @@ describe('Profile controller', function() {
 
         it('fails if name is not only letters', function(done) {
             agent
-            .post('http://localhost:3000/profile/'+id)
+            .put('http://localhost:3000/profile/'+id)
             .type('form')
             .send({ name: 'Lew,' })
             .end(function(err, result) {
@@ -84,7 +84,7 @@ describe('Profile controller', function() {
 
         it('successfully modifies name', function(done) {
             agent
-            .post('http://localhost:3000/profile/'+id)
+            .put('http://localhost:3000/profile/'+id)
             .send({ name: 'Joe' })
             .end(function(err, result) {
                 (err === null).should.be.true;
@@ -101,7 +101,7 @@ describe('Profile controller', function() {
 
         it('fails if handiness is not right or left', function(done) {
             agent
-            .post('http://localhost:3000/profile/'+id)
+            .put('http://localhost:3000/profile/'+id)
             .type('form')
             .send({ handiness: 'blah' })
             .end(function(err, result) {
@@ -114,7 +114,7 @@ describe('Profile controller', function() {
 
         it('successfully modifies handiness', function(done) {
             agent
-            .post('http://localhost:3000/profile/'+id)
+            .put('http://localhost:3000/profile/'+id)
             .send({ handiness: 'left' })
             .end(function(err, result) {
                 (err === null).should.be.true;
@@ -131,7 +131,7 @@ describe('Profile controller', function() {
 
         it('successfully modifies both', function(done) {
             agent
-            .post('http://localhost:3000/profile/'+id)
+            .put('http://localhost:3000/profile/'+id)
             .send({ name: 'Jerry', handiness: 'right' })
             .end(function(err, result) {
                 (err === null).should.be.true;
