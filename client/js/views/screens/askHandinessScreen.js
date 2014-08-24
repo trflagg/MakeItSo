@@ -37,6 +37,7 @@ define(['./screen'
          */
         , activate: function() {
             Screen.prototype.activate();
+            this.render();
         }
 
         /**
