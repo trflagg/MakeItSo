@@ -26,6 +26,8 @@ define(['./screen'
         , initialize: function() {
             Screen.prototype.initialize();
 
+            this.listenTo(this.model, 'invalid', this.invalid);
+
             this.template = template;
             this.render();
         }
@@ -76,9 +78,47 @@ define(['./screen'
             }
         }
 
+        /**
+         * call before each submission to reset error message
+         * @return {None}
+         */
+        , reset: function() {
+            $("#nameError").html("");
+        }
+
+        /**
+         * invalid()
+         *
+         * handles invalid events on profile model
+         * @return {None}
+         */
+        , invalid: function() {
+            this.showError(this.model.validationError);
+        }
+
+        /**
+         * showError()
+         *
+         * display error on screen
+         * @param  {String} message string to display
+         * @return {None}
+         */
+        , showError: function(message) {
+            $("#nameError").html(message);
+        }
+
+        /**
+         * submit()
+         *
+         * submit data to server and deal with response
+         * @return {None}
+         */
         , submit: function() {
             var name = $("#nameInput").val()
                 , screen = this;
+
+            this.reset();
+
             this.model.save({
                 'name': name
             }
@@ -87,11 +127,11 @@ define(['./screen'
                     if (response.success === "true") {
                         screen.next();
                     } else {
-                        $("#nameError").html(response.error);
+                        screen.showError(response.error);
                     }
                 }
                 , error: function(model, response, options) {
-                    $("#nameError").html(response.responseText);
+                    screen.showError(response.responseText)
                 }
             });
         }
