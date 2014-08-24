@@ -35,38 +35,57 @@ define(['./mode'
             this.addScreen(AskHandinessScreen);
 
             // start with the first one.
-            this.displayScreen(this.screens[this.currentScreen]);
+            this.displayScreen(this.screens[0]);
         }
 
-        /**
-         * render()
-         *
-         * draw current screen.
-         * @return {html}
-         */
         , render: function() {
             $(this.el).html(this.template());
         }
 
         , addScreen: function(screenClass) {
-            var $newScreen = $('<div>');
+            var $newScreen = $('<div>')
+                .addClass('screen')
+                .css('position', 'absolute')
+                .css('width', '100%')
+                .css('top', '0px')
+                .css('left', "0px")
+                .css('display', 'none');
             var newScreen = new screenClass({
                 el: $newScreen
                 , model: this.model
             });
             newScreen.setMode(this);
             this.screens.push(newScreen);
+
+            // any screen after the first one is positioned off to the left
+            if (this.screens.length > 1) {
+                $newScreen.css('left', $(window).width() + "px");
+            }
             $newScreen.attr('id','screen'+this.screens.length);
+            this.$("#screens").append($newScreen);
         }
 
         , displayScreen: function(nextScreen) {
-            this.$("#screens").append(nextScreen.el);
+            nextScreen.$el.css('display', 'block');
             nextScreen.activate();
         }
 
         , nextScreen: function() {
+            var $prevScreen
+                , $nextScreen;
+
             this.currentScreen++;
             if (this.currentScreen < this.screens.length) {
+                $prevScreen = this.screens[this.currentScreen-1].$el;
+                $nextScreen = this.screens[this.currentScreen].$el;
+                var amount = -$(window).width();
+                $prevScreen.animate({
+                    left: amount
+                });
+                $nextScreen.animate({
+                    left: 0
+                });
+
                 this.displayScreen(this.screens[this.currentScreen]);
             }
         }
