@@ -29,29 +29,8 @@ define(['backbone'], function(Backbone) {
             // noop
         }
 
-        /**
-         * keyDown()
-         *
-         * generic keydown handler
-         * @param  {event} event keydown event
-         * @return {Boolean} if the event should bubble down to subclass
-         */
-        , keyDown: function(event) {
-
-            // enter key
-            if (event.keyCode === 13) {
-                if (this.valid()) {
-                    // submit and move on
-                    this.submit();
-                }
-                else {
-
-                }
-
-                return false;
-            }
-
-            return true;
+        , setMode: function(mode) {
+            this.mode = mode;
         }
 
         /**
@@ -61,16 +40,6 @@ define(['backbone'], function(Backbone) {
          */
         , next: function() {
 
-        }
-
-        /**
-         * valid()
-         *
-         * generic validation function to be implemented by subclass
-         * @return {Boolean} true if screen is valid
-         */
-        , valid: function() {
-            return true;
         }
 
     });

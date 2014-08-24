@@ -5,13 +5,19 @@
  *
  */
 
-define(['backbone'], function(Backbone) {
+define(['backbone'
+        , '../models/profileModel'
+
+], function(Backbone
+            , ProfileModel
+) {
 
     var appModel = Backbone.Model.extend({
 
         // properties
         defaults: {
             mode: 'test'
+            , profile: null
         },
 
         /**
@@ -38,6 +44,10 @@ define(['backbone'], function(Backbone) {
 
             }).done(function(data) {
                 appModel.set('id', data.id);
+                var newProfile = new ProfileModel({
+                    'id': appModel.get('id')
+                });
+                appModel.set('profile', newProfile);
                 appModel.set('mode', data.mode);
             })
         }

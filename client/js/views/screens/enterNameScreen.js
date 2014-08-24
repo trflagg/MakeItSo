@@ -62,8 +62,12 @@ define(['./screen'
          * @return {Boolean} if the event should bubble down to subclass
          */
         , keyDown: function(event) {
-            if (Screen.prototype.keyDown.call(this, event)) {
-                if(this.valid()) {
+
+            if (event.keyCode === 13) {
+                this.submit();
+            }
+            else {
+                if (this.model.isValid()) {
                     $("#nameInstructions").fadeIn(2000);
                 }
                 else {
@@ -72,39 +76,24 @@ define(['./screen'
             }
         }
 
-        /**
-         * valid()
-         *
-         * return true if form is valid
-         * @return {Boolean} form is valid
-         */
-        , valid: function() {
-            var name = $("#nameInput").val();
-
-            return name.length >= 3;
-        }
-
         , submit: function() {
-            var name = $("#nameInput").val();
-
-            $.ajax({
-                url: '/profile/'+this.model.get('id')
-                , type: 'POST'
-                , context: this
-                , contentType: 'application/json'
-                , data: JSON.stringify({
-                    'name': name
-                })
-            }).fail(function(jqHXR) {
-                $("#nameError").html(jqHXR.responseText);
-            }).done(function(data) {
-                if (data.success === "true") {
-                    this.model.set('name', name);
-                    nextScreen();
-                } else {
-                    $("#nameError").html(data.error);
+            var name = $("#nameInput").val()
+                , screen = this;
+            this.model.save({
+                'name': name
+            }
+            , {
+                success: function(model, response, options) {
+                    if (response.success === "true") {
+                        screen.next();
+                    } else {
+                        $("#nameError").html(response.error);
+                    }
                 }
-            })
+                , error: function(model, response, options) {
+                    $("#nameError").html(response.responseText);
+                }
+            });
         }
     });
 
