@@ -1,0 +1,20 @@
+
+<div id="askSex" class="centerDiv">
+    <h2>Captain {{= it.name }},</h2>
+    <h2>please select one:</h2>
+    <div id="sexDiv">
+        <button id="female"
+                {{? it.sex == "female"}}
+                    class="active"
+                {{?}}>
+                female
+        </button>
+        <button id="male"
+                {{? it.sex == "male"}}
+                    class="active"
+                {{?}}>
+                male
+        </button>
+    </div>
+    <p id="sexError" class="error"></p>
+</div>

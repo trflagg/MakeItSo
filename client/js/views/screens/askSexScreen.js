@@ -15,7 +15,7 @@ define(['./screen'
     var askSexScreen = Screen.extend({
         events: {
             'click #male': function() { this.buttonClicked('male'); }
-            , 'click #femail': function() { this.buttonClicked('female'); }
+            , 'click #female': function() { this.buttonClicked('female'); }
         }
 
         /**
@@ -55,17 +55,17 @@ define(['./screen'
             }));
         }
 
-        , buttonClicked: function(handiness) {
-            this.submit(handiness);
+        , buttonClicked: function(sex) {
+            this.submit(sex);
         }
 
-        , submit: function(handiness) {
+        , submit: function(sex) {
             var screen = this;
 
             this.reset();
 
             this.model.save({
-                'handiness': handiness
+                'sex': sex
             }
             , {
                 success: function(model, response, options) {
@@ -86,7 +86,7 @@ define(['./screen'
          * @return {None}
          */
         , reset: function() {
-            $("#handinessError").html("");
+            $("#sexError").html("");
         }
 
         /**
@@ -97,7 +97,7 @@ define(['./screen'
          * @return {None}
          */
         , showError: function(message) {
-            this.$("#handinessError").html(message);
+            this.$("#sexError").html(message);
         }
     });
 

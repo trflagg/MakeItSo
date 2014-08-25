@@ -8,11 +8,13 @@
 define(['./mode'
         , '../screens/enterNameScreen'
         , '../screens/askHandinessScreen'
+        , '../screens/askSexScreen'
         , 'doT!/templates/editOptionsMode'
 
 ], function(Mode
             , EnterNameScreen
             , AskHandinessScreen
+            , AskSexScreen
             , template
 ) {
 
@@ -32,6 +34,7 @@ define(['./mode'
 
             // default list of screens.
             this.addScreen(EnterNameScreen);
+            this.addScreen(AskSexScreen);
             this.addScreen(AskHandinessScreen);
 
             // start with the first one.
