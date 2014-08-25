@@ -74,19 +74,35 @@ define(['./mode'
         }
 
         , nextScreen: function() {
-            var $prevScreen
+            var windowWidth = $(window).width()
+                , $prevScreen
                 , $nextScreen;
 
             this.currentScreen++;
             if (this.currentScreen < this.screens.length) {
                 $prevScreen = this.screens[this.currentScreen-1].$el;
                 $nextScreen = this.screens[this.currentScreen].$el;
-                var amount = -$(window).width();
                 $prevScreen.animate({
-                    left: amount
+                    left: -windowWidth
                 });
                 $nextScreen.animate({
                     left: 0
+                });
+
+                $("#starBackground")
+                .css('width', "+=" + (windowWidth * (2/9)))
+                .animate({
+                    left: "-=" + (windowWidth * (2/9))
+                });
+                $("#starMidfield")
+                .css('width', "+=" + (windowWidth * (2/6)))
+                .animate({
+                    left: "-=" + (windowWidth * (2/6))
+                });
+                $("#starForward")
+                .css('width', "+=" + (windowWidth * (2/3)))
+                .animate({
+                    left: "-=" + (windowWidth * (2/3))
                 });
 
                 this.displayScreen(this.screens[this.currentScreen]);
