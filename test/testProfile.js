@@ -28,6 +28,11 @@ describe('Profile object', function() {
         profile.handiness.should.equal('right');
     }),
 
+    it('should modify sex', function() {
+        profile.sex = 'female';
+        profile.sex.should.equal('female');
+    }),
+
     it('should fail to save if name is too short', function(done) {
         profile.name = 'yo';
         db.save('Profile', profile, function(err, saved_profile) {
@@ -35,6 +40,7 @@ describe('Profile object', function() {
             done();
         });
     });
+
     it('should fail to save if name is not only letters', function(done) {
         profile.name = 'yo.p';
         db.save('Profile', profile, function(err, saved_profile) {
@@ -44,7 +50,7 @@ describe('Profile object', function() {
     });
 
     it('should fail to save if handiness is not right or left', function(done) {
-        profile.name = 'Taylor'
+        profile.name = 'Taylor';
         profile.handiness = 'something';
         db.save('Profile', profile, function(err, saved_profile) {
             err.message.should.equal('handiness must be either right or left.');
@@ -52,9 +58,20 @@ describe('Profile object', function() {
         });
     });
 
+    it('should fail to save if sex is not male or female', function(done) {
+        profile.name = 'Taylor';
+        profile.handiness = 'left';
+        profile.sex = 'something';
+        db.save('Profile', profile, function(err, saved_profile) {
+            err.message.should.equal('sex must be either male or female.');
+            done();
+        });
+    });
+
     it('should save to the db', function(done) {
         profile.name = 'Taylor';
         profile.handiness = 'right';
+        profile.sex = 'male';
         db.save('Profile', profile, function(err, saved_profile) {
             assert.equal(err, null);
             saved_profile.should.not.equal(null);
@@ -68,6 +85,7 @@ describe('Profile object', function() {
             assert.equal(err, null);
             loaded_profile.name.should.equal('Taylor');
             loaded_profile.handiness.should.equal('right');
+            loaded_profile.sex.should.equal('male');
             done();
         })
     })

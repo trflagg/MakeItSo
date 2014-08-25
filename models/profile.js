@@ -12,11 +12,13 @@ module.exports = function(db) {
     Profile.prototype.initialize = function() {
         this.name = null;
         this.handiness = null;
+        this.sex = null;
     };
 
     Profile.prototype.saveToDoc = function(doc) {
         doc.name = this.name;
         doc.handiness = this.handiness;
+        doc.sex = this.sex;
 
         return doc;
     };
@@ -24,6 +26,7 @@ module.exports = function(db) {
     Profile.prototype.loadFromDoc = function(doc) {
         this.name = doc.name;
         this.handiness = doc.handiness;
+        this.sex = doc.sex;
     };
 
     Profile.prototype.validate = function() {
@@ -39,6 +42,13 @@ module.exports = function(db) {
             if (this.handiness !== 'right' &&
                 this.handiness !== 'left') {
                 throw new Error(message='handiness must be either right or left.');
+            }
+        }
+
+        if (this.sex) {
+            if (this.sex !== 'male' &&
+                this.sex !== 'female') {
+                throw new Error(message='sex must be either male or female.');
             }
         }
     };
