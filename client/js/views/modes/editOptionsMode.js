@@ -29,6 +29,7 @@ define(['./mode'
         init: function() {
             this.screens = [];
             this.template = template;
+            this.endFunction = null;
         }
 
         , render: function() {
@@ -97,6 +98,15 @@ define(['./mode'
 
                 this.displayScreen(this.screens[this.currentScreen]);
             }
+            else {
+                if (this.endFunction) {
+                    this.endFunction.call(this);
+                }
+            }
+        }
+
+        , setEndFunction: function(func) {
+            this.endFunction = func;
         }
 
         , newProfile: function() {
@@ -107,6 +117,11 @@ define(['./mode'
             this.addScreen(AskHandinessScreen);
 
             this.currentScreen = 0;
+
+            this.setEndFunction(function() {
+                console.log(this.model);
+            });
+
             // start with the first one.
             this.displayScreen(this.screens[0]);
         }
