@@ -14,20 +14,18 @@ describe('Profile object', function() {
 
     it('should make a new object', function() {
         profile = db.create('Profile');
-        assert.equal(profile._name, null);
-        assert.equal(profile._handiness, null);
+        assert.equal(profile.name, null);
+        assert.equal(profile.handiness, null);
     }),
 
     it('should modify name', function() {
         profile.name = 'Taylor';
         profile.name.should.equal('Taylor');
-        profile._name.should.equal('Taylor');
     }),
 
     it('should modify handiness', function() {
         profile.handiness = 'right';
         profile.handiness.should.equal('right');
-        profile._handiness.should.equal('right');
     }),
 
     it('should fail to save if name is too short', function(done) {
