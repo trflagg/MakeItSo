@@ -64,6 +64,8 @@ define(['backbone'
                             , model: appModel.get('profile')
                         });
 
+                        this.mode.newProfile();
+
                         $("#contents").fadeIn('slow');
                     });
                     break;

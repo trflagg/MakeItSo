@@ -28,17 +28,7 @@ define(['./mode'
          */
         init: function() {
             this.screens = [];
-            this.currentScreen = 0;
             this.template = template;
-            this.render();
-
-            // default list of screens.
-            this.addScreen(EnterNameScreen);
-            this.addScreen(AskSexScreen);
-            this.addScreen(AskHandinessScreen);
-
-            // start with the first one.
-            this.displayScreen(this.screens[0]);
         }
 
         , render: function() {
@@ -107,6 +97,18 @@ define(['./mode'
 
                 this.displayScreen(this.screens[this.currentScreen]);
             }
+        }
+
+        , newProfile: function() {
+            this.render();
+
+            this.addScreen(EnterNameScreen);
+            this.addScreen(AskSexScreen);
+            this.addScreen(AskHandinessScreen);
+
+            this.currentScreen = 0;
+            // start with the first one.
+            this.displayScreen(this.screens[0]);
         }
 
     });
