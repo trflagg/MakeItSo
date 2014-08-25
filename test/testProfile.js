@@ -58,13 +58,13 @@ describe('Profile object', function() {
         db.save('Profile', profile, function(err, saved_profile) {
             assert.equal(err, null);
             saved_profile.should.not.equal(null);
-            id = saved_profile._id;
+            id = profile._id;
             done();
         })
     }),
 
     it('should load from the db', function(done) {
-        db.load('Profile', {id: id}, function(err, loaded_profile) {
+        db.load('Profile', {_id: id}, function(err, loaded_profile) {
             assert.equal(err, null);
             loaded_profile.name.should.equal('Taylor');
             loaded_profile.handiness.should.equal('right');
