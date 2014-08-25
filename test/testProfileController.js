@@ -129,10 +129,39 @@ describe('Profile controller', function() {
             });
         });
 
-        it('successfully modifies both', function(done) {
+        it('fails if sex is not male or female', function(done) {
             agent
             .put('http://localhost:3000/profile/'+id)
-            .send({ name: 'Jerry', handiness: 'right' })
+            .type('form')
+            .send({ sex: 'blah' })
+            .end(function(err, result) {
+                (err === null).should.be.true;
+                result.status.should.equal(200);
+                result.body.error.should.equal('sex must be either male or female.');
+                done();
+            });
+        });
+
+        it('successfully modifies sex', function(done) {
+            agent
+            .put('http://localhost:3000/profile/'+id)
+            .send({ sex: 'female' })
+            .end(function(err, result) {
+                (err === null).should.be.true;
+                result.status.should.equal(200);
+                result.body.success.should.equal('true');
+
+                db.load('Profile', {_id: new ObjectID(id)}, function(err, foundProfile) {
+                    assert.equal(err, null);
+                    foundProfile.sex.should.equal('female');
+                    done();
+                });
+            });
+        });
+        it('successfully modifies everything', function(done) {
+            agent
+            .put('http://localhost:3000/profile/'+id)
+            .send({ name: 'Jerry', handiness: 'right', sex: 'male'})
             .end(function(err, result) {
                 (err === null).should.be.true;
                 result.status.should.equal(200);
@@ -142,6 +171,7 @@ describe('Profile controller', function() {
                     assert.equal(err, null);
                     foundProfile.name.should.equal('Jerry');
                     foundProfile.handiness.should.equal('right');
+                    foundProfile.sex.should.equal('male');
                     done();
                 });
             });

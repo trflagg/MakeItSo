@@ -32,6 +32,9 @@ module.exports = function(app, db) {
             if (body.handiness)
                 profile.handiness = body.handiness;
 
+            if (body.sex)
+                profile.sex = body.sex;
+
             yield db.save('Profile', profile);
 
             this.body = {
