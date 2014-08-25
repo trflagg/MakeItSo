@@ -12,6 +12,10 @@ describe('Profile object', function() {
         require('../models/profile')(db);
     });
 
+    after(function() {
+        db.close();
+    })
+
     it('should make a new object', function() {
         profile = db.create('Profile');
         assert.equal(profile.name, null);

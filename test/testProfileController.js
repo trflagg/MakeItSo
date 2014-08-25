@@ -16,6 +16,10 @@ describe('Profile controller', function() {
         require('../models/profile')(db);
     });
 
+    after(function() {
+        db.close();
+    })
+
     describe('PUT /profile/:id', function() {
         it('fails if no session', function(done) {
             var agent = request.agent();
