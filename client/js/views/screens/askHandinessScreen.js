@@ -14,6 +14,8 @@ define(['./screen'
 
     var askHandinessScreen = Screen.extend({
         events: {
+            'click #rightHand': function() { this.buttonClicked('right'); }
+            , 'click #leftHand': function() { this.buttonClicked('left'); }
         }
 
         /**
@@ -23,7 +25,7 @@ define(['./screen'
          * @return {None}
          */
         , initialize: function() {
-            Screen.prototype.initialize();
+            Screen.prototype.initialize.apply(this);
 
             this.template = template;
             this.render();
@@ -53,28 +55,49 @@ define(['./screen'
             }));
         }
 
-        , handinessClicked: function(handiness) {
-            submit(handiness);
+        , buttonClicked: function(handiness) {
+            this.submit(handiness);
         }
 
         , submit: function(handiness) {
-            $.ajax({
-                url: '/profile'
-                , type: 'PUT'
-                , contentType: 'application/json'
-                , data: JSON.stringify({
-                    'handiness': handiness
-                })
-            }).fail(function(jqHXR, text) {
-                $("#handinessError").html(text);
-            }).done(function(data) {
-                if (data.success) {
-                    this.model.set('handiness');
-                    nextScreen();
-                } else {
-                    $("#handinessError").html(text);
+            var screen = this;
+
+            this.reset();
+
+            this.model.save({
+                'handiness': handiness
+            }
+            , {
+                success: function(model, response, options) {
+                    if (response.success === "true") {
+                        screen.next();
+                    } else {
+                        screen.showError(response.error);
+                    }
                 }
-            })
+                , error: function(model, response, options) {
+                    screen.showError(response.responseText)
+                }
+            });
+        }
+
+        /**
+         * call before each submission to reset error message
+         * @return {None}
+         */
+        , reset: function() {
+            $("#handinessError").html("");
+        }
+
+        /**
+         * showError()
+         *
+         * display error on screen
+         * @param  {String} message string to display
+         * @return {None}
+         */
+        , showError: function(message) {
+            this.$("#handinessError").html(message);
         }
     });
 

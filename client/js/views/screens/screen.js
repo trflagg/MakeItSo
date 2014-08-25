@@ -17,7 +17,7 @@ define(['backbone'], function(Backbone) {
          */
         initialize: function() {
             this.mode = null;
-
+            this.listenTo(this.model, 'invalid', this.invalid);
         }
 
         /**
@@ -34,8 +34,15 @@ define(['backbone'], function(Backbone) {
             this.mode = mode;
         }
 
-        , setMode: function(mode) {
-            this.mode = mode;
+
+        /**
+         * invalid()
+         *
+         * handles invalid events on profile model
+         * @return {None}
+         */
+        , invalid: function() {
+            this.showError(this.model.validationError);
         }
 
         /**
