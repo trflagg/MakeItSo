@@ -1,4 +1,5 @@
 var fs = require('fs')
+    , thunkify = require('thunkify')
     , Db = require('argieDB/db')
     , coDb = require('argieDB/co-db')
     , environment = require('argieDB/environment-local')
@@ -24,9 +25,11 @@ module.exports = function() {
         agent
         .get('http://localhost:3000/start')
         .end(function(err, result) {
-            callback(result.body.id);
+            callback(err, result.body.id);
         });
-    }
+    };
+
+    helpers.coCreateSession = thunkify(helpers.createSession);
 
     return helpers;
 }()
