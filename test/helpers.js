@@ -1,5 +1,6 @@
 var fs = require('fs')
     , Db = require('argieDB/db')
+    , coDb = require('argieDB/co-db')
     , environment = require('argieDB/environment-local')
 
 module.exports = function() {
@@ -7,6 +8,10 @@ module.exports = function() {
 
     helpers.getDb = function() {
         return new Db(environment);
+    }
+
+    helpers.getCoDb = function() {
+        return new coDb(environment);
     }
 
     helpers.loadModels = function(db) {
