@@ -20,15 +20,8 @@ module.exports = function(app, db) {
     function *getShipList() {
 
         var ships = yield db.loadMultiple('Ship'
-                                    , {profile_id: this.params.profile._id});
-        this.body = {};
-        this.body.ships = [];
-
-        for (var i=0, ll=ships.length; i<ll; i++) {
-            this.body.ships.push({
-                shipName: ships[i].shipName
-                , _id: ships[i]._id
-            });
-        }
+                    , {profile_id: this.params.profile._id}
+                    , {shipName: 1, _id: 1});
+        this.body = ships;
     }
 }
