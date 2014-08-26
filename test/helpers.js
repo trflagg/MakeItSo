@@ -20,5 +20,13 @@ module.exports = function() {
         });
     }
 
+    helpers.createSession = function(agent, callback) {
+        agent
+        .get('http://localhost:3000/start')
+        .end(function(err, result) {
+            callback(result.body.id);
+        });
+    }
+
     return helpers;
 }()

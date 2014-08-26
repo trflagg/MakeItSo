@@ -8,7 +8,7 @@ var app = require('../app')
 
 describe('Profile controller', function() {
     var agent = request.agent()
-        , id
+        , profile_id
         , db;
 
     before(function() {
@@ -23,7 +23,6 @@ describe('Profile controller', function() {
     describe('PUT /profile/:id', function() {
         it('fails if no session', function(done) {
             var agent = request.agent();
-            var id;
 
             agent
             .put('http://localhost:3000/profile/53e7979a5447fd82a8e3300b')
@@ -39,10 +38,8 @@ describe('Profile controller', function() {
         it('set session', function(done) {
             agent = request.agent();
 
-            agent
-            .get('http://localhost:3000/start')
-            .end(function(err, result) {
-                id = result.body.id;
+            helpers.createSession(agent, function(id) {
+                profile_id = id;
                 done();
             });
         });
@@ -62,7 +59,7 @@ describe('Profile controller', function() {
 
         it('fails if name is too short', function(done) {
             agent
-            .put('http://localhost:3000/profile/'+id)
+            .put('http://localhost:3000/profile/'+profile_id)
             .type('form')
             .send({ name: 'Le' })
             .end(function(err, result) {
@@ -75,7 +72,7 @@ describe('Profile controller', function() {
 
         it('fails if name is not only letters', function(done) {
             agent
-            .put('http://localhost:3000/profile/'+id)
+            .put('http://localhost:3000/profile/'+profile_id)
             .type('form')
             .send({ name: 'Lew,' })
             .end(function(err, result) {
@@ -88,14 +85,14 @@ describe('Profile controller', function() {
 
         it('successfully modifies name', function(done) {
             agent
-            .put('http://localhost:3000/profile/'+id)
+            .put('http://localhost:3000/profile/'+profile_id)
             .send({ name: 'Joe' })
             .end(function(err, result) {
                 (err === null).should.be.true;
                 result.status.should.equal(200);
                 result.body.success.should.equal('true');
 
-                db.load('Profile', {_id: new ObjectID(id)}, function(err, foundProfile) {
+                db.load('Profile', {_id: new ObjectID(profile_id)}, function(err, foundProfile) {
                     assert.equal(err, null);
                     foundProfile.name.should.equal('Joe');
                     done();
@@ -105,7 +102,7 @@ describe('Profile controller', function() {
 
         it('fails if handiness is not right or left', function(done) {
             agent
-            .put('http://localhost:3000/profile/'+id)
+            .put('http://localhost:3000/profile/'+profile_id)
             .type('form')
             .send({ handiness: 'blah' })
             .end(function(err, result) {
@@ -118,14 +115,14 @@ describe('Profile controller', function() {
 
         it('successfully modifies handiness', function(done) {
             agent
-            .put('http://localhost:3000/profile/'+id)
+            .put('http://localhost:3000/profile/'+profile_id)
             .send({ handiness: 'left' })
             .end(function(err, result) {
                 (err === null).should.be.true;
                 result.status.should.equal(200);
                 result.body.success.should.equal('true');
 
-                db.load('Profile', {_id: new ObjectID(id)}, function(err, foundProfile) {
+                db.load('Profile', {_id: new ObjectID(profile_id)}, function(err, foundProfile) {
                     assert.equal(err, null);
                     foundProfile.handiness.should.equal('left');
                     done();
@@ -135,7 +132,7 @@ describe('Profile controller', function() {
 
         it('fails if sex is not male or female', function(done) {
             agent
-            .put('http://localhost:3000/profile/'+id)
+            .put('http://localhost:3000/profile/'+profile_id)
             .type('form')
             .send({ sex: 'blah' })
             .end(function(err, result) {
@@ -148,14 +145,14 @@ describe('Profile controller', function() {
 
         it('successfully modifies sex', function(done) {
             agent
-            .put('http://localhost:3000/profile/'+id)
+            .put('http://localhost:3000/profile/'+profile_id)
             .send({ sex: 'female' })
             .end(function(err, result) {
                 (err === null).should.be.true;
                 result.status.should.equal(200);
                 result.body.success.should.equal('true');
 
-                db.load('Profile', {_id: new ObjectID(id)}, function(err, foundProfile) {
+                db.load('Profile', {_id: new ObjectID(profile_id)}, function(err, foundProfile) {
                     assert.equal(err, null);
                     foundProfile.sex.should.equal('female');
                     done();
@@ -164,14 +161,14 @@ describe('Profile controller', function() {
         });
         it('successfully modifies everything', function(done) {
             agent
-            .put('http://localhost:3000/profile/'+id)
+            .put('http://localhost:3000/profile/'+profile_id)
             .send({ name: 'Jerry', handiness: 'right', sex: 'male'})
             .end(function(err, result) {
                 (err === null).should.be.true;
                 result.status.should.equal(200);
                 result.body.success.should.equal('true');
 
-                db.load('Profile', {_id: new ObjectID(id)}, function(err, foundProfile) {
+                db.load('Profile', {_id: new ObjectID(profile_id)}, function(err, foundProfile) {
                     assert.equal(err, null);
                     foundProfile.name.should.equal('Jerry');
                     foundProfile.handiness.should.equal('right');
