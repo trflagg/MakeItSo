@@ -66,7 +66,7 @@ describe('Ship controller', function() {
             .get('http://localhost:3000/ships/'+profile_id)
             .end(function(err, result) {
                 (err === null).should.be.true;
-                var ships = result.body;
+                var ships = result.body.ships;
                 ships.should.have.length(2);
                 ships[0].should.have.property('_id');
                 ships[0].shipName.should.equal('ShipOne');

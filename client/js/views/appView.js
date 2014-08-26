@@ -9,10 +9,12 @@
 define(['backbone'
         , '../models/appModel'
         , '../views/modes/editOptionsMode'
+        , '../views/modes/SelectShipMode'
 
 ], function(Backbone
             , AppModel
             , EditOptionsMode
+            , SelectShipMode
 ) {
 
     var appView = Backbone.View.extend({
@@ -50,13 +52,10 @@ define(['backbone'
          * @return {None}
          */
         , modeChanged: function() {
-
+            var appModel = this.model;
 
             switch(this.model.get('mode')) {
                 case 'newProfile':
-
-                    var appModel = this.model;
-
                     // fade out old mode.
                     $('#contents').fadeOut('slow', function() {
                         this.mode = new EditOptionsMode({
@@ -65,6 +64,20 @@ define(['backbone'
                         });
 
                         this.mode.newProfile();
+
+                        $("#contents").fadeIn('slow');
+                    });
+                    break;
+
+                case 'selectShip':
+                    appModel.loadProfile();
+                    appModel.getShipList();
+
+                    $("#contents").fadeOut('slow', function() {
+                        this.mode = new SelectShipMode({
+                            el: $("#contents")
+                            , model: appModel
+                        });
 
                         $("#contents").fadeIn('slow');
                     });

@@ -1,0 +1,25 @@
+<div id="selectShip" class="centerDiv">
+    <h2>Captain {{= it.name }},</h2>
+    <h2>please select your ship:</h2>
+    {{? it.ships.length > 0}}
+    <table>
+        <tr>
+            <th>Ship</th>
+            <th>Location</th>
+            <th>&nbsp;</th>
+        </tr>
+        {{~it.ships :ship:index}}
+            <tr>
+                <td>{{= ship.shipName }}</td>
+                <td>&nbsp;</td>
+                <td><a href="#">Make it So</a></td>
+            </tr>
+        {{~}}
+    </table>
+    {{??}}
+    <p>No ships found.</p>
+    {{?}}
+    {{? it.ships.length < 3 }}
+        <a href="#" id="newShipLink">Create New Ship</a>
+    {{?}}
+</div>

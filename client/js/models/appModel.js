@@ -44,13 +44,35 @@ define(['backbone'
 
             }).done(function(data) {
                 // id is undefined if this is a new profile.
-                appModel.set('id', data.id);
                 var newProfile = new ProfileModel({
-                    'id': appModel.get('id')
+                    'id': data.id
                 });
                 appModel.set('profile', newProfile);
                 appModel.set('mode', data.mode);
             })
+        }
+
+        , loadProfile: function() {
+            appModel = this;
+
+            this.get('profile').fetch();
+        }
+
+        /**
+         * getShipList()
+         *
+         * calls the server to get the list of the user's ships
+         * @return {None}
+         */
+        , getShipList: function() {
+            appModel = this;
+
+            $.ajax({
+                type: 'GET'
+                , url: '/ships/'+this.get('profile').get('id')
+            }).done(function(data) {
+                appModel.set('ships', data.ships);
+            });
         }
     });
 

@@ -1,0 +1,41 @@
+#selectShip {
+
+    table
+    {
+        margin-left:auto;
+        margin-right:auto;
+        text-align: left;
+        padding-top: 50px;
+
+    }
+
+    td, th
+    {
+        font-family: 'Coda', sans;
+        min-width: 10em;
+    }
+
+    th
+    {
+        font-size: 15px;
+        border-bottom: 3px solid #999;
+    }
+
+    td
+    {
+        font-size: 25px;
+        padding-top: .5em;
+        vertical-align: middle;
+    }
+
+    a {
+        color: inherit;
+    }
+
+    #newShipLink {
+        font-size: 25px;
+        font-family: 'Coda', sans;
+        padding-top: 25px;
+        display: block;
+    }
+}

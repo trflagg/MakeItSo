@@ -119,7 +119,7 @@ define(['./mode'
             this.currentScreen = 0;
 
             this.setEndFunction(function() {
-                console.log(this.model);
+                this.model.set('mode', 'selectShip');
             });
 
             // start with the first one.
