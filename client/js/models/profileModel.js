@@ -37,6 +37,13 @@ define(['backbone'], function(Backbone) {
                     return 'handiness must be either right or left.';
                 }
             }
+
+            if (attrs.sex) {
+                if (attrs.sex !== 'male' &&
+                    attrs.sex !== 'female') {
+                    return 'sex must be either male or female.';
+                }
+            }
         }
     });
 
