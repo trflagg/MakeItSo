@@ -9,7 +9,7 @@ define(['./mode'
         , '../screens/enterNameScreen'
         , '../screens/askHandinessScreen'
         , '../screens/askSexScreen'
-        , 'doT!/templates/editOptionsMode'
+        , 'doT!/templates/modes/editOptionsMode'
 
 ], function(Mode
             , EnterNameScreen

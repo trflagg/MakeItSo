@@ -6,7 +6,7 @@
  */
 
 define(['./screen'
-        , 'doT!/templates/enterNameScreen'
+        , 'doT!/templates/screens/enterNameScreen'
 
 ], function(Screen
             , template
