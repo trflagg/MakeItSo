@@ -15,6 +15,7 @@ module.exports = function(db) {
 
         this.output = null;
         this.shipName = null;
+        this.profile_id = null;
 
         this.setNewMessageText('** New command added: %s **');
         // controls and crew members are child messageHolders
@@ -70,6 +71,7 @@ module.exports = function(db) {
 
         doc.shipName = this.shipName;
         doc.output = this.output;
+        doc.profile_id = this.profile_id;
 
         return doc;
     };
@@ -79,6 +81,7 @@ module.exports = function(db) {
 
         this.shipName = doc.shipName;
         this.output = doc.output;
+        this.profile_id = doc.profile_id
     };
 
     Ship.prototype.validate = function() {
