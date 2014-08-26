@@ -92,6 +92,17 @@ describe('Profile object', function() {
             loaded_profile.sex.should.equal('male');
             done();
         })
+    }),
+
+    it('should only load from projection', function(done) {
+        db.load('Profile', {_id: id}, {name: 1}, function(err, loaded_profile) {
+            assert.equal(err, null);
+            loaded_profile.name.should.equal('Taylor');
+            loaded_profile.should.not.have.property('handiness');
+            loaded_profile.should.not.have.property('sex');
+
+            done();
+        })
     })
 
 

@@ -79,9 +79,9 @@ module.exports = function(db) {
     Ship.prototype.loadFromDoc = function(doc) {
         Ship.super_.prototype.loadFromDoc.call(this, doc);
 
-        this.shipName = doc.shipName;
-        this.output = doc.output;
-        this.profile_id = doc.profile_id
+        if(doc.shipName) this.shipName = doc.shipName;
+        if(doc.output) this.output = doc.output;
+        if(doc.profile_id) this.profile_id = doc.profile_id
     };
 
     Ship.prototype.validate = function() {

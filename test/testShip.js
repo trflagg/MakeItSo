@@ -73,5 +73,16 @@ describe('Ship object', function() {
 
             done();
         });
+    }),
+
+    it('should only load from projection', function(done) {
+        db.load('Ship', {_id: _id}, {shipName: 1}, function(err, loaded_ship) {
+            assert.equal(err, null);
+            loaded_ship.shipName.should.equal('Yomata');
+            loaded_ship.should.not.have.property('profile_id');
+            loaded_ship.should.not.have.property('_children');
+
+            done();
+        })
     })
 });

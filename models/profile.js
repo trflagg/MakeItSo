@@ -24,9 +24,9 @@ module.exports = function(db) {
     };
 
     Profile.prototype.loadFromDoc = function(doc) {
-        this.name = doc.name;
-        this.handiness = doc.handiness;
-        this.sex = doc.sex;
+        if(doc.name) this.name = doc.name;
+        if(doc.handiness) this.handiness = doc.handiness;
+        if(doc.sex) this.sex = doc.sex;
     };
 
     Profile.prototype.validate = function() {
