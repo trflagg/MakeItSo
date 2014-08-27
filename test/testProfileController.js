@@ -38,9 +38,9 @@ describe('Profile controller', function() {
         it('set session', function(done) {
             agent = request.agent();
 
-            helpers.createSession(agent, function(err, id) {
+            helpers.createSession(agent, function(err, result) {
                 (err === null).should.be.true;
-                profile_id = id;
+                profile_id = result.body.id;
                 done();
             });
         });

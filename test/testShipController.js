@@ -15,8 +15,8 @@ describe('Ship controller', function() {
         helpers.loadModels(db);
 
         agent = request.agent();
-        id = yield helpers.coCreateSession(agent)
-        profile_id = id;
+        result = yield helpers.coCreateSession(agent)
+        profile_id = result.body.id;
 
         var ship1 = db.create('Ship');
         ship1.shipName = 'ShipOne';

@@ -25,7 +25,7 @@ module.exports = function() {
         agent
         .get('http://localhost:3000/start')
         .end(function(err, result) {
-            callback(err, result.body.id);
+            callback(err, result);
         });
     };
 
