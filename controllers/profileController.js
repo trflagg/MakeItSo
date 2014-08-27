@@ -6,9 +6,44 @@
 
 var render = require('../render')
     , bodyParser = require('koa-body')
+    , requireParams = require('../middleware/require-params')
     , idMatchesSession = require('../middleware/id-matches-session');
 
 module.exports = function(app, db) {
+
+    /**
+     * POST /profile/
+     *
+     * make new profile.
+     * Requires 'name'
+     *
+     * @return { json }
+     */
+    app.post('/profile/'
+             , bodyParser()
+             , requireParams(['name'])
+             , newProfile);
+    function *newProfile() {
+        try {
+            var profile = db.create('Profile');
+            profile.name = this.request.body['name'];
+            yield db.save('Profile', profile);
+            this.cookies.get('profile');
+            this.cookies.set('profile', profile._id);
+            this.session.profile = profile._id;
+
+            this.body = {
+                success: 'true'
+                , id: profile._id
+            }
+        } catch(e) {
+            this.body = {
+                success: 'false'
+                , error: e.message
+            }
+        }
+    }
+
     /**
      * PUT /profile/:id
      *

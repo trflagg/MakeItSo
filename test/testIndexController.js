@@ -2,9 +2,21 @@
 var app = require('../app')
     , request = require('superagent')
     , assert = require('assert')
-    , should = require('should');
+    , should = require('should')
+    , helpers = require('./helpers');
 
 describe('Index controller', function() {
+
+    before(function() {
+        db = helpers.getCoDb();
+        helpers.loadModels(db);
+    });
+
+    after(function() {
+        db.deleteAll('Profile');
+        db.close();
+    });
+
     describe('GET /', function() {
         var agent = request.agent();
 
@@ -21,23 +33,28 @@ describe('Index controller', function() {
     });
 
     describe('GET /start', function() {
-        var agent = request.agent();
-        var profileCookieString;
+        var agent = request.agent()
+            , id;
 
-        it('creates a new profile the first time', function(done) {
+        it('responds with mode:newProfile if no cookie', function(done) {
             agent
             .get('http://localhost:3000/start')
             .end(function(err, result) {
                 result.body.should.eql({
                     mode: 'newProfile'
-                    , id: result.body.id
                 });
-                result.headers.should.have.property('set-cookie');
-                result.headers['set-cookie'][0].should.startWith('profile=');
-                profileCookieString = result.headers['set-cookie'][0];
-                result.headers['set-cookie'][1].should.startWith('koa:sess=');
+                result.headers.should.not.have.property('set-cookie');
                 done();
             });
+        });
+
+        it('creates session', function*() {
+            result = yield helpers.coCreateSession(agent);
+
+            result.headers.should.have.property('set-cookie');
+            result.headers['set-cookie'][0].should.startWith('profile=');
+            profileCookieString = result.headers['set-cookie'][0];
+            result.headers['set-cookie'][1].should.startWith('koa:sess=');
         });
 
         it('sends to selectShip the second time', function(done) {

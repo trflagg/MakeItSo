@@ -26,11 +26,7 @@ module.exports = function(app, db) {
      * sets session and returns starting mode
      *
      * /start with no cookie:
-     *   create new profile
-     *   save to db and get id
-     *   set session to id
-     *   set cookie 'profile' to id
-     *   reply { mode: 'newShip', id: <profile id> } // should change this to newProfile
+     *   reply { mode: 'newProfile'}
      *
      * /start with cookie:
      *   look up profile in db with id in cookie
@@ -54,8 +50,11 @@ module.exports = function(app, db) {
                 // has cookie. Load it and set session.
                 try {
                     var profile = yield db.load('Profile', {_id: new ObjectID(profile_id)});
-                    mode = 'selectShip';
                     this.session.profile = profile_id;
+                    this.body = {
+                        mode: 'selectShip'
+                        , id: profile_id
+                    };
                 }
                 catch(e) {
                     // Don't send thrown error message since
@@ -70,18 +69,11 @@ module.exports = function(app, db) {
                 }
             }
             else {
-                // no cookie. Make new profile and set session.
-                var profile = db.create('Profile');
-                yield db.save('Profile', profile);
-                this.cookies.get('profile');
-                this.cookies.set('profile', profile._id);
-                this.session.profile = profile._id;
-                mode = 'newProfile';
+                // no cookie.
+                this.body = {
+                    mode: 'newProfile'
+                };
             }
-            this.body = {
-                mode: mode
-                , id: profile._id
-            };
 
         } catch(e) {
             this.body = {

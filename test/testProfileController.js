@@ -18,6 +18,53 @@ describe('Profile controller', function() {
 
     after(function() {
         db.close();
+    });
+
+    describe('POST /profile/', function() {
+        it('fails if no data', function(done) {
+            var agent = request.agent();
+
+            agent
+            .post('http://localhost:3000/profile/')
+            .end(function(err, result) {
+                (err === null).should.be.true;
+                result.status.should.equal(400);
+                result.text.should.equal("data required.");
+                done();
+            })
+        });
+        it('fails if no name', function(done) {
+            var agent = request.agent();
+
+            agent
+            .post('http://localhost:3000/profile/')
+            .send({something: 'wrong'})
+            .end(function(err, result) {
+                (err === null).should.be.true;
+                result.status.should.equal(400);
+                result.text.should.equal("missing 'name'");
+                done();
+            })
+        });
+
+        it('saves profile and sets session', function(done) {
+            agent
+            .post('http://localhost:3000/profile/')
+            .send({name: 'test'})
+            .end(function(err, result) {
+                (err === null).should.be.true;
+                result.body.success.should.equal('true');
+                result.body.should.have.property('id');
+                result.headers.should.have.property('set-cookie');
+                var profile_id = result.body.id;
+
+                db.load('Profile', {_id: new ObjectID(profile_id)}, function(err, foundProfile) {
+                    assert.equal(err, null);
+                    foundProfile.name.should.equal('test');
+                    done();
+                });
+            });
+        });
     })
 
     describe('PUT /profile/:id', function() {

@@ -23,7 +23,8 @@ module.exports = function() {
 
     helpers.createSession = function(agent, callback) {
         agent
-        .get('http://localhost:3000/start')
+        .post('http://localhost:3000/profile/')
+        .send({name: 'test'})
         .end(function(err, result) {
             callback(err, result);
         });

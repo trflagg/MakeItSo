@@ -43,6 +43,7 @@ define(['backbone'
                 , url: '/start'
 
             }).done(function(data) {
+                // id is undefined if this is a new profile.
                 appModel.set('id', data.id);
                 var newProfile = new ProfileModel({
                     'id': appModel.get('id')
