@@ -19,7 +19,8 @@ describe('Profile object', function() {
     it('should make a new object', function() {
         profile = db.create('Profile');
         assert.equal(profile.name, null);
-        assert.equal(profile.handiness, null);
+        assert.equal(profile.handiness, "right");
+        assert.equal(profile.sex, "male");
     }),
 
     it('should modify name', function() {

@@ -11,8 +11,8 @@ module.exports = function(db) {
 
     Profile.prototype.initialize = function() {
         this.name = null;
-        this.handiness = null;
-        this.sex = null;
+        this.handiness = "right";
+        this.sex = "male";
     };
 
     Profile.prototype.saveToDoc = function(doc) {
