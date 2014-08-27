@@ -17,9 +17,46 @@ describe('Profile controller', function() {
     });
 
     after(function() {
+        db.deleteAll('Profile');
         db.close();
     });
 
+    describe('GET /profile/:id', function() {
+
+        it('set session', function(done) {
+            agent = request.agent();
+
+            helpers.createSession(agent, function(err, result) {
+                (err === null).should.be.true;
+                profile_id = result.body.id;
+                done();
+            });
+        });
+
+        it('fails if :id doesnt match session', function(done) {
+            agent
+            .get('http://localhost:3000/profile/53e7979a5447fd82a8e3300b')
+            .end(function(err, result) {
+                (err === null).should.be.true;
+                result.status.should.equal(400);
+                result.text.should.equal('session does not match param.');
+                done();
+            });
+        });
+
+        it('gets profile data', function(done) {
+            agent
+            .get('http://localhost:3000/profile/'+profile_id)
+            .end(function(err, result) {
+                (err === null).should.be.true;
+                result.body.name.should.equal('test');
+                result.body.handiness.should.equal('right');
+                result.body.sex.should.equal('male');
+                done();
+            });
+        })
+
+    })
     describe('POST /profile/', function() {
         it('fails if no data', function(done) {
             var agent = request.agent();

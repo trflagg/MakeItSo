@@ -12,6 +12,21 @@ var render = require('../render')
 module.exports = function(app, db) {
 
     /**
+     * GET /profile/:id
+     *
+     * get details on a profile.
+     *
+     * @return { json } profile info.
+     */
+    app.get('/profile/:id'
+            , idMatchesSession(db)
+            , getProfile);
+    function *getProfile() {
+        // profile loaded into params by idMatchesSession
+        this.body = this.params.profile;
+    }
+
+    /**
      * POST /profile/
      *
      * make new profile.
