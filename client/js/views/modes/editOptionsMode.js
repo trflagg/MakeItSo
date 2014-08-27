@@ -46,7 +46,7 @@ define(['./mode'
                 .css('display', 'none');
             var newScreen = new screenClass({
                 el: $newScreen
-                , model: this.model
+                , model: this.model.get('profile')
             });
             newScreen.setMode(this);
             this.screens.push(newScreen);

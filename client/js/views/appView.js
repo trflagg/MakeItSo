@@ -61,7 +61,7 @@ define(['backbone'
                     $('#contents').fadeOut('slow', function() {
                         this.mode = new EditOptionsMode({
                             el: $("#contents")
-                            , model: appModel.get('profile')
+                            , model: appModel
                         });
 
                         this.mode.newProfile();
