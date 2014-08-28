@@ -49,6 +49,7 @@ describe('Profile controller', function() {
             .get('http://localhost:3000/profile/'+profile_id)
             .end(function(err, result) {
                 (err === null).should.be.true;
+                result.status.should.equal(200);
                 result.body.name.should.equal('test');
                 result.body.handiness.should.equal('right');
                 result.body.sex.should.equal('male');
