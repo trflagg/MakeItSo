@@ -49,10 +49,12 @@ define(['./screen'
          * @return {html}
          */
         , render: function() {
-            return $(this.el).html(this.template({
+            $(this.el).html(this.template({
                 name: this.model.get('name')
                 , handiness: this.model.get('handiness')
             }));
+
+            return this;
         }
 
         , buttonClicked: function(handiness) {

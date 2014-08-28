@@ -31,6 +31,8 @@ define(['./mode'
                 name: this.model.get('profile').get('name')
                 , ships: this.model.get('ships')
             }));
+
+            return this;
         }
 
     });

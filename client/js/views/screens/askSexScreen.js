@@ -49,11 +49,13 @@ define(['./screen'
          * @return {html}
          */
         , render: function() {
-            return $(this.el).html(this.template({
+            $(this.el).html(this.template({
                 name: this.model.get('name')
                 , sex: this.model.get('sex')
             }));
-        }
+
+            return this;
+          }
 
         , buttonClicked: function(sex) {
             this.submit(sex);
