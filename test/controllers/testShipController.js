@@ -3,7 +3,7 @@ var request = require('superagent')
     , assert = require('assert')
     , should = require('should')
     , ObjectID = require('mongodb').ObjectID
-    , helpers = require('./helpers');
+    , helpers = require('../helpers');
 
 describe('Ship controller', function() {
     var agent = request.agent()

@@ -1,6 +1,6 @@
 var should = require('should')
     , assert = require('assert')
-    , helpers = require('./helpers');
+    , helpers = require('../helpers');
 
 describe('Profile object', function() {
     var profile
@@ -9,7 +9,7 @@ describe('Profile object', function() {
 
     before(function() {
         db = helpers.getCoDb();
-        require('../models/profile')(db);
+        helpers.loadModels(db);
     });
 
     after(function() {

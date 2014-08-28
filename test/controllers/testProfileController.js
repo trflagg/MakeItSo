@@ -1,10 +1,10 @@
 
-var app = require('../app')
+var app = require('../../app')
     , request = require('superagent')
     , assert = require('assert')
     , should = require('should')
     , ObjectID = require('mongodb').ObjectID
-    , helpers = require('./helpers');
+    , helpers = require('../helpers');
 
 describe('Profile controller', function() {
     var agent = request.agent()
@@ -13,7 +13,7 @@ describe('Profile controller', function() {
 
     before(function() {
         db = helpers.getDb();
-        require('../models/profile')(db);
+        helpers.loadModels(db);
     });
 
     after(function() {

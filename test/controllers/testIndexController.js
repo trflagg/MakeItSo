@@ -1,9 +1,9 @@
 
-var app = require('../app')
+var app = require('../../app')
     , request = require('superagent')
     , assert = require('assert')
     , should = require('should')
-    , helpers = require('./helpers');
+    , helpers = require('../helpers');
 
 describe('Index controller', function() {
 

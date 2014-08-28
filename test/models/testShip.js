@@ -1,6 +1,6 @@
 var should = require('should')
     , assert = require('assert')
-    , helpers = require('./helpers');
+    , helpers = require('../helpers');
 
 describe('Ship object', function() {
     var db
@@ -9,7 +9,7 @@ describe('Ship object', function() {
 
     before(function() {
         db = helpers.getDb();
-        require('../models/ship')(db);
+        helpers.loadModels(db);
     });
 
     after(function() {
