@@ -79,6 +79,8 @@ define(['backbone'
                             , model: appModel
                         });
 
+                        this.mode.render();
+
                         $("#contents").fadeIn('slow');
                     });
                     break;

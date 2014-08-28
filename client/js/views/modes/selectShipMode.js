@@ -22,8 +22,6 @@ define(['./mode'
          */
         init: function() {
             this.template = template;
-
-            this.render();
         }
 
         , render: function() {
