@@ -13,6 +13,9 @@ define(['./mode'
 ) {
 
     var selectShipMode = Mode.extend({
+        events: {
+            'click #newShipLink': 'newShip'
+        }
 
         /**
          * init()
@@ -20,7 +23,7 @@ define(['./mode'
          * initialize this mode
          * @return {None}
          */
-        init: function() {
+        , init: function() {
             this.template = template;
         }
 
@@ -31,6 +34,10 @@ define(['./mode'
             }));
 
             return this;
+        }
+
+        , newShip: function() {
+            this.model.set('mode', 'newShip');
         }
 
     });

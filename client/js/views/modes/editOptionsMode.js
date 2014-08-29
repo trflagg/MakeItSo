@@ -9,12 +9,14 @@ define(['./mode'
         , '../screens/enterNameScreen'
         , '../screens/askHandinessScreen'
         , '../screens/askSexScreen'
+        , '../screens/shipNameScreen'
         , 'doT!/templates/modes/editOptionsMode'
 
 ], function(Mode
             , EnterNameScreen
             , AskHandinessScreen
             , AskSexScreen
+            , ShipNameScreen
             , template
 ) {
 
@@ -125,6 +127,20 @@ define(['./mode'
             });
 
             // start with the first one.
+            this.displayScreen(this.screens[0]);
+        }
+
+        , newShip: function() {
+            this.render();
+
+            this.addScreen(ShipNameScreen);
+
+            this.currentScreen = 0;
+
+            this.setEndFunction(function() {
+                this.model.set('mode', 'selectShip');
+            });
+
             this.displayScreen(this.screens[0]);
         }
 

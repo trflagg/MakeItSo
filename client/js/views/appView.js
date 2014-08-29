@@ -8,11 +8,13 @@
 
 define(['backbone'
         , '../models/appModel'
+        , '../models/shipModel'
         , '../views/modes/editOptionsMode'
         , '../views/modes/SelectShipMode'
 
 ], function(Backbone
             , AppModel
+            , ShipModel
             , EditOptionsMode
             , SelectShipMode
 ) {
@@ -64,6 +66,22 @@ define(['backbone'
                         });
 
                         this.mode.newProfile();
+
+                        $("#contents").fadeIn('slow');
+                    });
+                    break;
+
+                case 'newShip':
+                    $("#contents").fadeOut('slow', function() {
+
+                        appModel.set('ship', new ShipModel());
+
+                        appModel.mode = new EditOptionsMode({
+                            el: $("#contents")
+                            , model: appModel
+                        });
+
+                        appModel.mode.newShip();
 
                         $("#contents").fadeIn('slow');
                     });

@@ -1,0 +1,10 @@
+<div id="nameEntry" class="centerDiv">
+    <h2>Captain {{= it.name }},</h2>
+    <h2>please name your ship:</h2>
+    <input id="nameInput", type="text", size=50 value="{{= it.shipName }}"/>
+
+    <p id="nameError" class="error"></p>
+    <div id="nameInstructions" class="prompt" style="display:none">
+        <p>(press Enter to continue)</p>
+    </div>
+</div>

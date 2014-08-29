@@ -32,12 +32,60 @@ describe('Ship controller', function() {
     });
 
     after(function*() {
-        yield db.remove('Profile', {_id: profile_id});
-        yield db.remove('Ship', {_id: ship1._id});
-        yield db.remove('Ship', {_id: ship2._id});
+        yield db.removeById('Profile', profile_id);
+        yield db.removeById('Ship', String(ship1._id));
+        yield db.removeById('Ship', String(ship2._id));
 
         db.close();
     })
+
+
+
+    describe('GET /ships/:id', function() {
+        it('fails if no session', function(done) {
+            // new agent without session cookie
+            var new_agent = request.agent();
+
+            new_agent
+            .get('http://localhost:3000/ships/'+profile_id)
+            .end(function(err, result) {
+                (err === null).should.be.true;
+                result.status.should.equal(400);
+                result.text.should.equal('session not found.');
+                done();
+            });
+        });
+
+        it('fails if :id doesnt match session', function(done) {
+            agent
+            .get('http://localhost:3000/ships/1234567890')
+            .end(function(err, result) {
+                (err === null).should.be.true;
+                result.status.should.equal(400);
+                result.text.should.equal('session does not match param.');
+                done();
+            });
+        });
+
+        it('gets list of ships', function(done) {
+            agent
+            .get('http://localhost:3000/ships/'+profile_id)
+            .end(function(err, result) {
+                (err === null).should.be.true;
+                var ships = result.body.ships;
+                ships.should.have.length(2);
+                ships.should.containDeep([{
+                    _id: new String(ship1._id)
+                    , shipName: 'ShipOne'
+                }]);
+                ships.should.containDeep([{
+                    _id: ship2._id
+                    , shipName: 'ShipTwo'
+                }]);
+                done();
+            })
+        });
+    });
 
     describe('POST /ships/', function() {
         it('fails if no session', function(done) {
@@ -117,55 +165,9 @@ describe('Ship controller', function() {
                 var new_ship_id = result.body.id;
                 var foundShip = yield db.load('Ship',
                                         {_id: new ObjectID(new_ship_id)});
-                foundShip.shipNameshould.equal('Layla');
-                yield db.remove('Ship', {_id: new ObjectID(new_ship_id)});
+                foundShip.shipName.should.equal('Layla');
+                yield db.removeById('Ship', new_ship_id);
             });
-        });
-    });
-
-    describe('GET /ships/:id', function() {
-        it('fails if no session', function(done) {
-            // new agent without session cookie
-            var new_agent = request.agent();
-
-            new_agent
-            .get('http://localhost:3000/ships/'+profile_id)
-            .end(function(err, result) {
-                (err === null).should.be.true;
-                result.status.should.equal(400);
-                result.text.should.equal('session not found.');
-                done();
-            });
-        });
-
-        it('fails if :id doesnt match session', function(done) {
-            agent
-            .get('http://localhost:3000/ships/1234567890')
-            .end(function(err, result) {
-                (err === null).should.be.true;
-                result.status.should.equal(400);
-                result.text.should.equal('session does not match param.');
-                done();
-            });
-        });
-
-        it('gets list of ships', function(done) {
-            agent
-            .get('http://localhost:3000/ships/'+profile_id)
-            .end(function(err, result) {
-                (err === null).should.be.true;
-                var ships = result.body.ships;
-                ships.should.have.length(2);
-                ships.should.containDeep([{
-                    _id: new String(ship1._id)
-                    , shipName: 'ShipOne'
-                }]);
-                ships.should.containDeep([{
-                    _id: ship2._id
-                    , shipName: 'ShipTwo'
-                }]);
-                done();
-            })
         });
     });
 });

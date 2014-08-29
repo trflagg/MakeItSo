@@ -20,7 +20,6 @@ module.exports = function(app, db) {
             , idMatchesSession(db)
             , getShipList);
     function *getShipList() {
-
         var ships = yield db.loadMultiple('Ship'
                     , {profile_id: this.params.profile._id}
                     , {shipName: 1, _id: 1});
@@ -36,17 +35,16 @@ module.exports = function(app, db) {
      */
     app.post('/ship/'
                 , bodyParser()
-                , idMatchesSession(db, {
-                    source: 'body'
-                    , load: false
-                })
                 , requireParams(['profile_id'
                                 , 'shipName'])
+                , idMatchesSession(db, {
+                    source: 'body'
+                })
                 , newShip);
     function *newShip() {
         try {
             var ship = db.create('Ship');
-            ship.profile_id = this.request.body['profile_id'];
+            ship.profile_id = this.params.profile._id;
             ship.shipName = this.request.body['shipName'];
             yield db.save('Ship', ship);
             this.cookies.get('ship');

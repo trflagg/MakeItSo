@@ -1,4 +1,3 @@
-
 var app = require('../../app')
     , request = require('superagent')
     , assert = require('assert')
@@ -17,7 +16,7 @@ describe('Profile controller', function() {
     });
 
     after(function*() {
-        yield db.remove('Profile', {_id: profile_id});
+        yield db.removeById('Profile', profile_id);
         db.close();
     });
 
