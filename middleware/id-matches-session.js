@@ -13,10 +13,9 @@ var ObjectID = require('mongodb').ObjectID
  *         false: don't load, only check that they match
  */
 module.exports = function(db, options) {
-    options = options || {
-        source: 'params'
-        , load: true
-    };
+    options = options || {};
+    options.source = options.source || 'params';
+    options.load = options.load || true;
 
     return function *(next) {
         if (!this.session.profile) {
@@ -41,6 +40,10 @@ module.exports = function(db, options) {
         if (options.load) {
             var profile = yield db.load('Profile'
                             , {_id: new ObjectID(this.session.profile)});
+
+            console.dir(profile);
+
+
             this.params.profile = profile;
         }
 
