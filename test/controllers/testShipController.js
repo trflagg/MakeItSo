@@ -39,8 +39,6 @@ describe('Ship controller', function() {
         db.close();
     })
 
-
-
     describe('GET /ships/:id', function() {
         it('fails if no session', function(done) {
             // new agent without session cookie
@@ -86,7 +84,6 @@ describe('Ship controller', function() {
             })
         });
     });
-
     describe('POST /ships/', function() {
         it('fails if no session', function(done) {
             // new agent without session cookie
@@ -117,6 +114,36 @@ describe('Ship controller', function() {
                 (err === null).should.be.true;
                 result.status.should.equal(400);
                 result.text.should.equal('session does not match param.');
+                done();
+            });
+        });
+
+        it('fails if name is too short', function(done) {
+            agent
+            .post('http://localhost:3000/ship/')
+            .send({
+                profile_id: profile_id
+                , shipName: 'Go'
+            })
+            .end(function(err, result) {
+                (err === null).should.be.true;
+                result.status.should.equal(200);
+                result.body.error.should.equal('shipName must be at least 3 characters.');
+                done();
+            });
+        });
+
+        it('fails if name is not only letters', function(done) {
+            agent
+            .post('http://localhost:3000/ship/')
+            .send({
+                profile_id: profile_id
+                , shipName: 'Go066l3'
+            })
+            .end(function(err, result) {
+                (err === null).should.be.true;
+                result.status.should.equal(200);
+                result.body.error.should.equal('shipName may only contain uppercase and lowercase letters.');
                 done();
             });
         });
@@ -170,4 +197,5 @@ describe('Ship controller', function() {
             });
         });
     });
+
 });
