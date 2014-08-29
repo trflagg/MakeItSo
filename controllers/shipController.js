@@ -5,6 +5,8 @@
  */
 
 var render = require('../render')
+    , bodyParser = require('koa-body')
+    , requireParams = require('../middleware/require-params')
     , idMatchesSession = require('../middleware/id-matches-session');
 
 module.exports = function(app, db) {
@@ -25,5 +27,41 @@ module.exports = function(app, db) {
         this.body = {
             ships: ships
         };
+    }
+
+    /**
+     * POST /ship
+     *
+     * make new ship.
+     */
+    app.post('/ship/'
+                , bodyParser()
+                , idMatchesSession(db, {
+                    source: 'body'
+                    , load: false
+                })
+                , requireParams(['profile_id'
+                                , 'shipName'])
+                , newShip);
+    function *newShip() {
+        try {
+            var ship = db.create('Ship');
+            ship.profile_id = this.request.body['profile_id'];
+            ship.shipName = this.request.body['shipName'];
+            yield db.save('Ship', ship);
+            this.cookies.get('ship');
+            this.cookies.set('ship', ship._id);
+            this.session.ship = ship._id;
+
+            this.body = {
+                success: 'true'
+                , id: ship._id
+            }
+        } catch(e) {
+            this.body = {
+                success: 'false'
+                , error: e.message
+            }
+        }
     }
 }
