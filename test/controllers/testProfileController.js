@@ -12,14 +12,13 @@ describe('Profile controller', function() {
         , db;
 
     before(function() {
-        db = helpers.getDb();
+        db = helpers.getCoDb();
         helpers.loadModels(db);
     });
 
-    after(function() {
-        db.remove('Profile', {_id: profile_id}, function(err){
-            db.close();
-        });
+    after(function*() {
+        yield db.remove('Profile', {_id: profile_id});
+        db.close();
     });
 
     describe('GET /profile/:id', function() {
@@ -86,22 +85,20 @@ describe('Profile controller', function() {
             })
         });
 
-        it('saves profile and sets session', function(done) {
+        it('saves profile and sets session', function*(done) {
             agent
             .post('http://localhost:3000/profile/')
             .send({name: 'test'})
-            .end(function(err, result) {
+            .end(function*(err, result) {
                 (err === null).should.be.true;
                 result.body.success.should.equal('true');
                 result.body.should.have.property('id');
                 result.headers.should.have.property('set-cookie');
                 var profile_id = result.body.id;
-
-                db.load('Profile', {_id: new ObjectID(profile_id)}, function(err, foundProfile) {
-                    assert.equal(err, null);
-                    foundProfile.name.should.equal('test');
-                    done();
-                });
+                console.log('1');
+                var foundProfile = yield db.load('Profile', {_id: new ObjectID(profile_id)});
+                console.log('2');
+                foundProfile.name.should.equal('test');
             });
         });
     })
@@ -170,20 +167,17 @@ describe('Profile controller', function() {
             });
         });
 
-        it('successfully modifies name', function(done) {
+        it('successfully modifies name', function*(done) {
             agent
             .put('http://localhost:3000/profile/'+profile_id)
             .send({ name: 'Joe' })
-            .end(function(err, result) {
+            .end(function*(err, result) {
                 (err === null).should.be.true;
                 result.status.should.equal(200);
                 result.body.success.should.equal('true');
 
-                db.load('Profile', {_id: new ObjectID(profile_id)}, function(err, foundProfile) {
-                    assert.equal(err, null);
-                    foundProfile.name.should.equal('Joe');
-                    done();
-                });
+                var foundProfile = yield db.load('Profile', {_id: new ObjectID(profile_id)});
+                foundProfile.name.should.equal('Joe');
             });
         });
 
@@ -200,20 +194,17 @@ describe('Profile controller', function() {
             });
         });
 
-        it('successfully modifies handiness', function(done) {
+        it('successfully modifies handiness', function*() {
             agent
             .put('http://localhost:3000/profile/'+profile_id)
             .send({ handiness: 'left' })
-            .end(function(err, result) {
+            .end(function*(err, result) {
                 (err === null).should.be.true;
                 result.status.should.equal(200);
                 result.body.success.should.equal('true');
 
-                db.load('Profile', {_id: new ObjectID(profile_id)}, function(err, foundProfile) {
-                    assert.equal(err, null);
-                    foundProfile.handiness.should.equal('left');
-                    done();
-                });
+                var foundProfile = yield db.load('Profile', {_id: new ObjectID(profile_id)});
+                foundProfile.handiness.should.equal('left');
             });
         });
 
@@ -230,38 +221,31 @@ describe('Profile controller', function() {
             });
         });
 
-        it('successfully modifies sex', function(done) {
+        it('successfully modifies sex', function*() {
             agent
             .put('http://localhost:3000/profile/'+profile_id)
             .send({ sex: 'female' })
-            .end(function(err, result) {
+            .end(function*(err, result) {
                 (err === null).should.be.true;
                 result.status.should.equal(200);
                 result.body.success.should.equal('true');
-
-                db.load('Profile', {_id: new ObjectID(profile_id)}, function(err, foundProfile) {
-                    assert.equal(err, null);
-                    foundProfile.sex.should.equal('female');
-                    done();
-                });
+                var foundProfile = yield db.load('Profile', {_id: new ObjectID(profile_id)});
+                foundProfile.sex.should.equal('female');
             });
         });
-        it('successfully modifies everything', function(done) {
+        it('successfully modifies everything', function*() {
             agent
             .put('http://localhost:3000/profile/'+profile_id)
             .send({ name: 'Jerry', handiness: 'right', sex: 'male'})
-            .end(function(err, result) {
+            .end(function*(err, result) {
                 (err === null).should.be.true;
                 result.status.should.equal(200);
                 result.body.success.should.equal('true');
 
-                db.load('Profile', {_id: new ObjectID(profile_id)}, function(err, foundProfile) {
-                    assert.equal(err, null);
-                    foundProfile.name.should.equal('Jerry');
-                    foundProfile.handiness.should.equal('right');
-                    foundProfile.sex.should.equal('male');
-                    done();
-                });
+                var foundProfile = yield db.load('Profile', {_id: new ObjectID(profile_id)})
+                foundProfile.name.should.equal('Jerry');
+                foundProfile.handiness.should.equal('right');
+                foundProfile.sex.should.equal('male');
             });
         });
     });

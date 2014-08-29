@@ -72,10 +72,14 @@ describe('Ship controller', function() {
                 (err === null).should.be.true;
                 var ships = result.body.ships;
                 ships.should.have.length(2);
-                ships[0].should.have.property('_id');
-                ships[0].shipName.should.equal('ShipOne');
-                ships[1].should.have.property('_id');
-                ships[1].shipName.should.equal('ShipTwo');
+                ships.should.containDeep([{
+                    _id: new String(ship1._id)
+                    , shipName: 'ShipOne'
+                }]);
+                ships.should.containDeep([{
+                    _id: ship2._id
+                    , shipName: 'ShipTwo'
+                }]);
                 done();
             })
         })
