@@ -12,13 +12,13 @@ var render = require('../render')
 module.exports = function(app, db) {
 
     /**
-     * GET /profile/:id
+     * GET /profile/:profile_id
      *
      * get details on a profile.
      *
      * @return { json } profile info.
      */
-    app.get('/profile/:id'
+    app.get('/profile/:profile_id'
             , idMatchesSession(db)
             , getProfile);
     function *getProfile() {
@@ -60,13 +60,13 @@ module.exports = function(app, db) {
     }
 
     /**
-     * PUT /profile/:id
+     * PUT /profile/:profile_id
      *
-     * modify profile with :id
+     * modify profile with :profile_id
      *
      * @return { json }
      */
-    app.put('/profile/:id'
+    app.put('/profile/:profile_id'
             , bodyParser()
             , idMatchesSession(db)
             , editProfile);

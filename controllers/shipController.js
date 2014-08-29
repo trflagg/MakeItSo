@@ -14,7 +14,7 @@ module.exports = function(app, db) {
      * return list of the user's ships
      * @return {json}
      */
-    app.get('/ships/:id'
+    app.get('/ships/:profile_id'
             , idMatchesSession(db)
             , getShipList);
     function *getShipList() {
