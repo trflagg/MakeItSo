@@ -50,8 +50,8 @@ define(['./screen'
          */
         , render: function() {
             $(this.el).html(this.template({
-                name: this.model.get('name')
-                , handiness: this.model.get('handiness')
+                name: this.model.get('profile').get('name')
+                , handiness: this.model.get('profile').get('handiness')
             }));
 
             return this;
@@ -66,7 +66,7 @@ define(['./screen'
 
             this.reset();
 
-            this.model.save({
+            this.model.get('profile').save({
                 'handiness': handiness
             }
             , {

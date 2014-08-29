@@ -50,7 +50,7 @@ define(['./screen'
          */
         , render: function() {
             $(this.el).html(this.template({
-                name: this.model.get('name')
+                name: this.model.get('profile').get('name')
             }));
 
             return this;
@@ -69,7 +69,7 @@ define(['./screen'
                 this.submit();
             }
             else {
-                if (this.model.isValid()) {
+                if (this.model.get('profile').isValid()) {
                     $("#nameInstructions").fadeIn(2000);
                 }
                 else {
@@ -90,7 +90,7 @@ define(['./screen'
 
             this.reset();
 
-            this.model.save({
+            this.model.get('profile').save({
                 'name': name
             }
             , {
