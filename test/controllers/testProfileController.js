@@ -17,8 +17,9 @@ describe('Profile controller', function() {
     });
 
     after(function() {
-        db.deleteAll('Profile');
-        db.close();
+        db.remove('Profile', {_id: profile_id}, function(err){
+            db.close();
+        });
     });
 
     describe('GET /profile/:id', function() {

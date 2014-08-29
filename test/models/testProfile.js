@@ -4,7 +4,7 @@ var should = require('should')
 
 describe('Profile object', function() {
     var profile
-        , id
+        , profile_id
         , db;
 
     before(function() {
@@ -12,7 +12,8 @@ describe('Profile object', function() {
         helpers.loadModels(db);
     });
 
-    after(function() {
+    after(function*() {
+        yield db.remove('Profile', {_id: profile_id});
         db.close();
     })
 
@@ -82,18 +83,18 @@ describe('Profile object', function() {
         profile.handiness = 'right';
         profile.sex = 'male';
         yield db.save('Profile', profile);
-        id = profile._id;
+        profile_id = profile._id;
     }),
 
     it('should load from the db', function*() {
-        var loaded_profile = yield db.load('Profile', {_id: id});
+        var loaded_profile = yield db.load('Profile', {_id: profile_id});
         loaded_profile.name.should.equal('Taylor');
         loaded_profile.handiness.should.equal('right');
         loaded_profile.sex.should.equal('male');
     }),
 
     it('should only load from projection', function*() {
-        var loaded_profile = yield db.load('Profile', {_id: id}, {name: 1});
+        var loaded_profile = yield db.load('Profile', {_id: profile_id}, {name: 1});
         loaded_profile.name.should.equal('Taylor');
         loaded_profile.should.not.have.property('handiness');
         loaded_profile.should.not.have.property('sex');

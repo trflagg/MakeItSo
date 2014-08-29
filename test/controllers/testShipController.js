@@ -8,7 +8,9 @@ var request = require('superagent')
 describe('Ship controller', function() {
     var agent = request.agent()
         , profile_id
-        , db;
+        , db
+        , ship1
+        , ship2;
 
     before(function*() {
         db = helpers.getCoDb();
@@ -18,20 +20,22 @@ describe('Ship controller', function() {
         result = yield helpers.coCreateSession(agent)
         profile_id = result.body.id;
 
-        var ship1 = db.create('Ship');
+        ship1 = db.create('Ship');
         ship1.shipName = 'ShipOne';
         ship1.profile_id = new ObjectID(profile_id);
         yield db.save('Ship', ship1);
 
-        var ship2 = db.create('Ship');
+        ship2 = db.create('Ship');
         ship2.shipName = 'ShipTwo';
         ship2.profile_id = new ObjectID(profile_id);
         yield db.save('Ship', ship2);
     });
 
-    after(function() {
-        db.deleteAll('Ship');
-        db.deleteAll('Profile');
+    after(function*() {
+        yield db.remove('Profile', {_id: profile_id});
+        yield db.remove('Ship', {_id: ship1._id});
+        yield db.remove('Ship', {_id: ship2._id});
+
         db.close();
     })
 

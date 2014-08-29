@@ -6,6 +6,7 @@ var app = require('../../app')
     , helpers = require('../helpers');
 
 describe('Index controller', function() {
+    var profile_id;
 
     before(function() {
         db = helpers.getCoDb();
@@ -13,7 +14,7 @@ describe('Index controller', function() {
     });
 
     after(function() {
-        db.deleteAll('Profile');
+        db.remove('Profile', {_id: profile_id});
         db.close();
     });
 
@@ -33,8 +34,7 @@ describe('Index controller', function() {
     });
 
     describe('GET /start', function() {
-        var agent = request.agent()
-            , id;
+        var agent = request.agent();
 
         it('responds with mode:newProfile if no cookie', function(done) {
             agent
@@ -63,9 +63,10 @@ describe('Index controller', function() {
             // removes session cookie but keep profile id
             .set('Cookie', profileCookieString)
             .end(function(err, result) {
+                profile_id = result.body.id;
                 result.body.should.eql({
                     mode: 'selectShip'
-                    , id: result.body.id
+                    , id: profile_id
                 });
                 result.headers.should.have.property('set-cookie');
                 result.headers['set-cookie'][0].should.startWith('koa:sess=');

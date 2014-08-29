@@ -5,7 +5,7 @@ var should = require('should')
 describe('Ship object', function() {
     var db
         , ship
-        , _id;
+        , ship_id;
 
     before(function() {
         db = helpers.getDb();
@@ -13,7 +13,9 @@ describe('Ship object', function() {
     });
 
     after(function() {
-        db.close();
+        db.remove('Ship', {_id: ship_id}, function(err) {
+            db.close();
+        })
     });
 
     it('should make a new object', function() {
@@ -60,14 +62,14 @@ describe('Ship object', function() {
 
         db.save('Ship', ship, function(err) {
             assert.equal(err, null);
-            _id = ship._id;
+            ship_id = ship._id;
 
             done();
         });
     }),
 
     it('should load from db', function(done) {
-        db.load('Ship', {_id: _id}, function(err, loaded_ship) {
+        db.load('Ship', {_id: ship_id}, function(err, loaded_ship) {
             assert.equal(err, null);
             loaded_ship.shipName.should.equal('Yomata');
 
@@ -76,7 +78,7 @@ describe('Ship object', function() {
     }),
 
     it('should only load from projection', function(done) {
-        db.load('Ship', {_id: _id}, {shipName: 1}, function(err, loaded_ship) {
+        db.load('Ship', {_id: ship_id}, {shipName: 1}, function(err, loaded_ship) {
             assert.equal(err, null);
             loaded_ship.shipName.should.equal('Yomata');
             loaded_ship.should.not.have.property('profile_id');
