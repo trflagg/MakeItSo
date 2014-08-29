@@ -1,2 +1,3 @@
+--recursive
 --require co-mocha
 --reporter nyan
