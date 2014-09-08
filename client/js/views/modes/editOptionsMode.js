@@ -22,6 +22,11 @@ define(['./mode'
 
     var editOptionsMode = Mode.extend({
 
+        events: {
+            "focusin .highlightLabel": "highlightLabel"
+            , "focusout .highlightLabel": "highlightLabel"
+        }
+
         /**
          * init()
          *
@@ -142,6 +147,18 @@ define(['./mode'
             });
 
             this.displayScreen(this.screens[0]);
+        }
+
+        /**
+         * add highlightLabel to an input's classes and any item labeled
+         * for the input's id will get 'hightlight' class added when input
+         * is in focus.
+         * @param  {jquery event} event
+         * @return {None}
+         */
+        , highlightLabel: function(event) {
+            // all elements with <label for="[id of focused item"]>
+            this.$("label[for*='"+event.target.id+"']").toggleClass('highlight');
         }
 
     });
