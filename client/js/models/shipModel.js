@@ -5,9 +5,13 @@
  *
  */
 
-define(['backbone'], function(Backbone) {
+define([
+    'backbone'
+    , './argie/commandHolderModel'
+], function(Backbone
+            , CommandHolderModel) {
 
-    var shipModel = Backbone.Model.extend({
+    var shipModel = CommandHolderModel.extend({
 
         urlRoot: 'ship'
 
