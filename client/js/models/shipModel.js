@@ -29,6 +29,32 @@ define([
             })
         }
 
+        , parse: function(response, options) {
+
+            this.set('id', response.id);
+            this.set('shipName', response.shipName);
+            this.set('output', response.output);
+
+            var commands = response.commands;
+            for (var i=0, ll=commands.length; i<ll; i++) {
+                var command = commands[i]
+
+                switch (command.text) {
+
+                    case 'crew':
+                        this.get("crew").set("childMessageCount", command.childMessageCount);
+                        this.get("crew").setChildren(command.children);
+                        break
+                    case 'ship_controls':
+                        this.get("shipControls").setChildren(command.children);
+                        break
+                    case 'direct_messages':
+                        this.get("directMessages").setChildren(command.children);
+                        break
+                }
+            }
+        }
+
         /**
          * Copied from models/ship.js
          */
@@ -41,6 +67,7 @@ define([
                     throw new Error(message='shipName may only contain uppercase and lowercase letters.');
             }
         }
+
     });
 
     return shipModel;

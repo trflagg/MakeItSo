@@ -1,0 +1,37 @@
+<div id="nameCrew" class="centerDiv">
+    <h2>Captain {{= it.name }},</h2>
+    <h2>please name your crew:</h2>
+    <center>
+        <table>
+            <tr>
+                <td> <label for="security">Security Chief</label></td>
+                <td> <input class='crewInput highlightLabel' id="security", type="text", size=30></td>
+            </tr>
+            <tr>
+                <td> <label for="medical">Medical Officer</label></td>
+                <td> <input class='crewInput highlightLabel' id="medical", type="text", size=30></td>
+            </tr>
+            <tr>
+                <td> <label for="info">Information Chief</label></td>
+                <td> <input class='crewInput highlightLabel' id="info", type="text", size=30></td>
+            </tr>
+            <tr>
+                <td> <label for="empat">Empat</label></td>
+                <td> <input class='crewInput highlightLabel' id="empat", type="text", size=30></td>
+            </tr>
+            <tr>
+                <td> <label for="engineering">Head of Engineering</label></td>
+                <td> <input class='crewInput highlightLabel' id="engineering", type="text", size=30></td>
+            </tr>
+            <tr>
+                <td> <label for="cultural">Cultural Advisor</label></td>
+                <td> <input class='crewInput highlightLabel' id="cultural", type="text", size=30></td>
+            </tr>
+        </table>
+    </center>
+
+    <p id="nameError" class="error"></p>
+    <div id="nameInstructions" class="prompt" style="display:none">
+        <p>(press Enter to continue)</p>
+    </div>
+</div>

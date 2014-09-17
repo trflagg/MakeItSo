@@ -27,6 +27,7 @@ define([
                 this.set("children", new CommandCollection());
             }
         }
+
     });
 
     commandHolderModel.prototype.setChildren = function(children) {
@@ -43,6 +44,10 @@ define([
     commandHolderModel.prototype.toggleChildren = function() {
         this.set("show_children", !this.get("show_children"));
     };
+
+    commandHolderModel.prototype.getChildById = function(id) {
+        return this.get("children").findWhere({id: id});
+    }
 
    return commandHolderModel;
 });

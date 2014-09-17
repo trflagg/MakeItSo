@@ -53,10 +53,7 @@ module.exports = function(app, db) {
 
             this.body = ship.toClient();
         } catch(e) {
-            this.body = {
-                success: 'false'
-                , error: e.message
-            }
+            throw e;
         }
     }
 }

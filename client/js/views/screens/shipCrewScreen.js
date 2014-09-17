@@ -5,7 +5,7 @@
  */
 
 define(['./screen'
-        , 'doT!/templates/screens/ShipNameScreen'
+        , 'doT!/templates/screens/ShipCrewScreen'
 
 ], function(Screen
             , template
@@ -13,7 +13,7 @@ define(['./screen'
 
     var shipNameScreen = Screen.extend({
         events: {
-            'keydown #nameInput': 'keyDown'
+            'keydown .crewInput': 'keyDown'
         }
 
         /**
@@ -24,7 +24,6 @@ define(['./screen'
          */
         , initialize: function() {
             Screen.prototype.initialize.apply(this);
-
             this.template = template;
             this.render();
         }
@@ -38,7 +37,8 @@ define(['./screen'
         , activate: function() {
             Screen.prototype.activate();
 
-            this.$("#nameInput").focus();
+            // fires too soon
+            // this.$(".crewInput")[0].focus();
         }
 
         /**
@@ -53,7 +53,6 @@ define(['./screen'
                                 ''
             $(this.el).html(this.template({
                 name: this.model.get('profile').get('name')
-                , shipName: shipName
             }));
 
             return this;
@@ -71,14 +70,6 @@ define(['./screen'
             if (event.keyCode === 13) {
                 this.submit();
             }
-            else {
-                if (this.model.isValid()) {
-                    $("#nameInstructions").fadeIn(2000);
-                }
-                else {
-                    $("#nameInstructions").fadeOut(2000);
-                }
-            }
         }
 
         /**
@@ -88,20 +79,37 @@ define(['./screen'
          * @return {None}
          */
         , submit: function() {
-            var shipName = $("#nameInput").val()
-                , screen = this;
+            var screen = this;
+
+            var security = $("#security").val()
+                , medical = $("#medical").val()
+                , info = $("#info").val()
+                , empat = $("#empat").val()
+                , engineering = $("#engineering").val()
+                , cultural = $("#cultural").val();
 
             this.reset();
+            this.model.get('ship').get('crew').getChildById('security')
+                                  .set('name', security);
+            this.model.get('ship').get('crew').getChildById('medical')
+                                  .set('name', medical);
+            this.model.get('ship').get('crew').getChildById('info')
+                                  .set('name', info);
+            this.model.get('ship').get('crew').getChildById('empat')
+                                  .set('name', empat);
+            this.model.get('ship').get('crew').getChildById('engineering')
+                                  .set('name', engineering);
+            this.model.get('ship').get('crew').getChildById('cultural')
+                                  .set('name', cultural);
+
             this.model.get('ship').save({
-                'profile_id': screen.model.get('profile').get('id')
-                , 'shipName': shipName
             }
             , {
                 success: function(model, response, options) {
-                    if (response.error) {
-                        screen.showError(response.error);
-                    } else {
+                    if (response.success === "true") {
                         screen.next();
+                    } else {
+                        screen.showError(response.error);
                     }
                 }
                 , error: function(model, response, options) {

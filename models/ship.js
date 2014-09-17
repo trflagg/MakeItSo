@@ -97,6 +97,7 @@ module.exports = function(db) {
     Ship.prototype.toClient = function() {
         var client_ship = {};
 
+        client_ship.id = this._id;
         client_ship.shipName = this.shipName;
         client_ship.output = this.output;
         client_ship.commands = this.getCommandTextList();

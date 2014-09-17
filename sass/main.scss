@@ -28,6 +28,34 @@ p {
     font-family: 'Coda', sans-serif;
 }
 
+table
+{
+    margin-left:auto;
+    margin-right:auto;
+    text-align: right;
+    padding-top: 50px;
+}
+
+td, th
+{
+    font-family: 'Coda', sans;
+    min-width: 10em;
+}
+
+th
+{
+    font-size: 15px;
+    border-bottom: 3px solid #999;
+}
+
+td
+{
+    font-size: 25px;
+    padding-top: .5em;
+    padding-right: .8em;
+    vertical-align: middle;
+}
+
 input[type="text"] {
     background: #000;
     color: #999;

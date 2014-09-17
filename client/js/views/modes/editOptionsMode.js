@@ -10,6 +10,7 @@ define(['./mode'
         , '../screens/askHandinessScreen'
         , '../screens/askSexScreen'
         , '../screens/shipNameScreen'
+        , '../screens/shipCrewScreen'
         , 'doT!/templates/modes/editOptionsMode'
 
 ], function(Mode
@@ -17,6 +18,7 @@ define(['./mode'
             , AskHandinessScreen
             , AskSexScreen
             , ShipNameScreen
+            , ShipCrewScreen
             , template
 ) {
 
@@ -139,6 +141,7 @@ define(['./mode'
             this.render();
 
             this.addScreen(ShipNameScreen);
+            this.addScreen(ShipCrewScreen);
 
             this.currentScreen = 0;
 
