@@ -18,6 +18,15 @@ define([
         // properties
         , defaults: {
             shipName: ''
+            , directMessages: new CommandHolderModel({
+                text: 'direct messages'
+            })
+            , crew: new CommandHolderModel({
+                text: 'crew'
+            })
+            , shipControls: new CommandHolderModel({
+                text: 'ship controls'
+            })
         }
 
         /**

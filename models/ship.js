@@ -92,7 +92,17 @@ module.exports = function(db) {
             if (!/^[a-zA-Z]+$/.test(this.shipName))
                 throw new Error(message='shipName may only contain uppercase and lowercase letters.');
         }
-    }
+    };
+
+    Ship.prototype.toClient = function() {
+        var client_ship = {};
+
+        client_ship.shipName = this.shipName;
+        client_ship.output = this.output;
+        client_ship.commands = this.getCommandTextList();
+
+        return client_ship;
+    };
 
     db.register('Ship', Ship);
 

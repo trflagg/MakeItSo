@@ -51,10 +51,7 @@ module.exports = function(app, db) {
             this.cookies.set('ship', ship._id);
             this.session.ship = ship._id;
 
-            this.body = {
-                success: 'true'
-                , id: ship._id
-            }
+            this.body = ship.toClient();
         } catch(e) {
             this.body = {
                 success: 'false'

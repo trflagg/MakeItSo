@@ -33,7 +33,7 @@ define(['./mode'
          * initialize this mode
          * @return {None}
          */
-        init: function() {
+        , init: function() {
             this.screens = [];
             this.template = template;
             this.endFunction = null;
