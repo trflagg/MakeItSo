@@ -106,10 +106,10 @@ define(['./screen'
             }
             , {
                 success: function(model, response, options) {
-                    if (response.success === "true") {
-                        screen.next();
-                    } else {
+                    if (response.error) {
                         screen.showError(response.error);
+                    } else {
+                        screen.next();
                     }
                 }
                 , error: function(model, response, options) {

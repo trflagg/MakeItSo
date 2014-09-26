@@ -7,7 +7,8 @@
 var render = require('../render')
     , bodyParser = require('koa-body')
     , requireParams = require('../middleware/require-params')
-    , idMatchesSession = require('../middleware/id-matches-session');
+    , idMatchesSession = require('../middleware/id-matches-session')
+    , ObjectID = require('mongodb').ObjectID;
 
 module.exports = function(app, db) {
     /**
@@ -55,5 +56,38 @@ module.exports = function(app, db) {
         } catch(e) {
             throw e;
         }
+    }
+
+    /**
+     * PUT /ship/:id
+     *
+     * edit a ship
+     * currently only sets crew names
+     */
+    app.put('/ship/:id'
+            , bodyParser()
+            , requireParams(['profile_id'])
+            , idMatchesSession(db, {
+                source: 'body'
+                , load: false
+            })
+            , editShip);
+    function *editShip() {
+        var ship = yield db.load('Ship', {_id: new ObjectID(this.params.id)});
+
+        // set names
+        var crewChildren = this.request.body.crew.children;
+
+        for (var i=0, ll=crewChildren.length; i<ll; i++) {
+            var crew_id = crewChildren[i].id;
+            console.log(crew_id);
+            console.dir(ship.child('crew').child(crew_id));
+            ship.child('crew').child(crew_id).setName(crewChildren[i].name);
+        }
+
+        yield db.save('Ship', ship);
+
+        this.body = ship.toClient();
+
     }
 }
