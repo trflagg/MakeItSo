@@ -30,17 +30,16 @@ module.exports = function(app, db) {
     }
 
     /**
-     * POST /ship
+     * POST /ship/:profile_id
      *
      * make new ship.
+     * TODO: x-reference url profile_id vs form-data profile_id
      */
-    app.post('/ship/'
+    app.post('/ship/:profile_id'
                 , bodyParser()
                 , requireParams(['profile_id'
                                 , 'shipName'])
-                , idMatchesSession(db, {
-                    source: 'body'
-                })
+                , idMatchesSession(db)
                 , newShip);
     function *newShip() {
         try {
@@ -59,17 +58,15 @@ module.exports = function(app, db) {
     }
 
     /**
-     * PUT /ship/:id
+     * PUT /ship/:profile_id/:id
      *
      * edit a ship
      * currently only sets crew names
      */
-    app.put('/ship/:id'
+    app.put('/ship/:profile_id/:id'
             , bodyParser()
-            , requireParams(['profile_id'])
             , idMatchesSession(db, {
-                source: 'body'
-                , load: false
+                load: false
             })
             , editShip);
     function *editShip() {

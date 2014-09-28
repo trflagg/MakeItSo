@@ -13,7 +13,9 @@ define([
 
     var shipModel = CommandHolderModel.extend({
 
-        urlRoot: 'ship'
+        urlRoot: function() {
+            return 'ship/' + this.get('profile_id')
+        }
 
         // properties
         , defaults: {
