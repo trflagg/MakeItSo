@@ -46,6 +46,8 @@ module.exports = function(app, db) {
             var ship = db.create('Ship');
             ship.profile_id = this.params.profile._id;
             ship.shipName = this.request.body['shipName'];
+            yield ship.startGame();
+
             yield db.save('Ship', ship);
             this.cookies.get('ship');
             this.cookies.set('ship', ship._id);
@@ -77,8 +79,6 @@ module.exports = function(app, db) {
 
         for (var i=0, ll=crewChildren.length; i<ll; i++) {
             var crew_id = crewChildren[i].id;
-            console.log(crew_id);
-            console.dir(ship.child('crew').child(crew_id));
             ship.child('crew').child(crew_id).setName(crewChildren[i].name);
         }
 

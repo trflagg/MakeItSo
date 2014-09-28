@@ -3,6 +3,7 @@ var util = require('util');
 module.exports = function(db) {
 
     var Avatar = require('argie/models/avatar')(db, 'Ship')
+        , Message = require('argie/models/message')(db)
         , MessageHolder = require('argie/models/messageHolder')(db);
 
     Ship = function(doc) {
@@ -92,6 +93,13 @@ module.exports = function(db) {
             if (!/^[a-zA-Z]+$/.test(this.shipName))
                 throw new Error(message='shipName may only contain uppercase and lowercase letters.');
         }
+    };
+
+    Ship.prototype.startGame = function*() {
+        var message = yield db.load('Message', {name: 'INIT'});
+        var result = yield message.run(this)
+        // show result of message
+        this.output = result;
     };
 
     Ship.prototype.toClient = function() {
