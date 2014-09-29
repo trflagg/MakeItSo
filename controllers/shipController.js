@@ -87,4 +87,21 @@ module.exports = function(app, db) {
         this.body = ship.toClient();
 
     }
+
+    /**
+     * GET /ship/:profile_id/:id
+     *
+     * get current ship data
+     * TODO: load ship using a middleware function
+     */
+    app.get('/ship/:profile_id/:id'
+            , idMatchesSession(db, {
+                load: flase
+            })
+            , getShip);
+    function *getShip() {
+        var ship = yield db.load('Ship', {_id: new ObjectID(this.params.id)});
+
+        this.body = ship.toClient();
+    }
 }
