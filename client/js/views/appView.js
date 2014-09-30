@@ -11,12 +11,14 @@ define(['backbone'
         , '../models/shipModel'
         , '../views/modes/editOptionsMode'
         , '../views/modes/SelectShipMode'
+        , '../views/modes/gameMode'
 
 ], function(Backbone
             , AppModel
             , ShipModel
             , EditOptionsMode
             , SelectShipMode
+            , GameMode
 ) {
 
     var appView = Backbone.View.extend({
@@ -93,6 +95,22 @@ define(['backbone'
 
                     $("#contents").fadeOut('slow', function() {
                         this.mode = new SelectShipMode({
+                            el: $("#contents")
+                            , model: appModel
+                        });
+
+                        this.mode.render();
+
+                        $("#contents").fadeIn('slow');
+                    });
+                    break;
+
+                case 'startGame':
+                    // fetch ship from server
+                    appModel.get('ship').fetch();
+
+                    $("#contents").fadeOut('slow', function() {
+                        this.mode = new GameMode({
                             el: $("#contents")
                             , model: appModel
                         });

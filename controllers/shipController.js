@@ -96,7 +96,7 @@ module.exports = function(app, db) {
      */
     app.get('/ship/:profile_id/:id'
             , idMatchesSession(db, {
-                load: flase
+                load: false
             })
             , getShip);
     function *getShip() {
