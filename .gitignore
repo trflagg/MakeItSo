@@ -8,3 +8,5 @@ client/bower-components/
 .sass-cache/
 
 client/css/
+
+fixtures/
