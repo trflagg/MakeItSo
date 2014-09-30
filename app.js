@@ -9,6 +9,8 @@ var fs = require('fs')
     , Db = require('argieDB/co-db')
     , environment = require('argieDB/environment-local')
 
+    , regExs = require('./helpers/regExs')
+
     , logger = require('koa-logger')
     , router = require('koa-router')
     , serve = require('koa-static')
@@ -22,6 +24,11 @@ var app = module.exports = koa();
  * Create db connection
  */
 var db = new Db(environment);
+
+/**
+ * Register argie's regExs
+ */
+regExs.registerRegExs();
 
 /**
  * load models in /models
