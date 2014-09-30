@@ -36,6 +36,7 @@ define([
             this.set('id', response.id);
             this.set('shipName', response.shipName);
             this.set('output', response.output);
+            this.set('screen', response.screen);
 
             var commands = response.commands;
             for (var i=0, ll=commands.length; i<ll; i++) {

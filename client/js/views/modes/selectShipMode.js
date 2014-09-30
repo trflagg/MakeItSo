@@ -6,15 +6,18 @@
  */
 
 define(['./mode'
+        , '../../models/shipModel'
         , 'doT!/templates/modes/selectShipMode'
 
 ], function(Mode
+            , ShipModel
             , template
 ) {
 
     var selectShipMode = Mode.extend({
         events: {
             'click #newShipLink': 'newShip'
+            , 'click .shipLink': 'shipSelected'
         }
 
         /**
@@ -38,6 +41,16 @@ define(['./mode'
 
         , newShip: function() {
             this.model.set('mode', 'newShip');
+        }
+
+        , shipSelected: function(event) {
+            var shipIndex = event.target.dataset.shipIndex;
+            var selectedShip = new ShipModel({
+                profile_id: this.model.get('profile').id
+            });
+            selectedShip.set('id', this.model.get('ships')[shipIndex]._id)
+            this.model.set('ship', selectedShip);
+            this.model.set('mode', 'startGame');
         }
 
     });

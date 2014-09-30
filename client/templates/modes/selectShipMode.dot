@@ -12,7 +12,7 @@
             <tr>
                 <td>{{= ship.shipName }}</td>
                 <td>&nbsp;</td>
-                <td><a href="#">Make it So</a></td>
+                <td><a href="#" class='shipLink' data-ship-index="{{= index }}">Make it So</a></td>
             </tr>
         {{~}}
     </table>
