@@ -4,7 +4,8 @@ module.exports = function(db) {
 
     var Avatar = require('argie/models/avatar')(db, 'Ship')
         , Message = require('argie/models/message')(db)
-        , MessageHolder = require('argie/models/messageHolder')(db);
+        , MessageHolder = require('argie/models/messageHolder')(db)
+        , systemWrapper = require('argie/models/systemWrapper');
 
     Ship = function(doc) {
         Ship.super_.call(this, doc);
@@ -15,6 +16,7 @@ module.exports = function(db) {
         Ship.super_.prototype.initialize.call(this);
 
         this.lastResult = null;
+        this.screen = null;
         this.shipName = null;
         this.profile_id = null;
 
@@ -72,6 +74,7 @@ module.exports = function(db) {
 
         doc.shipName = this.shipName;
         doc.lastResult = this.lastResult;
+        doc.screen = this.screen;
         doc.profile_id = this.profile_id;
 
         return doc;
@@ -82,6 +85,7 @@ module.exports = function(db) {
 
         if(doc.shipName) this.shipName = doc.shipName;
         if(doc.lastResult) this.lastResult = doc.lastResult;
+        if(doc.screen) this.screen = doc.screen;
         if(doc.profile_id) this.profile_id = doc.profile_id
     };
 
@@ -108,10 +112,21 @@ module.exports = function(db) {
         client_ship.id = this._id;
         client_ship.shipName = this.shipName;
         client_ship.lastResult = this.lastResult;
+        client_ship.screen = this.screen;
         client_ship.commands = this.getCommandTextList();
 
         return client_ship;
     };
+
+    // add to the system wrapper
+    systemWrapper.prototype.registerFunction({
+        functionName: 'setScreen'
+        , functionBody: function(screenName) {
+            console.log('setScreen '+screenName);
+            console.dir(this);
+            this._avatar.screen = screenName;
+        }
+    });
 
     db.register('Ship', Ship);
 

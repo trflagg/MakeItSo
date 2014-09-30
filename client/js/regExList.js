@@ -1,9 +1,9 @@
 module.exports.regExList = [
 {
-  functionName: 'setScreen'
-  , placeholder: '{% SET_SCREEN(%s) %}'
-  , regEx: /^{% SET_SCREEN\((\s+)\) %}$/
+  functionName: 'clearScreens'
+  , placeholder: '{% CLEAR_SCREEN %}'
+  , regEx: /^{% CLEAR_SCREEN %}$/
   , functionBody: function(screen) {
-    console.dir('set screen:' + screen);
+    console.dir('clear screen');
   }
 }];
