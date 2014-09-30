@@ -14,7 +14,7 @@ module.exports = function(db) {
     Ship.prototype.initialize = function() {
         Ship.super_.prototype.initialize.call(this);
 
-        this.output = null;
+        this.lastResult = null;
         this.shipName = null;
         this.profile_id = null;
 
@@ -71,7 +71,7 @@ module.exports = function(db) {
         Ship.super_.prototype.saveToDoc.call(this, doc);
 
         doc.shipName = this.shipName;
-        doc.output = this.output;
+        doc.lastResult = this.lastResult;
         doc.profile_id = this.profile_id;
 
         return doc;
@@ -81,7 +81,7 @@ module.exports = function(db) {
         Ship.super_.prototype.loadFromDoc.call(this, doc);
 
         if(doc.shipName) this.shipName = doc.shipName;
-        if(doc.output) this.output = doc.output;
+        if(doc.lastResult) this.lastResult = doc.lastResult;
         if(doc.profile_id) this.profile_id = doc.profile_id
     };
 
@@ -99,7 +99,7 @@ module.exports = function(db) {
         var message = yield db.load('Message', {name: 'INIT'});
         var result = yield message.run(this)
         // show result of message
-        this.output = result;
+        this.lastResult = result;
     };
 
     Ship.prototype.toClient = function() {
@@ -107,7 +107,7 @@ module.exports = function(db) {
 
         client_ship.id = this._id;
         client_ship.shipName = this.shipName;
-        client_ship.output = this.output;
+        client_ship.lastResult = this.lastResult;
         client_ship.commands = this.getCommandTextList();
 
         return client_ship;
