@@ -20,6 +20,7 @@ define([
         // properties
         , defaults: {
             shipName: ''
+            , lastResult: ''
             , directMessages: new CommandHolderModel({
                 text: 'direct messages'
             })
@@ -37,6 +38,7 @@ define([
             this.set('shipName', response.shipName);
             this.set('output', response.output);
             this.set('screen', response.screen);
+            this.set('lastResult', response.lastResult);
 
             var commands = response.commands;
             for (var i=0, ll=commands.length; i<ll; i++) {

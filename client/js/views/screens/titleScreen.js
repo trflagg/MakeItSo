@@ -16,7 +16,9 @@ define(['./gameScreen'
     }
 
     , render: function() {
-      $(this.el).html(this.template({}));
+      $(this.el).html(this.template({
+        content: this.model.get('ship').get('lastResult')
+      }));
       return this;
     }
   });
