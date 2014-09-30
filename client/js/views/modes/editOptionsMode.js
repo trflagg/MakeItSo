@@ -146,7 +146,7 @@ define(['./mode'
             this.currentScreen = 0;
 
             this.setEndFunction(function() {
-                this.model.set('mode', 'selectShip');
+                this.model.set('mode', 'startGame');
             });
 
             this.displayScreen(this.screens[0]);
