@@ -117,6 +117,7 @@ module.exports = function(app, db) {
         var ship = yield db.load('Ship', {_id: new ObjectID(this.params.id)});
 
         yield ship.runCommand(this.params.command);
+        yield db.save('Ship', ship);
 
         this.body = ship.toClient();
     }
