@@ -37,7 +37,6 @@ define([
             this.set('id', response.id);
             this.set('shipName', response.shipName);
             this.set('output', response.output);
-            this.set('screen', response.screen);
             this.set('lastResult', response.lastResult);
 
             var rootCommands = [];
@@ -63,6 +62,7 @@ define([
                 }
             }
             this.setChildren(rootCommands);
+            this.set('screen', response.screen);
         }
 
         /**
