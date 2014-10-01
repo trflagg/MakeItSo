@@ -27,7 +27,9 @@ define(['./gameScreen'
     }
 
     , continue: function() {
-      console.log('continue');
+      // ship MUST have a root message named 'Continue'
+      // when it sets screen = 'TITLE'
+      this.model.get('ship').runCommand('Continue');
     }
   });
 

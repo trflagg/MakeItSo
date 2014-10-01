@@ -40,24 +40,29 @@ define([
             this.set('screen', response.screen);
             this.set('lastResult', response.lastResult);
 
+            var rootCommands = [];
             var commands = response.commands;
             for (var i=0, ll=commands.length; i<ll; i++) {
                 var command = commands[i]
-
                 switch (command.text) {
 
                     case 'crew':
                         this.get("crew").set("childMessageCount", command.childMessageCount);
                         this.get("crew").setChildren(command.children);
-                        break
+                        break;
                     case 'ship_controls':
                         this.get("shipControls").setChildren(command.children);
-                        break
+                        break;
                     case 'direct_messages':
                         this.get("directMessages").setChildren(command.children);
-                        break
+                        break;
+
+                    default:
+                        // root-level command
+                        rootCommands.push(command);
                 }
             }
+            this.setChildren(rootCommands);
         }
 
         /**
@@ -71,6 +76,17 @@ define([
                 if (!/^[a-zA-Z]+$/.test(this.shipName))
                     throw new Error(message='shipName may only contain uppercase and lowercase letters.');
             }
+        }
+
+        , runCommand: function(commandText) {
+            var ship = this;
+
+            $.ajax({
+                type: 'POST'
+                , url: this.url() + '/' + encodeURI(commandText)
+            }).done(function(data) {
+                ship.parse(data);
+            })
         }
 
     });
