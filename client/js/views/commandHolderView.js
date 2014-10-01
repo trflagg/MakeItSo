@@ -19,6 +19,7 @@ define([
 
             if (this.model) {
                 this.listenTo(this.model, 'change', this.render);
+                this.listenTo(this.model.get("children"), 'run', this.runCommand);
             }
             this.render();
         },
@@ -72,6 +73,11 @@ define([
                 model: command
             })
         .el);
+    };
+
+    commandHolderView.prototype.runCommand = function(text) {
+        // bubble up the event
+        this.trigger('run', text);
     };
 
     commandHolderView.prototype.clicked = function() {

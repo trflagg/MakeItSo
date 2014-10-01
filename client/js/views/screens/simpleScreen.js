@@ -24,10 +24,15 @@ define(['./gameScreen'
         model: this.model.get('ship')
         , el: this.$("#commands")
       });
+      this.listenTo(this.rootCommands, 'run', this.runCommand);
     }
 
     , render: function() {
       return this.outputLastResult();
+    }
+
+    , runCommand: function(commandText) {
+      this.model.get('ship').runCommand(commandText);
     }
   });
 

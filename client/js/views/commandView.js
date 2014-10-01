@@ -34,7 +34,7 @@ define([
     });
 
     commandView.prototype.clicked = function() {
-        console.log(this.model.get("text") + " clicked");
+        this.model.trigger('run', this.model.get('text'));
     };
 
     return commandView;
