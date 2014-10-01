@@ -20,10 +20,7 @@ define(['./gameScreen'
     }
 
     , render: function() {
-      $(this.el).html(this.template({
-        content: this.model.get('ship').get('lastResult')
-      }));
-      return this;
+      return this.outputLastResult();
     }
   });
 

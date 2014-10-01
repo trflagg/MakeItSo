@@ -1,3 +1,5 @@
-<div id="simpleScreen">
-  {{= it.content }}
+<div id="simpleScreen" class="output">
+  <p>
+    {{= it.content | '' }}
+  </p>
 </div>

@@ -11,6 +11,21 @@ define(['backbone'], function(Backbone) {
 
         initialize: function() {
         }
+
+        , outputLastResult: function() {
+          var lastResult = this.model.get('ship').get('lastResult')
+              , lines = lastResult.split('\n')
+              , $output = $("<div></div>");
+
+          for(var i=0, ll=lines.length; i<ll; i++) {
+            if (lines[i].length > 0) {
+              $output.append($("<p></p>").addClass("outputText").append(lines[i]));
+            }
+          }
+
+          $(this.el).html(this.template({}));
+          this.$(".output").html($output);
+        }
     });
 
     return screen;
