@@ -1,5 +1,6 @@
-<div id="simpleScreen" class="output">
-  <p>
-    {{= it.content | '' }}
-  </p>
+<div id="simpleScreen">
+  <div  class="output">
+  </div>
+  <div id="commands">
+  </div>
 </div>

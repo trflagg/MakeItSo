@@ -1,9 +1,11 @@
 
 
 define(['./gameScreen'
+        , 'views/CommandHolderView'
         , 'doT!/templates/screens/simpleScreen'
 
 ], function(GameScreen
+            , CommandHolderView
             , template
 ) {
 
@@ -17,6 +19,11 @@ define(['./gameScreen'
 
       this.template = template;
       this.render();
+
+      this.rootCommands = new CommandHolderView({
+        model: this.model.get('ship')
+        , el: this.$("#commands")
+      });
     }
 
     , render: function() {
