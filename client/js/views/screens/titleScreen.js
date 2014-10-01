@@ -7,8 +7,12 @@ define(['./gameScreen'
             , template
 ) {
 
-  var shipNameScreen = GameScreen.extend({
-    initialize: function() {
+  var titleScreen = GameScreen.extend({
+    events: {
+      'click .continue': 'continue'
+    }
+
+    , initialize: function() {
       GameScreen.prototype.initialize.apply(this);
 
       this.template = template;
@@ -21,7 +25,11 @@ define(['./gameScreen'
       }));
       return this;
     }
+
+    , continue: function() {
+      console.log('continue');
+    }
   });
 
-  return shipNameScreen;
+  return titleScreen;
 });

@@ -1,6 +1,6 @@
 #gameMode {
   #titleScreen {
-    margin-top: 10%;
+    margin-top: 60px;
 
     h1 {
       font-size: 90px;
@@ -12,10 +12,17 @@
       white-space: pre;
       text-align: center;
       line-height: 22px;
-      font-family: Coda;
       font-size: 20px;
       letter-spacing: 3px;
       align-self: center;
+    }
+
+    a.continue {
+      display: block;
+      font-size: 40px;
+      text-align: center;
+      letter-spacing: 8px;
+      margin-top: 90px;
     }
   }
 }

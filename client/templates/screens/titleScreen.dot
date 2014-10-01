@@ -1,3 +1,4 @@
 <div id="titleScreen">
   {{= it.content }}
+  <a href="#" class="continue">Continue</a>
 </div>
