@@ -104,4 +104,20 @@ module.exports = function(app, db) {
 
         this.body = ship.toClient();
     }
+
+    /**
+     * POST ship/:profile_id/:id/:command
+     *
+     * runs command with given text on ship
+     */
+    app.post('/ship/:profile_id/:id/:command'
+            , idMatchesSession(db, {load: false})
+            , runCommand);
+    function *runCommand() {
+        var ship = yield db.load('Ship', {_id: new ObjectID(this.params.id)});
+
+        yield ship.runCommand(this.params.command);
+
+        this.body = ship.toClient();
+    }
 }

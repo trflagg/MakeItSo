@@ -106,6 +106,14 @@ module.exports = function(db) {
         this.lastResult = result;
     };
 
+    Ship.prototype.runCommand = function* (command, child) {
+        var result = yield Avatar.prototype.runMessage.call(this, command, child);
+
+        this.lastResult = result;
+
+        return result;
+    };
+
     Ship.prototype.toClient = function() {
         var client_ship = {};
 
