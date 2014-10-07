@@ -5,7 +5,7 @@
  *
  */
 
-define(['backbone'], function(Backbone) {
+define(['backbone', 'regExList'], function(Backbone, regExList) {
 
     var screen = Backbone.View.extend({
 
@@ -19,8 +19,21 @@ define(['backbone'], function(Backbone) {
               , $output = $("<div></div>");
 
           for(var i=0, ll=lines.length; i<ll; i++) {
-            if (lines[i].length > 0) {
-              $output.append($("<p></p>").addClass("outputText").append(lines[i]));
+            var currentLine = lines[i]
+                , print = true;
+
+            if (currentLine.length > 0) {
+              // match against regEx's
+              _.each(regExList, function(regEx) {
+                if ((regExArray = regEx.regEx.exec(currentLine)) != null) {
+                  // run the regEx
+                  print = regEx.functionBody(regExArray);
+                }
+              });
+
+              if (print) {
+                $output.append($("<p></p>").addClass("outputText").append(currentLine));
+              }
             }
           }
 
