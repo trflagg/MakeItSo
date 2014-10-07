@@ -19,26 +19,31 @@ define(['backbone', 'regExList'], function(Backbone, regExList) {
               , $output = $("<div></div>");
 
           for(var i=0, ll=lines.length; i<ll; i++) {
-            var currentLine = lines[i]
-                , print = true;
+            var currentLine = lines[i];
 
-            if (currentLine.length > 0) {
-              // match against regEx's
-              _.each(regExList, function(regEx) {
-                if ((regExArray = regEx.regEx.exec(currentLine)) != null) {
-                  // run the regEx
-                  print = regEx.functionBody(regExArray);
-                }
-              });
-
-              if (print) {
-                $output.append($("<p></p>").addClass("outputText").append(currentLine));
-              }
-            }
+            outputLine(currentLine, $output);
           }
 
           $(this.el).html(this.template({}));
           this.$(".output").html($output);
+        }
+
+        , outputLine: function(line, $output) {
+          var print = true;
+
+          if (currentLine.length > 0) {
+            // match against regEx's
+            _.each(regExList, function(regEx) {
+              if ((regExArray = regEx.regEx.exec(currentLine)) != null) {
+                // run the regEx
+                print = regEx.functionBody(regExArray);
+              }
+            });
+
+            if (print) {
+              $output.append($("<p></p>").addClass("outputText").append(currentLine));
+            }
+          }
         }
     });
 
