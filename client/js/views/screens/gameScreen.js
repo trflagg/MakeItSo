@@ -10,6 +10,7 @@ define(['backbone'], function(Backbone) {
     var screen = Backbone.View.extend({
 
         initialize: function() {
+          this.listenTo(this.model.get('ship'), 'change:lastResult', this.outputLastResult);
         }
 
         , outputLastResult: function() {
