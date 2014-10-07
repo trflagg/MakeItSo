@@ -93,4 +93,19 @@ module.exports = function(app, db) {
         this.cookies.set('profile', null);
         this.body = "Cookie deleted";
     }
+
+    app.get('/reset/:message_name', resetShip);
+    function *resetShip() {
+        var messageName = this.params.message_name || '';
+        var profile_id = this.cookies.get('profile');
+        var ships = yield db.loadMultiple('Ship'
+                                , {profile_id: new ObjectID(profile_id)});
+        this.body = 'profile_id:'+profile_id;
+
+        for (var i=0, ll=ships.length; i<ll; i++) {
+            ships[i].lastResult = yield ships[i].reset(messageName);
+            yield db.save('Ship', ships[i]);
+            this.body += ' ship: '+ships[i]._id;
+        }
+    }
 }
