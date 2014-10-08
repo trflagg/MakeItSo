@@ -18,25 +18,31 @@ define(['backbone', 'regExList'], function(Backbone, regExList) {
               , lines = lastResult.split('\n')
               , $output = $("<div></div>");
 
-          for(var i=0, ll=lines.length; i<ll; i++) {
-            var currentLine = lines[i];
-
-            outputLine(currentLine, $output);
-          }
+          this.outputLines(lines, $output);
 
           $(this.el).html(this.template({}));
           this.$(".output").html($output);
         }
 
-        , outputLine: function(line, $output) {
+        , outputLines: function(lines, $output) {
+          while (lines && lines.length > 0) {
+            // remove the first one
+            var currentLine = lines.shift();
+            lines = this.outputLine(currentLine, lines, $output);
+          }
+        }
+
+        , outputLine: function(currentLine, lines, $output) {
           var print = true;
+          var gameScreen = this;
 
           if (currentLine.length > 0) {
             // match against regEx's
             _.each(regExList, function(regEx) {
               if ((regExArray = regEx.regEx.exec(currentLine)) != null) {
                 // run the regEx
-                print = regEx.functionBody(regExArray);
+                lines = regEx.functionBody.call(gameScreen, lines, $output, regExArray);
+                print = false;
               }
             });
 
@@ -44,6 +50,8 @@ define(['backbone', 'regExList'], function(Backbone, regExList) {
               $output.append($("<p></p>").addClass("outputText").append(currentLine));
             }
           }
+
+          return lines;
         }
     });
 

@@ -6,9 +6,9 @@ define(function(require, exports, module) {
     functionName: 'clearScreen'
     , placeholder: '{% CLEAR_SCREEN %}'
     , regEx: /^{% CLEAR_SCREEN %}/
-    , functionBody: function(args) {
+    , functionBody: function(lines, $output, args) {
       console.dir('clear screen');
-      return false;
+      return lines;
     }
   }
 
@@ -16,9 +16,13 @@ define(function(require, exports, module) {
     functionName: 'wait'
     , placeholder: '{% WAIT(%d) %}'
     , regEx: /^{% WAIT\((\d+)\) %}/
-    , functionBody: function(args) {
+    , functionBody: function(lines, $output, args) {
       console.dir('wait '+args[1]);
-      return false;
+      var gameScreen = this;
+      setTimeout(function() {
+        gameScreen.outputLines(lines, $output)
+      }, args[1])
+      return [];
     }
   }];
 
