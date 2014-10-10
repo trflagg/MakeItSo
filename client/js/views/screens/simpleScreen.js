@@ -25,6 +25,7 @@ define(['./gameScreen'
         , el: this.$("#commands")
       });
       this.listenTo(this.rootCommands, 'run', this.runCommand);
+      this.listenTo(this.model.get('ship'), 'change:children', this.commandsChanged);
     }
 
     , render: function() {
@@ -33,6 +34,15 @@ define(['./gameScreen'
 
     , runCommand: function(commandText) {
       this.model.get('ship').runCommand(commandText);
+    }
+
+    , commandsChanged: function() {
+      //TODO: avoid memory leak
+      // probably have view reload rather than recreate it every time
+      this.rootCommands = new CommandHolderView({
+        model: this.model.get('ship')
+        , el: this.$("#commands")
+      });
     }
   });
 

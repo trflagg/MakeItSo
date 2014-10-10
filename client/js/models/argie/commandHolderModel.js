@@ -32,7 +32,7 @@ define([
 
     commandHolderModel.prototype.setChildren = function(children) {
         this.get("children").reset(children);
-        this.trigger('change');
+        this.trigger('change:children');
     }
 
     commandHolderModel.prototype.getChildren = function() {
