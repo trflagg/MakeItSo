@@ -7,6 +7,7 @@
  */
 
 define(['backbone'
+        , 'fsm'
         , '../models/appModel'
         , '../models/shipModel'
         , '../views/modes/editOptionsMode'
@@ -15,6 +16,7 @@ define(['backbone'
         , '../views/modes/titleMode'
 
 ], function(Backbone
+            , StateMachine
             , AppModel
             , ShipModel
             , EditOptionsMode
@@ -34,6 +36,8 @@ define(['backbone'
         initialize: function() {
             this.model = new AppModel();
             this.listenTo(this.model, 'change:mode', this.updateMode);
+
+            this.fsm = this.createFSM();
 
             // start the app
             this.start();
@@ -58,81 +62,102 @@ define(['backbone'
          * @return {None}
          */
         , updateMode: function() {
-            var appView = this
-                , appModel = this.model;
+            // use the mode name as state-change function
+            this.fsm[this.model.get('mode')](this.model);
+        }
 
-            // TODO: Swap out views correctly to avoid memory leaks
-            switch(this.model.get('mode')) {
-                case 'title':
-                    this.setMode(new TitleMode({
-                            el: $("<div></div>")
-                            , model: appModel
-                    }));
-                    this.mode.render();
-                    break;
-
-                case 'newProfile':
-                    // fade out old mode.
-                    $('#contents').fadeOut('slow', function() {
-                        appView.setMode(new EditOptionsMode({
-                            el: $("<div></div>")
-                            , model: appModel
+        , createFSM: function() {
+            var appModel = this.model
+                , appView = this;
+            var fsm = StateMachine.create({
+                events: [
+                    { name: 'title', from: 'none', to: 'title' }
+                    , { name: 'newProfile', from: 'title', to: 'newProfile' }
+                    , { name: 'selectShip', from: ['none', 'newProfile'], to: 'selectShip'}
+                    , { name: 'newShip', from: 'selectShip', to: 'newShip' }
+                    , { name: 'startGame', from: ['selectShip', 'newShip'], to: 'startGame'}
+                ]
+                , callbacks: {
+                    ontitle: function(event, from, to) {
+                        appView.setMode(new TitleMode({
+                                el: $("<div></div>")
+                                , model: appModel
                         }));
-
-                        appView.mode.newProfile();
-
-                        $("#contents").fadeIn('slow');
-                    });
-                    break;
-
-                case 'newShip':
-                    $("#contents").fadeOut('slow', function() {
-
-                        appModel.set('ship', new ShipModel());
-
-                        appView.setMode(new EditOptionsMode({
-                            el: $("<div></div>")
-                            , model: appModel
-                        }));
-
-                        appView.mode.newShip();
-
-                        $("#contents").fadeIn('slow');
-                    });
-                    break;
-
-                case 'selectShip':
-                    appModel.loadProfile();
-                    appModel.getShipList();
-
-                    $("#contents").fadeOut('slow', function() {
-                        appView.setMode(new SelectShipMode({
-                            el: $("<div></div>")
-                            , model: appModel
-                        }));
-
                         appView.mode.render();
+                        return StateMachine.ASYNC;
+                    }
+                    , onnewProfile: function(event, from, to) {
+                        // fade out old mode.
+                        $('#contents').fadeOut('slow', function() {
+                            appView.setMode(new EditOptionsMode({
+                                el: $("<div></div>")
+                                , model: appModel
+                            }));
 
-                        $("#contents").fadeIn('slow');
-                    });
-                    break;
+                            appView.mode.newProfile();
 
-                case 'startGame':
-                    // fetch ship from server
-                    appModel.get('ship').fetch();
+                            $("#contents").fadeIn('slow');
+                        });
+                        return StateMachine.ASYNC;
+                    }
+                    , onnewShip: function(event, from, to) {
+                        $("#contents").fadeOut('slow', function() {
 
-                    $("#contents").fadeOut('slow', function() {
-                        appView.setMode(new GameMode({
-                            el: $("<div></div>")
-                            , model: appModel
-                        }));
+                            appModel.set('ship', new ShipModel());
 
-                        appView.mode.render();
+                            appView.setMode(new EditOptionsMode({
+                                el: $("<div></div>")
+                                , model: appModel
+                            }));
 
-                        $("#contents").fadeIn('slow');
-                    });
-                    break;
-            }
+                            appView.mode.newShip();
+
+                            $("#contents").fadeIn('slow');
+                        });
+                        return StateMachine.ASYNC;
+                    }
+                    , onselectShip: function(event, from, to) {
+                        appModel.loadProfile();
+                        appModel.getShipList();
+
+                        $("#contents").fadeOut('slow', function() {
+                            appView.setMode(new SelectShipMode({
+                                el: $("<div></div>")
+                                , model: appModel
+                            }));
+
+                            appView.mode.render();
+
+                            $("#contents").fadeIn('slow');
+                        });
+                        return StateMachine.ASYNC;
+                    }
+                    , onstartGame: function(event, from, to, model) {
+                        // fetch ship from server
+                        appModel.get('ship').fetch();
+
+                        $("#contents").fadeOut('slow', function() {
+                            appView.setMode(new GameMode({
+                                el: $("<div></div>")
+                                , model: appModel
+                            }));
+
+                            appView.mode.render();
+
+                            $("#contents").fadeIn('slow');
+                        });
+
+                        return StateMachine.ASYNC;
+                    }
+                    , onbeforeevent: function(event, from, to) {
+                        console.dir(event);
+                        console.log(from);
+                        console.log(to);
+                    }
+                }
+            });
+
+            return fsm;
         }
 
         , setMode: function(newMode) {

@@ -10,6 +10,7 @@ require.config({
         'jquery': '../bower-components/jquery/dist/jquery'
         , 'underscore': '../bower-components/underscore/underscore'
         , 'backbone': '../bower-components/backbone/backbone'
+        , 'fsm': '../bower-components/javascript-state-machine/state-machine.min'
 
         , 'doTCompiler': '../bower-components/doT/doT'
         , 'text': '../bower-components/requirejs-text/text'
