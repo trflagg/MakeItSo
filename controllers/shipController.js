@@ -46,6 +46,7 @@ module.exports = function(app, db) {
             var ship = db.create('Ship');
             ship.profile_id = this.params.profile._id;
             ship.shipName = this.request.body['shipName'];
+            ship.setGlobal('name', this.params.profile.name);
             yield ship.startGame();
 
             yield db.save('Ship', ship);
