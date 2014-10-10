@@ -16,12 +16,12 @@ define(['backbone', 'regExList'], function(Backbone, regExList) {
         , outputLastResult: function() {
           var lastResult = this.model.get('ship').get('lastResult')
               , lines = lastResult.split('\n')
-              , $output = $("<div></div>");
+              , $innerDiv = $("<div></div>");
 
-          this.outputLines(lines, $output);
+          this.outputLines(lines, $innerDiv);
 
           $(this.el).html(this.template({}));
-          this.$(".output").html($output);
+          this.$(".output").html($innerDiv);
         }
 
         , outputLines: function(lines, $output) {
@@ -32,7 +32,7 @@ define(['backbone', 'regExList'], function(Backbone, regExList) {
           }
         }
 
-        , outputLine: function(currentLine, lines, $output) {
+        , outputLine: function(currentLine, lines, $innerDiv) {
           var print = true;
           var gameScreen = this;
 
@@ -41,17 +41,27 @@ define(['backbone', 'regExList'], function(Backbone, regExList) {
             _.each(regExList, function(regEx) {
               if ((regExArray = regEx.regEx.exec(currentLine)) != null) {
                 // run the regEx
-                lines = regEx.functionBody.call(gameScreen, lines, $output, regExArray);
+                lines = regEx.functionBody.call(gameScreen, lines, $innerDiv, regExArray);
                 print = false;
               }
             });
 
             if (print) {
-              $output.append($("<p></p>").addClass("outputText").append(currentLine));
+              // checked if scrolled to bottom before we print line
+              var $output = this.$('div.output');
+              var isScrolledToBottom = $output.prop('scrollHeight') - $output.prop('clientHeight') <= $output.scrollTop() + 1;
+              $innerDiv.append($("<p></p>").addClass("outputText").append(currentLine));
+              if (isScrolledToBottom) {
+                this.scrollToBottom($output);
+              }
             }
           }
 
           return lines;
+        }
+
+        , scrollToBottom: function($output) {
+          $output.scrollTop($output.prop('scrollHeight'));
         }
     });
 
