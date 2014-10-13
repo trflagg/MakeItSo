@@ -23,6 +23,7 @@
     "underscore": "~1.6.0",
     "jquery": "~2.1.1",
     "requirejs-doT": "~0.1.2",
-    "javascript-state-machine": "~2.3.0"
+    "javascript-state-machine": "~2.3.0",
+    "blast-text": "~1.1.1"
   }
 }
