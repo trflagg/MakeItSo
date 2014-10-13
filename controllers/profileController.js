@@ -44,7 +44,9 @@ module.exports = function(app, db) {
             profile.name = this.request.body['name'];
             yield db.save('Profile', profile);
             this.cookies.get('profile');
-            this.cookies.set('profile', profile._id);
+            var expires = new Date();
+            expires.setFullYear(expires.getFullYear() + 1);
+            this.cookies.set('profile', profile._id, {signed: true, expires: expires});
             this.session.profile = profile._id;
 
             this.body = {
