@@ -4,6 +4,7 @@
 #titleScreen
 {
     position: relative;
+    margin-left: 10%;
 
     h1
     {
@@ -12,7 +13,6 @@
         letter-spacing: -.1em;
         display: block;
         margin: 0em;
-        margin-left: .3em;
     }
 
     #firstRow
@@ -24,5 +24,19 @@
     {
         margin-top: -0.5em;
     }
+
+    #continueMessage
+    {
+        margin-top: 60px;
+        display: none;
+
+        p {
+            font-family: 'Audiowide', sans;
+            letter-spacing: -.1em;
+            font-size: 30px;
+        }
+    }
 }
+
+
 

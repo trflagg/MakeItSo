@@ -12,6 +12,7 @@ define(['backbone'
         , '../views/modes/editOptionsMode'
         , '../views/modes/SelectShipMode'
         , '../views/modes/gameMode'
+        , '../views/modes/titleMode'
 
 ], function(Backbone
             , AppModel
@@ -19,6 +20,7 @@ define(['backbone'
             , EditOptionsMode
             , SelectShipMode
             , GameMode
+            , TitleMode
 ) {
 
     var appView = Backbone.View.extend({
@@ -58,7 +60,16 @@ define(['backbone'
         , modeChanged: function() {
             var appModel = this.model;
 
+            // TODO: Swap out views correctly to avoid memory leaks
             switch(this.model.get('mode')) {
+                case 'title':
+                    this.mode = new TitleMode({
+                            el: $("#contents")
+                            , model: appModel
+                    });
+                    this.mode.render();
+                    break;
+
                 case 'newProfile':
                     // fade out old mode.
                     $('#contents').fadeOut('slow', function() {

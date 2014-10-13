@@ -71,7 +71,7 @@ module.exports = function(app, db) {
             else {
                 // no cookie.
                 this.body = {
-                    mode: 'newProfile'
+                    mode: 'title'
                 };
             }
 
