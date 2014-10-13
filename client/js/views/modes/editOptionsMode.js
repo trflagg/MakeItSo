@@ -86,26 +86,26 @@ define(['./mode'
                 $nextScreen = this.screens[this.currentScreen].$el;
                 $prevScreen.animate({
                     left: -windowWidth
-                });
+                }, 'slow', 'linear');
                 $nextScreen.animate({
                     left: 0
-                });
+                }, 'slow', 'linear');
 
                 $("#starBackground")
                 .css('width', "+=" + (windowWidth * (2/9)))
                 .animate({
                     left: "-=" + (windowWidth * (2/9))
-                });
+                }, 'slow', 'linear');
                 $("#starMidfield")
                 .css('width', "+=" + (windowWidth * (2/6)))
                 .animate({
                     left: "-=" + (windowWidth * (2/6))
-                });
+                }, 'slow', 'linear');
                 $("#starForward")
                 .css('width', "+=" + (windowWidth * (2/3)))
                 .animate({
                     left: "-=" + (windowWidth * (2/3))
-                });
+                }, 'slow', 'linear');
 
                 this.displayScreen(this.screens[this.currentScreen]);
             }
