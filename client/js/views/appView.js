@@ -33,7 +33,7 @@ define(['backbone'
          */
         initialize: function() {
             this.model = new AppModel();
-            this.listenTo(this.model, 'change:mode', this.modeChanged);
+            this.listenTo(this.model, 'change:mode', this.updateMode);
 
             // start the app
             this.start();
@@ -52,33 +52,34 @@ define(['backbone'
         }
 
         /**
-         * modeChanged()
+         * updateMode()
          *
          * fired when the mode changes
          * @return {None}
          */
-        , modeChanged: function() {
-            var appModel = this.model;
+        , updateMode: function() {
+            var appView = this
+                , appModel = this.model;
 
             // TODO: Swap out views correctly to avoid memory leaks
             switch(this.model.get('mode')) {
                 case 'title':
-                    this.mode = new TitleMode({
-                            el: $("#contents")
+                    this.setMode(new TitleMode({
+                            el: $("<div></div>")
                             , model: appModel
-                    });
+                    }));
                     this.mode.render();
                     break;
 
                 case 'newProfile':
                     // fade out old mode.
                     $('#contents').fadeOut('slow', function() {
-                        this.mode = new EditOptionsMode({
-                            el: $("#contents")
+                        appView.setMode(new EditOptionsMode({
+                            el: $("<div></div>")
                             , model: appModel
-                        });
+                        }));
 
-                        this.mode.newProfile();
+                        appView.mode.newProfile();
 
                         $("#contents").fadeIn('slow');
                     });
@@ -89,12 +90,12 @@ define(['backbone'
 
                         appModel.set('ship', new ShipModel());
 
-                        appModel.mode = new EditOptionsMode({
-                            el: $("#contents")
+                        appView.setMode(new EditOptionsMode({
+                            el: $("<div></div>")
                             , model: appModel
-                        });
+                        }));
 
-                        appModel.mode.newShip();
+                        appView.mode.newShip();
 
                         $("#contents").fadeIn('slow');
                     });
@@ -105,12 +106,12 @@ define(['backbone'
                     appModel.getShipList();
 
                     $("#contents").fadeOut('slow', function() {
-                        this.mode = new SelectShipMode({
-                            el: $("#contents")
+                        appView.setMode(new SelectShipMode({
+                            el: $("<div></div>")
                             , model: appModel
-                        });
+                        }));
 
-                        this.mode.render();
+                        appView.mode.render();
 
                         $("#contents").fadeIn('slow');
                     });
@@ -121,12 +122,12 @@ define(['backbone'
                     appModel.get('ship').fetch();
 
                     $("#contents").fadeOut('slow', function() {
-                        this.mode = new GameMode({
-                            el: $("#contents")
+                        appView.setMode(new GameMode({
+                            el: $("<div></div>")
                             , model: appModel
-                        });
+                        }));
 
-                        this.mode.render();
+                        appView.mode.render();
 
                         $("#contents").fadeIn('slow');
                     });
@@ -134,6 +135,17 @@ define(['backbone'
             }
         }
 
+        , setMode: function(newMode) {
+            if (this.mode) {
+                this.mode.close();
+            }
+            else {
+                $("#contents").empty();
+            }
+
+            this.mode = newMode;
+            $("#contents").append(newMode.$el);
+        }
 
     })
 

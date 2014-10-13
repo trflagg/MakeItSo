@@ -32,6 +32,14 @@ define(['backbone'], function(Backbone) {
             // noop
         }
 
+        , close: function() {
+            this.remove();
+            this.unbind();
+            if (this.onClose) {
+                this.onClose();
+            }
+        }
+
     });
 
     return mode;
