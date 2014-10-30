@@ -11,7 +11,7 @@ define(['backbone'
         , '../models/appModel'
         , '../models/shipModel'
         , '../views/modes/editOptionsMode'
-        , '../views/modes/SelectShipMode'
+        , '../views/modes/selectShipMode'
         , '../views/modes/gameMode'
         , '../views/modes/titleMode'
 

@@ -5,7 +5,7 @@
  */
 
 define(['./screen'
-        , 'doT!/templates/screens/ShipCrewScreen'
+        , 'doT!/templates/screens/shipCrewScreen'
 
 ], function(Screen
             , template

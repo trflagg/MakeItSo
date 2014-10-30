@@ -1,7 +1,7 @@
 
 
 define(['./gameScreen'
-        , 'doT!/templates/screens/TitleScreen'
+        , 'doT!/templates/screens/titleScreen'
 
 ], function(GameScreen
             , template

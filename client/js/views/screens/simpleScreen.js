@@ -1,7 +1,7 @@
 
 
 define(['./gameScreen'
-        , 'views/CommandHolderView'
+        , 'views/commandHolderView'
         , 'doT!/templates/screens/simpleScreen'
 
 ], function(GameScreen
