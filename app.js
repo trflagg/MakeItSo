@@ -7,7 +7,6 @@
 var fs = require('fs')
 
     , Db = require('argieDB/co-db')
-    , environment = require('argieDB/environment-local')
 
     , regExs = require('./helpers/regExs')
 
@@ -23,7 +22,15 @@ var app = module.exports = koa();
 /**
  * Create db connection
  */
+console.log('Connecting to DB');
+if (app.env === 'production') {
+    var environment = require('./environment-production');
+}
+else {
+    var environment = require('argieDB/environment-local');
+}
 var db = new Db(environment);
+console.log('Connected.');
 
 /**
  * Register argie's regExs
@@ -55,5 +62,5 @@ fs.readdirSync('./controllers').forEach(function (file) {
 
 
 // Start!
-if (!module.parent) app.listen(3000);
+if (!module.parent) app.listen(8888);
 

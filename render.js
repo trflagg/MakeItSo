@@ -10,4 +10,5 @@ module.exports = views('views', {
     map: {
         html: 'swig'
     }
+    , cache: 'memory'
 });
