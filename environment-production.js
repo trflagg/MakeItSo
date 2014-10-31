@@ -1,3 +1,5 @@
 
 module.exports.appName = 'MakeItSo'
-module.exports.db = process.env.MONGO_URL
+module.exports.db = {
+  URL: process.env.MONGO_URL
+}

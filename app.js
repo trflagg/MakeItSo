@@ -25,6 +25,7 @@ var app = module.exports = koa();
 console.log('Connecting to DB');
 if (app.env === 'production') {
     var environment = require('./environment-production');
+    console.log('db URL: '+environment.db.URL);
 }
 else {
     var environment = require('argieDB/environment-local');
