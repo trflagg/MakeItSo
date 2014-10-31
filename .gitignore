@@ -7,6 +7,6 @@ client/bower-components/
 
 .sass-cache/
 
-client/css/
+client/css/main.css
 
 fixtures/
