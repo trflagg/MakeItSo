@@ -67,5 +67,5 @@ fs.readdirSync('./controllers').forEach(function (file) {
 
 
 // Start!
-if (!module.parent) app.listen(8888);
+if (!module.parent) app.listen(3000);
 

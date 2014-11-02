@@ -7,4 +7,4 @@ RUN gem install sass
 RUN sass sass/main.scss client/css/main.css
 
 ENV NODE_ENV production
-EXPOSE 8888
+EXPOSE 3000
