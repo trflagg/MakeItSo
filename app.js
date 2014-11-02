@@ -25,11 +25,14 @@ var app = module.exports = koa();
 console.log('Connecting to DB');
 if (app.env === 'production') {
     var environment = require('./environment-production');
-    console.log('db URL: '+environment.db.URL);
+}
+else if (app.env === 'dev-docker') {
+    var environment = require('./environment-dev-docker');
 }
 else {
     var environment = require('argieDB/environment-local');
 }
+console.log('db URL: '+environment.db.URL);
 var db = new Db(environment);
 console.log('Connected.');
 
