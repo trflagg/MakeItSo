@@ -7,7 +7,7 @@ Uses Node, Koa, &amp; MongoDB.
 
 This is a work in progress!
 
-You can play it here: http://hi-scor.es:8888/ THIS IS A WORK IN PROGRESS!
+You can play it here: http://hi-scor.es:3000/ THIS IS AN INCOMPLETE WORK IN PROGRESS!
 
 This repo is a new implementation of [this project](https://github.com/trflagg/MiS).
 
