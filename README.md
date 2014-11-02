@@ -15,7 +15,7 @@ To build the docker image:
 
     make build
 
-To run the container for dev ($MONGO_URL must be set):
+To run the container for dev ($MONGO_URL_DEV must be set):
 
     make run-dev
 
