@@ -32,7 +32,8 @@ else if (app.env === 'dev-docker') {
 else {
     var environment = require('argieDB/environment-local');
 }
-console.log('db URL: '+environment.db.URL);
+// hide the username:password in the URL string
+console.log('db URL: '+environment.db.URL.replace(/:\/\/.*:(.*)@/, 'XXXXXXX'));
 var db = new Db(environment);
 console.log('Connected.');
 
