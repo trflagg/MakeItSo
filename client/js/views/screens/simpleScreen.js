@@ -24,6 +24,7 @@ define(['./gameScreen'
         model: this.model.get('ship')
         , el: this.$("#commands")
       });
+      this.$("#commands").hide();
       this.listenTo(this.rootCommands, 'run', this.runCommand);
       this.listenTo(this.model.get('ship'), 'change:children', this.commandsChanged);
     }
@@ -43,6 +44,10 @@ define(['./gameScreen'
         model: this.model.get('ship')
         , el: this.$("#commands")
       });
+    }
+
+    , outputDone: function() {
+      this.$("#commands").show();
     }
   });
 

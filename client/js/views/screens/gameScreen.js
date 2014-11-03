@@ -11,6 +11,7 @@ define(['backbone', 'regExList'], function(Backbone, regExList) {
 
         initialize: function() {
           this.listenTo(this.model.get('ship'), 'change:lastResult', this.outputLastResult);
+          this.listenTo(this, 'output_done', this.outputDone);
         }
 
         , outputLastResult: function() {
@@ -18,10 +19,18 @@ define(['backbone', 'regExList'], function(Backbone, regExList) {
               , lines = lastResult.split('\n')
               , $innerDiv = $("<div></div>");
 
+          // here is our semaphore..
+          // node is single-threaded so it should be threadsafe
+          this.waiters = 0;
+
           this.outputLines(lines, $innerDiv);
 
           $(this.el).html(this.template({}));
           this.$(".output").html($innerDiv);
+        }
+
+        , outputDone: function() {
+          // noop
         }
 
         , outputLines: function(lines, $output) {
@@ -29,6 +38,10 @@ define(['backbone', 'regExList'], function(Backbone, regExList) {
             // remove the first one
             var currentLine = lines.shift();
             lines = this.outputLine(currentLine, lines, $output);
+          }
+          console.log(this.waiters);
+          if (this.waiters === 0) {
+            this.trigger('output_done');
           }
         }
 

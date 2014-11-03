@@ -17,9 +17,12 @@ define(function(require, exports, module) {
     , placeholder: '{% WAIT(%d) %}'
     , regEx: /^{% WAIT\((\d+)\) %}/
     , functionBody: function(lines, $output, args) {
-      console.dir('wait '+args[1]);
       var gameScreen = this;
+      // set semaphore to say someone is waiting
+      this.waiters++;
       setTimeout(function() {
+        // unset to say we're done
+        gameScreen.waiters--;
         gameScreen.outputLines(lines, $output)
       }, args[1])
       return [];
