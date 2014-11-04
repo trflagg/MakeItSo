@@ -34,7 +34,7 @@ define(['./mode'
             $(this.el).html(this.template());
             this.continueChars = this.$("#continueMessage p")
                                     .blast({delimiter: "character"})
-                                    .hide()
+                                    .css('opacity', 0);
 
             return this;
         }
@@ -44,9 +44,14 @@ define(['./mode'
             for(var i=0, ll=this.continueChars.length; i<ll; i++) {
                 // need intermediate function to avoid sharing 'i'
                 (function(index) {
-                    setTimeout(function() {
-                        $(this.continueChars[index]).show();
-                    }.bind(this), index * 20);
+                    this.interval = setInterval(function() {
+                        setTimeout(function() {
+                            $(this.continueChars[index]).css('opacity', 1);
+                        }.bind(this), index * 30);
+                        setTimeout(function() {
+                            $(this.continueChars[index]).css('opacity', 0);
+                        }.bind(this), (index * 30) + 1100);
+                    }.bind(this), 3000);
                 }).call(this, i);
             }
         }
