@@ -21,6 +21,8 @@ define(['backbone', 'regExList'], function(Backbone, regExList) {
 
           // here is our semaphore..
           // node is single-threaded so it should be threadsafe
+          // wait a second...
+          // this on the client!
           this.waiters = 0;
 
           this.outputLines(lines, $innerDiv);
