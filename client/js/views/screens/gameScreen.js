@@ -41,7 +41,6 @@ define(['backbone', 'regExList'], function(Backbone, regExList) {
             var currentLine = lines.shift();
             lines = this.outputLine(currentLine, lines, $output);
           }
-          console.log(this.waiters);
           if (this.waiters === 0) {
             this.trigger('output_done');
           }

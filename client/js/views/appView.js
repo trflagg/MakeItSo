@@ -150,9 +150,6 @@ define(['backbone'
                         return StateMachine.ASYNC;
                     }
                     , onbeforeevent: function(event, from, to) {
-                        console.dir(event);
-                        console.log(from);
-                        console.log(to);
                     }
                 }
             });
