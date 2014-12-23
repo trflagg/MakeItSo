@@ -1,6 +1,6 @@
 {
   "name": "MakeItSo",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "OpenSource engine for the game I'm working on. Uses Node, MongoDB, & Koa.",
   "main": "index.js",
   "scripts": {
@@ -38,6 +38,7 @@
     "mocha": "^1.21.3",
     "should": "^4.0.4",
     "supertest": "^0.13.0",
-    "thunkify": "^2.1.2"
+    "thunkify": "^2.1.2",
+    "version": "^0.1.2"
   }
 }
