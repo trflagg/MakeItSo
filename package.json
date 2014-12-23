@@ -38,6 +38,7 @@
     "mocha": "^1.21.3",
     "should": "^4.0.4",
     "supertest": "^0.13.0",
-    "thunkify": "^2.1.2"
+    "thunkify": "^2.1.2",
+    "version": "^0.1.2"
   }
 }
