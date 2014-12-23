@@ -19,6 +19,10 @@ To run the container for dev ($MONGO_URL_DEV must be set):
 
     make run-dev
 
-To run the container for production ($MONGO_URL must be set):
+To run the container from local build ($MONGO_URL must be set):
 
     make run
+
+To run from dockerhub registry ($MONGO_URL must be set):
+
+    make run-prod
