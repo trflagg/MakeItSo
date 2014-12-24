@@ -2,7 +2,7 @@ var fs = require('fs')
     , thunkify = require('thunkify')
     , Db = require('argieDB/db')
     , coDb = require('argieDB/co-db')
-    , environment = require('argieDB/environment-local')
+    , environment = require('../environment-test')
 
 module.exports = function() {
     helpers = {};
