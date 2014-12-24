@@ -8,7 +8,7 @@ describe('Ship object', function() {
         , ship_id;
 
     before(function() {
-        db = helpers.getDb();
+        db = helpers.getCoDb();
         helpers.loadModels(db);
     });
 
@@ -40,50 +40,40 @@ describe('Ship object', function() {
         ship._children.direct_messages.should.not.equal(null);
     }),
 
-    it('should fail to save if shipName is too short', function(done) {
+    it('should fail to save if shipName is too short', function*() {
         ship.shipName = 'yo';
-        db.save('Ship', ship, function(err) {
-            err.message.should.equal('shipName must be at least 3 characters.');
-            done();
-        });
+        try {
+            yield db.save('Ship', ship)
+        } catch(e) {
+            e.message.should.equal('shipName must be at least 3 characters.');
+        }
     });
 
-    it('should fail to save if shipName is not only letters', function(done) {
+    it('should fail to save if shipName is not only letters', function*() {
         ship.shipName = 'yo.p';
-        db.save('Ship', ship, function(err) {
-            err.message.should.equal('shipName may only contain uppercase and lowercase letters.');
-            done();
-        });
+        try {
+            yield db.save('Ship', ship);
+        } catch(e) {
+            e.message.should.equal('shipName may only contain uppercase and lowercase letters.');
+        }
     });
 
-    it('should save to the db', function(done) {
+    it('should save to the db', function*() {
         ship.shipName = 'Yomata';
 
-        db.save('Ship', ship, function(err) {
-            assert.equal(err, null);
-            ship_id = ship._id;
-
-            done();
-        });
+        yield db.save('Ship', ship);
+        ship_id = ship._id;
     }),
 
-    it('should load from db', function(done) {
-        db.load('Ship', {_id: ship_id}, function(err, loaded_ship) {
-            assert.equal(err, null);
-            loaded_ship.shipName.should.equal('Yomata');
-
-            done();
-        });
+    it('should load from db', function*() {
+        var loaded_ship = yield db.load('Ship', {_id: ship_id})
+        loaded_ship.shipName.should.equal('Yomata');
     }),
 
-    it('should only load from projection', function(done) {
-        db.load('Ship', {_id: ship_id}, {shipName: 1}, function(err, loaded_ship) {
-            assert.equal(err, null);
-            loaded_ship.shipName.should.equal('Yomata');
-            loaded_ship.should.not.have.property('profile_id');
-            loaded_ship.should.not.have.property('_children');
-
-            done();
-        })
+    it('should only load from projection', function*() {
+        var loaded_ship = yield db.load('Ship', {_id: ship_id}, {shipName: 1});
+        loaded_ship.shipName.should.equal('Yomata');
+        loaded_ship.should.not.have.property('profile_id');
+        loaded_ship.should.not.have.property('_children');
     })
 });
