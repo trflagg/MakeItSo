@@ -76,4 +76,19 @@ describe('Ship object', function() {
         loaded_ship.should.not.have.property('profile_id');
         loaded_ship.should.not.have.property('_children');
     })
+
+    it('should load with INIT message when startGame is called', function*() {
+        var loaded_ship = yield db.load('Ship', {_id: ship_id});
+        yield loaded_ship.startGame();
+
+        var ship_client = loaded_ship.toClient();
+        ship_client.lastResult.should.equal('\nThis is the INIT message.\n\n\nThis is the START message.\n\n\n\n');
+        ship_client.screen.should.equal('TITLE');
+        ship_client.commands.should.containDeep([{
+            text: 'message1'
+        }]);
+        ship_client.commands.should.containDeep([{
+            text: 'message2'
+        }]);
+    })
 });
