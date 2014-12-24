@@ -13,9 +13,8 @@ describe('Ship object', function() {
     });
 
     after(function() {
-        db.remove('Ship', {_id: ship_id}, function(err) {
-            db.close();
-        })
+        db.deleteAll('Ship');
+        db.close();
     });
 
     it('should make a new object', function() {

@@ -13,7 +13,7 @@ describe('Profile object', function() {
     });
 
     after(function*() {
-        yield db.remove('Profile', {_id: profile_id});
+        db.deleteAll('Profile');
         db.close();
     })
 
