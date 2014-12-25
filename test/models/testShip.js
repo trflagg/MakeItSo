@@ -93,4 +93,19 @@ describe('Ship object', function() {
             text: 'message2'
         }]);
     });
+
+    it('should run a command', function*() {
+        var loaded_ship = yield db.load('Ship', {_id: ship_id});
+        yield loaded_ship.startGame();
+
+        yield loaded_ship.runCommand('message1');
+        var ship_client = loaded_ship.toClient();
+        ship_client.lastResult.should.equal('\nThis is MESSAGE_1\n');
+        ship_client.commands.should.not.containDeep([{
+            text: 'message1'
+        }]);
+        ship_client.commands.should.containDeep([{
+            text: 'message2'
+        }]);
+    });
 });
