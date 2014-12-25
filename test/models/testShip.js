@@ -7,13 +7,15 @@ describe('Ship object', function() {
         , ship
         , ship_id;
 
-    before(function() {
+    before(function*() {
         db = helpers.getCoDb();
         helpers.loadModels(db);
+        yield helpers.loadFixtures(db);
     });
 
     after(function() {
         db.deleteAll('Ship');
+        db.deleteAll('Message');
         db.close();
     });
 

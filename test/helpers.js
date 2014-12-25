@@ -2,7 +2,7 @@ var fs = require('fs')
     , thunkify = require('thunkify')
     , Db = require('argieDB/db')
     , coDb = require('argieDB/co-db')
-    , environment = require('../environment-test')
+    , environment = require('../environment-test');
 
 module.exports = function() {
     helpers = {};
@@ -19,6 +19,12 @@ module.exports = function() {
         fs.readdirSync('./models').forEach(function(file) {
             require('../models/' + file)(db);
         });
+    }
+
+    helpers.loadFixtures = function*(db) {
+        var MessageLoader = require('argie/messageLoader');
+        loader = new MessageLoader(db);
+        yield loader.loadDirectory('test/fixtures/');
     }
 
     helpers.createSession = function(agent, callback) {
