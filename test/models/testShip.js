@@ -23,7 +23,7 @@ describe('Ship object', function() {
         ship = db.create('Ship');
         assert.equal(ship.shipName, null);
         assert.equal(ship.output, null);
-    }),
+    })
 
     it('should have all of its children and subchildren', function() {
         ship._children.crew.should.not.equal(null);
@@ -40,7 +40,7 @@ describe('Ship object', function() {
         ship._children.ship_controls._children.processor.should.not.equal(null);
         ship._children.ship_controls._children.engines.should.not.equal(null);
         ship._children.direct_messages.should.not.equal(null);
-    }),
+    });
 
     it('should fail to save if shipName is too short', function*() {
         ship.shipName = 'yo';
@@ -65,19 +65,19 @@ describe('Ship object', function() {
 
         yield db.save('Ship', ship);
         ship_id = ship._id;
-    }),
+    });
 
     it('should load from db', function*() {
         var loaded_ship = yield db.load('Ship', {_id: ship_id})
         loaded_ship.shipName.should.equal('Yomata');
-    }),
+    });
 
     it('should only load from projection', function*() {
         var loaded_ship = yield db.load('Ship', {_id: ship_id}, {shipName: 1});
         loaded_ship.shipName.should.equal('Yomata');
         loaded_ship.should.not.have.property('profile_id');
         loaded_ship.should.not.have.property('_children');
-    })
+    });
 
     it('should load with INIT message when startGame is called', function*() {
         var loaded_ship = yield db.load('Ship', {_id: ship_id});
@@ -92,5 +92,5 @@ describe('Ship object', function() {
         ship_client.commands.should.containDeep([{
             text: 'message2'
         }]);
-    })
+    });
 });
