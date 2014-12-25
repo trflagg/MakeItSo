@@ -130,8 +130,6 @@ module.exports = function(db) {
     systemWrapper.prototype.registerFunction({
         functionName: 'setScreen'
         , functionBody: function(screenName) {
-            console.log('setScreen '+screenName);
-            console.dir(this);
             this._avatar.screen = screenName;
         }
     });
