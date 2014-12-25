@@ -7,22 +7,23 @@ describe('Ship object', function() {
         , ship
         , ship_id;
 
-    before(function() {
-        db = helpers.getDb();
+    before(function*() {
+        db = helpers.getCoDb();
         helpers.loadModels(db);
+        yield helpers.loadFixtures(db);
     });
 
     after(function() {
-        db.remove('Ship', {_id: ship_id}, function(err) {
-            db.close();
-        })
+        db.deleteAll('Ship');
+        db.deleteAll('Message');
+        db.close();
     });
 
     it('should make a new object', function() {
         ship = db.create('Ship');
         assert.equal(ship.shipName, null);
         assert.equal(ship.output, null);
-    }),
+    })
 
     it('should have all of its children and subchildren', function() {
         ship._children.crew.should.not.equal(null);
@@ -39,52 +40,72 @@ describe('Ship object', function() {
         ship._children.ship_controls._children.processor.should.not.equal(null);
         ship._children.ship_controls._children.engines.should.not.equal(null);
         ship._children.direct_messages.should.not.equal(null);
-    }),
+    });
 
-    it('should fail to save if shipName is too short', function(done) {
+    it('should fail to save if shipName is too short', function*() {
         ship.shipName = 'yo';
-        db.save('Ship', ship, function(err) {
-            err.message.should.equal('shipName must be at least 3 characters.');
-            done();
-        });
+        try {
+            yield db.save('Ship', ship)
+        } catch(e) {
+            e.message.should.equal('shipName must be at least 3 characters.');
+        }
     });
 
-    it('should fail to save if shipName is not only letters', function(done) {
+    it('should fail to save if shipName is not only letters', function*() {
         ship.shipName = 'yo.p';
-        db.save('Ship', ship, function(err) {
-            err.message.should.equal('shipName may only contain uppercase and lowercase letters.');
-            done();
-        });
+        try {
+            yield db.save('Ship', ship);
+        } catch(e) {
+            e.message.should.equal('shipName may only contain uppercase and lowercase letters.');
+        }
     });
 
-    it('should save to the db', function(done) {
+    it('should save to the db', function*() {
         ship.shipName = 'Yomata';
 
-        db.save('Ship', ship, function(err) {
-            assert.equal(err, null);
-            ship_id = ship._id;
+        yield db.save('Ship', ship);
+        ship_id = ship._id;
+    });
 
-            done();
-        });
-    }),
+    it('should load from db', function*() {
+        var loaded_ship = yield db.load('Ship', {_id: ship_id})
+        loaded_ship.shipName.should.equal('Yomata');
+    });
 
-    it('should load from db', function(done) {
-        db.load('Ship', {_id: ship_id}, function(err, loaded_ship) {
-            assert.equal(err, null);
-            loaded_ship.shipName.should.equal('Yomata');
+    it('should only load from projection', function*() {
+        var loaded_ship = yield db.load('Ship', {_id: ship_id}, {shipName: 1});
+        loaded_ship.shipName.should.equal('Yomata');
+        loaded_ship.should.not.have.property('profile_id');
+        loaded_ship.should.not.have.property('_children');
+    });
 
-            done();
-        });
-    }),
+    it('should load with INIT message when startGame is called', function*() {
+        var loaded_ship = yield db.load('Ship', {_id: ship_id});
+        yield loaded_ship.startGame();
 
-    it('should only load from projection', function(done) {
-        db.load('Ship', {_id: ship_id}, {shipName: 1}, function(err, loaded_ship) {
-            assert.equal(err, null);
-            loaded_ship.shipName.should.equal('Yomata');
-            loaded_ship.should.not.have.property('profile_id');
-            loaded_ship.should.not.have.property('_children');
+        var ship_client = loaded_ship.toClient();
+        ship_client.lastResult.should.equal('\nThis is the INIT message.\n\n\nThis is the START message.\n\n\n\n');
+        ship_client.screen.should.equal('TITLE');
+        ship_client.commands.should.containDeep([{
+            text: 'message1'
+        }]);
+        ship_client.commands.should.containDeep([{
+            text: 'message2'
+        }]);
+    });
 
-            done();
-        })
-    })
+    it('should run a command', function*() {
+        var loaded_ship = yield db.load('Ship', {_id: ship_id});
+        yield loaded_ship.startGame();
+
+        yield loaded_ship.runCommand('message1');
+        var ship_client = loaded_ship.toClient();
+        ship_client.lastResult.should.equal('\nThis is MESSAGE_1\n');
+        ship_client.commands.should.not.containDeep([{
+            text: 'message1'
+        }]);
+        ship_client.commands.should.containDeep([{
+            text: 'message2'
+        }]);
+    });
 });
