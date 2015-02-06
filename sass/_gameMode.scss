@@ -38,8 +38,13 @@
       overflow: scroll;
     }
 
+
     .outputText {
       margin-top: 40px;
+    }
+
+    .chat .outputText {
+      margin-top: 0px;
     }
 
     #commands {
