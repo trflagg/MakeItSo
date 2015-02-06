@@ -15,6 +15,7 @@ define(['backbone', 'regExList'], function(Backbone, regExList) {
         }
 
         , outputLastResult: function() {
+          this.$("#commands").hide();
           var lastResult = this.model.get('ship').get('lastResult')
               , lines = lastResult.split('\n')
               , $innerDiv = $("<div></div>");
@@ -27,7 +28,6 @@ define(['backbone', 'regExList'], function(Backbone, regExList) {
 
           this.outputLines(lines, $innerDiv);
 
-          $(this.el).html(this.template({}));
           this.$(".output").html($innerDiv);
         }
 
