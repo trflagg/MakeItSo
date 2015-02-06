@@ -23,9 +23,30 @@ define(function(require, exports, module) {
       setTimeout(function() {
         // unset to say we're done
         gameScreen.waiters--;
-        gameScreen.outputLines(lines, $output)
+        gameScreen.outputLines(lines, $output);
       }, args[1])
       return [];
+    }
+  }
+
+  , {
+    functionName: 'startChat'
+    , placeholder: '{% START_CHAT %}'
+    , regEx: /^{% START_CHAT %}/
+    , functionBody: function(lines, $output, args) {
+      var $innerDiv = $("<div></div>").addClass('chat');
+      $output.append($innerDiv);
+      return this.outputLines(lines, $innerDiv);
+    }
+  }
+
+  , {
+    functionName: 'endChat'
+    , placeholder: '{% END_CHAT %}'
+    , regEx: /^{% END_CHAT %}/
+    , functionBody: function(lines, $output, args) {
+      var $outDiv = $output.parent()
+      return this.outputLines(lines, $outDiv);
     }
   }];
 
