@@ -21,3 +21,6 @@ run-prod:
 
 update-dev-fixtures:
 	node --harmony node_modules/argie/messageLoader ../../environment-dev-docker.js
+
+update-prod-fixtures:
+	node --harmony node_modules/argie/messageLoader ../../environment-production.js
