@@ -31,6 +31,14 @@ define(['./gameScreen'
 
     , render: function() {
       $(this.el).html(this.template({}));
+
+      // TODO: unbind this event handler in an onClose() method
+      // Probably also need to call that onClose() from the mode's
+      // onClose()
+      $("#simpleScreen").height($(window).height());
+      $(window).resize(function() {
+          $("#simpleScreen").height($(window).height());
+      })
     }
 
     , runCommand: function(commandText) {
