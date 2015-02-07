@@ -18,19 +18,27 @@ define(['./gameScreen'
       GameScreen.prototype.initialize.apply(this);
 
       this.template = template;
-      this.render();
 
+      this.render();
       this.rootCommands = new CommandHolderView({
         model: this.model.get('ship')
         , el: this.$("#commands")
       });
-      this.$("#commands").hide();
       this.listenTo(this.rootCommands, 'run', this.runCommand);
       this.listenTo(this.model.get('ship'), 'change:children', this.commandsChanged);
+      this.outputLastResult();
     }
 
     , render: function() {
-      return this.outputLastResult();
+      $(this.el).html(this.template({}));
+
+      // TODO: unbind this event handler in an onClose() method
+      // Probably also need to call that onClose() from the mode's
+      // onClose()
+      $("#simpleScreen").height($(window).height());
+      $(window).resize(function() {
+          $("#simpleScreen").height($(window).height());
+      })
     }
 
     , runCommand: function(commandText) {

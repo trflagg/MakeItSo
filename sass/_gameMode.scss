@@ -34,18 +34,39 @@
     }
 
     .output {
-      height: 500px;
+      height: 75%;
       overflow: scroll;
     }
+
 
     .outputText {
       margin-top: 40px;
     }
 
+    .chat .outputText {
+      margin-top: 0px;
+
+      .collins {
+        color: #B44;
+      }
+      .mackenzie {
+        color: #499;
+      }
+      .hawkins {
+        color: #55C;
+      }
+      .golz {
+        color: #494;
+      }
+      .banerjee {
+        color: #949;
+      }
+    }
+
     #commands {
       display: inline-block;
       text-align: center;
-      margin-top: 50px;
+      margin-top: 10px;
       width: 100%;
 
       li {

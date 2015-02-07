@@ -16,3 +16,11 @@ run-dev:
 run:
 	docker run -d -p 3000:3000 --name='mis' -e MONGO_URL=$(MONGO_URL) mis
 
+run-prod:
+	docker run -d -p 3000:3000 --name='mis' -e MONGO_URL=$(MONGO_URL) trflagg/makeitso
+
+update-dev-fixtures:
+	node --harmony node_modules/argie/messageLoader ../../environment-dev-docker.js
+
+update-prod-fixtures:
+	node --harmony node_modules/argie/messageLoader ../../environment-production.js

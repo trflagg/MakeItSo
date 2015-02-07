@@ -5,7 +5,12 @@
  *
  */
 
-define(['backbone', 'regExList'], function(Backbone, regExList) {
+define(['backbone'
+        , 'regExList'
+        , 'regExLines'
+], function(Backbone
+            , regExList
+            , regExLines ) {
 
     var screen = Backbone.View.extend({
 
@@ -15,6 +20,7 @@ define(['backbone', 'regExList'], function(Backbone, regExList) {
         }
 
         , outputLastResult: function() {
+          this.$("#commands").hide();
           var lastResult = this.model.get('ship').get('lastResult')
               , lines = lastResult.split('\n')
               , $innerDiv = $("<div></div>");
@@ -27,7 +33,6 @@ define(['backbone', 'regExList'], function(Backbone, regExList) {
 
           this.outputLines(lines, $innerDiv);
 
-          $(this.el).html(this.template({}));
           this.$(".output").html($innerDiv);
         }
 
@@ -64,6 +69,13 @@ define(['backbone', 'regExList'], function(Backbone, regExList) {
               // checked if scrolled to bottom before we print line
               var $output = this.$('div.output');
               var isScrolledToBottom = $output.prop('scrollHeight') - $output.prop('clientHeight') <= $output.scrollTop() + 1;
+              // match against lineStartRegExs
+              _.each(regExLines, function(regEx) {
+                if ((regExArray = regEx.regEx.exec(currentLine)) != null) {
+                  currentLine = regEx.functionBody(currentLine, regExArray);
+                }
+              });
+
               $innerDiv.append($("<p></p>").addClass("outputText").append(currentLine));
               if (isScrolledToBottom) {
                 this.scrollToBottom($output);

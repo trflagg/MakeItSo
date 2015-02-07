@@ -78,7 +78,7 @@ define(['backbone'
                     , { name: 'startGame', from: ['selectShip', 'newShip'], to: 'startGame'}
                 ]
                 , callbacks: {
-                    ontitle: function(event, from, to) {
+                    onentertitle: function(event, from, to) {
                         appView.setMode(new TitleMode({
                                 el: $("<div></div>")
                                 , model: appModel
@@ -86,7 +86,7 @@ define(['backbone'
                         appView.mode.render();
                         return StateMachine.ASYNC;
                     }
-                    , onnewProfile: function(event, from, to) {
+                    , onenternewProfile: function(event, from, to) {
                         // fade out old mode.
                         $('#contents').fadeOut('slow', function() {
                             appView.setMode(new EditOptionsMode({
@@ -100,7 +100,7 @@ define(['backbone'
                         });
                         return StateMachine.ASYNC;
                     }
-                    , onnewShip: function(event, from, to) {
+                    , onenternewShip: function(event, from, to) {
                         $("#contents").fadeOut('slow', function() {
 
                             appModel.set('ship', new ShipModel());
@@ -116,7 +116,7 @@ define(['backbone'
                         });
                         return StateMachine.ASYNC;
                     }
-                    , onselectShip: function(event, from, to) {
+                    , onenterselectShip: function(event, from, to) {
                         appModel.loadProfile();
                         appModel.getShipList();
 
@@ -132,7 +132,7 @@ define(['backbone'
                         });
                         return StateMachine.ASYNC;
                     }
-                    , onstartGame: function(event, from, to, model) {
+                    , onenterstartGame: function(event, from, to, model) {
                         // fetch ship from server
                         appModel.get('ship').fetch();
 
