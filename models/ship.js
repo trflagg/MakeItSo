@@ -122,6 +122,7 @@ module.exports = function(db) {
         client_ship.lastResult = this.lastResult;
         client_ship.screen = this.screen;
         client_ship.commands = this.getCommandTextList();
+        client_ship.location = this.getLocation();
 
         return client_ship;
     };

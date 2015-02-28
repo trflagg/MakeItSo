@@ -38,6 +38,7 @@ define([
             this.set('shipName', response.shipName);
             this.set('output', response.output);
             this.set('lastResult', response.lastResult);
+            this.set('location', response.location);
 
             var rootCommands = [];
             var commands = response.commands;
