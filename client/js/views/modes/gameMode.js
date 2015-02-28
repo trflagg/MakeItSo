@@ -8,11 +8,13 @@
 define(['./mode'
         , '../screens/titleScreen'
         , '../screens/simpleScreen'
+        , '../screens/bridgeScreen'
         , 'doT!/templates/modes/gameMode'
 
 ], function(Mode
             , TitleScreen
             , SimpleScreen
+            , BridgeScreen
             , template
 ) {
 
@@ -46,6 +48,13 @@ define(['./mode'
 
                 case 'SIMPLE':
                     this.screen = new SimpleScreen({
+                        model: this.model
+                        , el: this.$("#screen")
+                    })
+                    break;
+
+                case 'BRIDGE':
+                    this.screen = new BridgeScreen({
                         model: this.model
                         , el: this.$("#screen")
                     })
