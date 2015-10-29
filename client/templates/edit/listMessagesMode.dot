@@ -1,6 +1,11 @@
 <div id="listMessages" class="centerDiv">
-Hello World
+
+<h2>Messages:</h2>
+
+<select id="messageSelect">
+    <option></option>
 {{~it.messages :message}}
-    <p>{{=message}}</p>
+    <option>{{=message}}</option>
 {{~}}
+</select>
 </div>

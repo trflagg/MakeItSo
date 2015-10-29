@@ -8,6 +8,7 @@ define(['../../modes/mode'
 
     var listMessagesMode = Mode.extend({
         events: {
+            'change #messageSelect': 'messageSelected'
         }
 
         , init: function() {
@@ -31,8 +32,11 @@ define(['../../modes/mode'
                 })
             }));
 
-            console.log('render');
             return this;
+        }
+
+        , messageSelected: function(event) {
+            console.log(event.target.value);
         }
 
     });
