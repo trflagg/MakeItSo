@@ -8,7 +8,11 @@ define(['../../modes/mode'
 
     var editMessageMode = Mode.extend({
 
-        init: function(options) {
+        events: {
+            'click #saveButton': 'saveMessage'
+        }
+
+        , init: function(options) {
             this.message_name = options.message_name;
             this.template = template;
             var message = Backbone.Model.extend({
@@ -29,11 +33,16 @@ define(['../../modes/mode'
                 message: this.message
             }));
             var textArea = $("#editTextarea").append(this.message.get('_text'));
-            textArea.height($(window).height() - 10);
-            textArea.width($(window).width() - 10);
-            this.$("#editMessage").append(textArea);
+            $("#editMessage").height($(document).height() - 20);
+            $("#editMessage").width($(document).width() - 20);
 
             return this;
+        }
+
+        , saveMessage: function() {
+            this.message.set('_text', $('#editTextarea')[0].value)
+            console.log(this.message.get('_text'));
+            this.message.save();
         }
 
     });

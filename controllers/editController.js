@@ -1,6 +1,8 @@
 
-var render = require('../render');
-var ObjectID = require('mongodb').ObjectID;
+var render = require('../render')
+    , requireParams = require('../middleware/require-params')
+    , bodyParser = require('koa-body')
+    , ObjectID = require('mongodb').ObjectID;
 
 module.exports = function(app, db) {
 
@@ -19,6 +21,24 @@ module.exports = function(app, db) {
           var message = yield db.load('Message', {'name': message_name});
           console.dir(message);
           this.body = message;
+        }
+
+        app.post('/edit/api/message/:message_name'
+                , bodyParser()
+                , requireParams(['_name'
+                                ,'_text'])
+                , save_message);
+        function *save_message() {
+          try {
+            console.log(this.params);
+            console.log(this.request.body);
+            var message = yield db.load('Message', {'name': this.request.body._name});
+            message.setText(this.request.body._text);
+            yield db.save('Message', message);
+            this.body = 'success';
+          } catch(e) {
+            throw e;
+          }
         }
 
         app.get('/edit/(.*)', index);
