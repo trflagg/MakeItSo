@@ -10,6 +10,7 @@ define(['../../modes/mode'
 
         events: {
             'click #saveButton': 'saveMessage'
+            , 'click #listButton': 'backToMessageList'
         }
 
         , init: function(options) {
@@ -32,7 +33,7 @@ define(['../../modes/mode'
             $(this.el).html(this.template({
                 message: this.message
             }));
-            var textArea = $("#editTextarea").append(this.message.get('_text'));
+            var textArea = $("#editTextarea").append(this.message.escape('_text'));
             $("#editMessage").height($(document).height() - 20);
             $("#editMessage").width($(document).width() - 20);
 
@@ -43,6 +44,10 @@ define(['../../modes/mode'
             this.message.set('_text', $('#editTextarea')[0].value)
             console.log(this.message.get('_text'));
             this.message.save();
+        }
+
+        , backToMessageList: function() {
+          Backbone.history.navigate("messages", {trigger: true});
         }
 
     });

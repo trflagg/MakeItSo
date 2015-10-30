@@ -2,5 +2,6 @@
   <h2>{{= it.message.get('_name') }}</h2>
   <textarea id="editTextarea" />
   <button id="saveButton">Save</button>
+  <button id="listButton">Message List</button>
 </div>
 
