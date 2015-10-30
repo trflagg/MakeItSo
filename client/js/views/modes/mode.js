@@ -17,9 +17,9 @@ define(['backbone'], function(Backbone) {
          * general initialization for all modes
          * @return {None}
          */
-        initialize: function() {
+        initialize: function(options) {
 
-            this.init();
+            this.init(options);
         }
 
         /**

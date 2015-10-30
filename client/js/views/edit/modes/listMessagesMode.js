@@ -36,7 +36,7 @@ define(['../../modes/mode'
         }
 
         , messageSelected: function(event) {
-            console.log(event.target.value);
+            Backbone.history.navigate("message/" + event.target.value, {trigger: true});
         }
 
     });
