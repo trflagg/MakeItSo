@@ -19,7 +19,7 @@
   "homepage": "https://github.com/trflagg/MakeItSo",
   "dependencies": {
     "amdefine": "^0.1.0",
-    "argie": "git://github.com/trflagg/argie.git#co_db",
+    "argie": "git://github.com/trflagg/argie.git",
     "argieDB": "git://github.com/trflagg/argieDB.git",
     "co-views": "^0.2.0",
     "koa": "~0.8.2",
