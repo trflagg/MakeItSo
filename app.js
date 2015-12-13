@@ -54,7 +54,7 @@ fs.readdirSync('./models').forEach(function(file) {
  */
 app.use(logger());
 app.keys = ['secret session cookie string'];
-app.use(session());
+app.use(session(app));
 app.use(serve('client'));
 app.use(router(app));
 
