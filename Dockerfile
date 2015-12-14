@@ -1,5 +1,5 @@
-FROM node:0.11.14-onbuild
-RUN 'npm' 'install' 'nodemon@1.3.0' '-g'
+FROM node:4-onbuild
+RUN 'npm' 'install' 'nodemon' '-g'
 RUN 'npm' 'install' 'bower' '-g'
 RUN 'bower' '--allow-root' 'install'
 RUN apt-get update
