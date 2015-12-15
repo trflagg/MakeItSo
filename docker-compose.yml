@@ -1,0 +1,11 @@
+mis:
+  build: "https://github.com/trflagg/MakeItSo.git#develop"
+  ports:
+    - "3000:3000"
+  links:
+    - mongo:mongo
+  environment:
+    NODE_ENV: docker
+mongo:
+  image: "mongo:3.2"
+
