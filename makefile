@@ -20,10 +20,10 @@ run-prod:
 	docker pull trflagg/makeitso
 	docker run -d -p 3000:3000 --name='mis' -e MONGO_URL=$(MONGO_URL) trflagg/makeitso
 
-update-fixtures:
+update-dev-fixtures:
 	node --harmony node_modules/argie/messageLoader ../../environment-default.js
 
 update-docker-fixtures:
-	docker run -rm --name='mis_fixtures' -e NODE_ENV=docker --link mongo:mongo mis \
+	docker run  --name='mis_fixtures' -e NODE_ENV=docker --link mongo:mongo mis \
 				node --harmony node_modules/argie/messageLoader ../../environment-docker.js
 
