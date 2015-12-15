@@ -23,12 +23,15 @@ var app = module.exports = koa();
  * Create db connection
  */
 console.log('Connecting to DB');
-if (app.env === 'production') {
-}
-else {
-}
 
 environment = require('./environment-default.js');
+
+if (app.env === 'production') {
+} else if (app.env === 'docker') {
+  environment = require('./environment-docker.js')
+} else {
+}
+
 
 // hide the username:password in the URL string
 console.log('db URL: '+environment.db.URL.replace(/:\/\/.*:(.*)@/, 'XXXXXXX'));
