@@ -23,15 +23,16 @@ var app = module.exports = koa();
  * Create db connection
  */
 console.log('Connecting to DB');
+
+environment = require('./environment-default.js');
+
 if (app.env === 'production') {
-    var environment = require('./environment-production');
+} else if (app.env === 'docker') {
+  environment = require('./environment-docker.js')
+} else {
 }
-else if (app.env === 'dev-docker') {
-    var environment = require('./environment-dev-docker');
-}
-else {
-    var environment = require('argieDB/environment-local');
-}
+
+
 // hide the username:password in the URL string
 console.log('db URL: '+environment.db.URL.replace(/:\/\/.*:(.*)@/, 'XXXXXXX'));
 var db = new Db(environment);

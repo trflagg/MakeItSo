@@ -15,11 +15,11 @@ To build the docker image:
 
     make build
 
-To run the container for dev ($MONGO_URL_DEV must be set):
+To run the container ($MONGO_URL must be set):
 
-    make run-dev
+    make run
 
-To run the container from local build ($MONGO_URL must be set):
+To run the container with a link to a docker mongo instance named 'mongo':
 
     make run
 
