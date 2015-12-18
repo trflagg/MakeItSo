@@ -7,6 +7,13 @@ build:
 build-compose:
 	docker-compose build
 
+docker-start:
+	docker-machine start default
+	eval $(docker-machine env default)
+	
+docker-stop:
+	docker-machine stop default
+
 mongo-dev:
 	mongo $(MONGO_HOST) -u $(MONGO_USERNAME) -p $(MONGO_PASSWORD)
 
@@ -25,6 +32,13 @@ run-compose:
 run-prod:
 	docker pull trflagg/makeitso
 	docker run -d -p 3000:3000 --name='mis' -e MONGO_URL=$(MONGO_URL) trflagg/makeitso
+
+start-docker:
+	docker-machine start default
+	eval $(docker-machine env default)
+	
+stop-docker:
+	docker-machine stop default
 
 update-dev-fixtures:
 	node --harmony node_modules/argie/messageLoader ../../environment-default.js

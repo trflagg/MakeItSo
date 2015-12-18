@@ -1,0 +1,6 @@
+mis:
+  environment:
+    NODE_ENV: docker
+  volumes:
+    - '.':'/usr/src/app'
+

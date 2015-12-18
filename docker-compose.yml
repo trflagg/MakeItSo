@@ -2,6 +2,8 @@ mis:
   build: "https://github.com/trflagg/MakeItSo.git#develop"
   ports:
     - "3000:3000"
+  volumes:
+    - '.:/usr/src/app'
   links:
     - mongo:mongo
   environment:
