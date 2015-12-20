@@ -10,4 +10,8 @@ mis:
     NODE_ENV: docker
 mongo:
   image: "mongo:3.2"
-
+sass:
+  build: "https://github.com/trflagg/sass-docker.git"
+  volumes:
+    - '.:/src'
+  command:  --watch /src/sass:/src/client/css

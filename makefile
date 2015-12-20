@@ -14,24 +14,11 @@ docker-start:
 docker-stop:
 	docker-machine stop default
 
-mongo-dev:
-	mongo $(MONGO_HOST) -u $(MONGO_USERNAME) -p $(MONGO_PASSWORD)
-
-mongo:
-	mongo $(MONGO_HOST_DEV) -u $(MONGO_USERNAME) -p $(MONGO_PASSWORD)
-
 run:
-	docker run -d -p 3000:3000 --name='mis' -e MONGO_URL=$(MONGO_URL) mis
-
-run-docker:
-	docker run -d -p 3000:3000 --name='mis' -e NODE_ENV=docker --link mongo:mongo mis
-
-run-compose:
 	docker-compose up
 
 run-prod:
-	docker pull trflagg/makeitso
-	docker run -d -p 3000:3000 --name='mis' -e MONGO_URL=$(MONGO_URL) trflagg/makeitso
+	docker-compose -f docker-compose.yml -f docker-compose.production.yml up -d
 
 start-docker:
 	docker-machine start default
