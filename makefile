@@ -14,6 +14,15 @@ docker-start:
 docker-stop:
 	docker-machine stop default
 
+mongo-compose:
+	docker run -it mongo mongo mongodb://172.17.0.2:27017/admin
+
+mongo-dev:
+	mongo $(MONGO_HOST) -u $(MONGO_USERNAME) -p $(MONGO_PASSWORD)
+
+mongo:
+	mongo $(MONGO_HOST_DEV) -u $(MONGO_USERNAME) -p $(MONGO_PASSWORD)
+
 run:
 	docker-compose up
 
@@ -35,6 +44,6 @@ update-docker-fixtures:
 				node --harmony node_modules/argie/messageLoader ../../environment-docker.js
 
 update-compose-fixtures:
-	docker run  --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo mis \
+	docker run  --rm --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo -v $(shell pwd):/usr/src/app mis \
 				node --harmony node_modules/argie/messageLoader ../../environment-docker.js
 
