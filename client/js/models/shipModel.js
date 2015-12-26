@@ -52,6 +52,7 @@ define([
                         this.get("crew").setChildren(command.children);
                         break;
                     case 'ship_controls':
+                        this.get("shipControls").set("childMessageCount", command.childMessageCount);
                         this.get("shipControls").setChildren(command.children);
                         break;
                     case 'direct_messages':

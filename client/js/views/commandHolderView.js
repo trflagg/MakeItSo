@@ -37,7 +37,9 @@ define([
                 }
 
                 var children = this.model.get("children").models;
-                _.each(children, this.renderChildren, {parent: this});
+                if (this.model.get("show_children")) {
+                  _.each(children, this.renderChildren, {parent: this});
+                }
             }
 
             return this;
