@@ -21,7 +21,6 @@ define(['./gameScreen'
       this.model.get('ship').set('show_children', true);
       this.setNewCommands();
 
-      this.listenTo(this.rootCommands, 'run', this.runCommand);
       this.listenTo(this.model.get('ship'), 'change:children', this.commandsChanged);
       this.outputLastResult();
     }
@@ -66,6 +65,10 @@ define(['./gameScreen'
         model: this.model.get('ship').get('crew')
         , el: this.$('#crewCommands')
       });
+
+      this.listenTo(this.rootCommands, 'run', this.runCommand);
+      this.listenTo(this.shipCommands, 'run', this.runCommand);
+      this.listenTo(this.crewCommands, 'run', this.runCommand);
     }
 
     , outputDone: function() {

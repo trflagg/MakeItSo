@@ -38,7 +38,7 @@ define([
 
                 var children = this.model.get("children").models;
                 if (this.model.get("show_children")) {
-                  _.each(children, this.renderChildren, {parent: this});
+                  _.each(children, this.renderChild, {parent: this});
                 }
             }
 
@@ -50,7 +50,7 @@ define([
         this.template = givenTemplate;
     };
 
-    commandHolderView.prototype.renderChildren = function(child) {
+    commandHolderView.prototype.renderChild = function(child) {
         if (child.get("children")) {
             this.parent.renderChildCommandHolder(child);
         }
@@ -66,6 +66,7 @@ define([
                 model: commandHolder
             })
         .el);
+        this.listenTo(commandHolder.get('children'), 'run', this.runCommand);
     };
 
     commandHolderView.prototype.renderCommand = function(command) {
@@ -83,7 +84,6 @@ define([
     };
 
     commandHolderView.prototype.clicked = function() {
-        console.log(this.model.get("text") + " clicked");
         this.model.toggleChildren();
     };
 
