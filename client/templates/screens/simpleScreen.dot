@@ -2,5 +2,7 @@
   <div  class="output">
   </div>
   <div id="commands">
+    <div id="rootCommands">
+    </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 #gameMode {
 
-  #commands {
+  ul.command-list {
     li {
       border: 1px solid white;
       list-style: none;
@@ -54,7 +54,6 @@
       overflow: scroll;
     }
 
-
     .outputText {
       margin-top: 40px;
     }
@@ -79,7 +78,7 @@
       }
     }
 
-    #commands {
+    #rootCommands {
       text-align: center;
       margin-top: 10px;
       width: 100%;

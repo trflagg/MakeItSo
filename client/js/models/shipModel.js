@@ -30,6 +30,7 @@ define([
             , shipControls: new CommandHolderModel({
                 text: 'ship controls'
             })
+            , show_children: true
         }
 
         , parse: function(response, options) {
