@@ -4,7 +4,7 @@
   "description": "OpenSource engine for the game I'm working on. Uses Node, MongoDB, & Koa.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --harmony app.js",
+    "start": "nodemon -L --harmony app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
