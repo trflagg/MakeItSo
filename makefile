@@ -15,10 +15,7 @@ docker-stop:
 	docker-machine stop default
 
 mongo-compose:
-	docker run -it mongo mongo mongodb://172.17.0.2:27017/admin
-
-mongo-dev:
-	mongo $(MONGO_HOST) -u $(MONGO_USERNAME) -p $(MONGO_PASSWORD)
+	docker run -it --link makeitso_mongo_1:mongo --rm mongo sh -c 'exec mongo "$$MONGO_PORT_27017_TCP_ADDR:$$MONGO_PORT_27017_TCP_PORT"'
 
 mongo:
 	mongo $(MONGO_HOST_DEV) -u $(MONGO_USERNAME) -p $(MONGO_PASSWORD)
@@ -38,10 +35,6 @@ stop-docker:
 
 update-dev-fixtures:
 	node --harmony node_modules/argie/messageLoader ../../environment-default.js
-
-update-docker-fixtures:
-	docker run  --name='mis_fixtures' -e NODE_ENV=docker --link mongo:mongo mis \
-				node --harmony node_modules/argie/messageLoader ../../environment-docker.js
 
 update-compose-fixtures:
 	docker run  --rm --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo -v $(shell pwd):/usr/src/app mis \
