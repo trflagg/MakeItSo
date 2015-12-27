@@ -30,6 +30,7 @@ define([
             , shipControls: new CommandHolderModel({
                 text: 'ship controls'
             })
+            , show_children: true
         }
 
         , parse: function(response, options) {
@@ -38,6 +39,7 @@ define([
             this.set('shipName', response.shipName);
             this.set('output', response.output);
             this.set('lastResult', response.lastResult);
+            this.set('location', response.location);
 
             var rootCommands = [];
             var commands = response.commands;
@@ -50,6 +52,7 @@ define([
                         this.get("crew").setChildren(command.children);
                         break;
                     case 'ship_controls':
+                        this.get("shipControls").set("childMessageCount", command.childMessageCount);
                         this.get("shipControls").setChildren(command.children);
                         break;
                     case 'direct_messages':

@@ -22,7 +22,7 @@ define(['./gameScreen'
       this.render();
       this.rootCommands = new CommandHolderView({
         model: this.model.get('ship')
-        , el: this.$("#commands")
+        , el: this.$("#rootCommands")
       });
       this.listenTo(this.rootCommands, 'run', this.runCommand);
       this.listenTo(this.model.get('ship'), 'change:children', this.commandsChanged);
@@ -50,7 +50,7 @@ define(['./gameScreen'
       // probably have view reload rather than recreate it every time
       this.rootCommands = new CommandHolderView({
         model: this.model.get('ship')
-        , el: this.$("#commands")
+        , el: this.$("#rootCommands")
       });
     }
 
