@@ -61,6 +61,11 @@ define(['./gameScreen'
         model: this.model.get('ship').get('shipControls')
         , el: this.$("#shipCommands")
       });
+
+      this.crewCommands = new CommandHolderView({
+        model: this.model.get('ship').get('crew')
+        , el: this.$('#crewCommands')
+      });
     }
 
     , outputDone: function() {
