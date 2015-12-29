@@ -78,9 +78,9 @@ define([
         .el);
     };
 
-    commandHolderView.prototype.runCommand = function(text) {
+    commandHolderView.prototype.runCommand = function(command) {
         // bubble up the event
-        this.trigger('run', text);
+        this.trigger('run', command);
     };
 
     commandHolderView.prototype.clicked = function() {

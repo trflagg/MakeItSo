@@ -22,13 +22,15 @@ define([
             shipName: ''
             , lastResult: ''
             , directMessages: new CommandHolderModel({
-                text: 'direct messages'
+                text: 'direct messages',
+                id: 'direct_messages'
             })
             , crew: new CommandHolderModel({
                 text: 'crew'
             })
             , shipControls: new CommandHolderModel({
-                text: 'ship controls'
+                text: 'ship controls',
+                id: 'ship_controls'
             })
             , show_children: true
         }
@@ -81,12 +83,13 @@ define([
             }
         }
 
-        , runCommand: function(commandText) {
+        , runCommand: function(commandPath) {
             var ship = this;
+            var commandURL = this.url() + '/' + _.map(commandPath.split('.'), encodeURIComponent).join('/');
 
             $.ajax({
                 type: 'POST'
-                , url: this.url() + '/' + encodeURI(commandText)
+                , url: commandURL
             }).done(function(data) {
                 ship.parse(data);
             })
