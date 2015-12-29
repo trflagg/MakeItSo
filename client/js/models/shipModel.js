@@ -81,12 +81,13 @@ define([
             }
         }
 
-        , runCommand: function(commandText) {
+        , runCommand: function(commandPath) {
             var ship = this;
+            var commandURL = this.url() + '/' + _.map(commandPath.split('.'), encodeURIComponent).join('/');
 
             $.ajax({
                 type: 'POST'
-                , url: this.url() + '/' + encodeURI(commandText)
+                , url: commandURL
             }).done(function(data) {
                 ship.parse(data);
             })

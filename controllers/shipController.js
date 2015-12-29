@@ -111,13 +111,15 @@ module.exports = function(app, db) {
      *
      * runs command with given text on ship
      */
-    app.post('/ship/:profile_id/:id/:command'
+    app.post('/ship/:profile_id/:id/:command+'
             , idMatchesSession(db, {load: false})
             , runCommand);
     function *runCommand() {
+        console.log(this.params.command);
+        var commands = this.params.command.split('/');
         var ship = yield db.load('Ship', {_id: new ObjectID(this.params.id)});
-
-        yield ship.runCommand(this.params.command);
+  console.log(commands);
+        yield ship.runCommand(commands.pop(), commands.join('.'));
         yield db.save('Ship', ship);
 
         this.body = ship.toClient();

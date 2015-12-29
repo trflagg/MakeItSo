@@ -57,8 +57,8 @@ define(['./gameScreen'
       })
     }
 
-    , runCommand: function(commandText) {
-      this.model.get('ship').runCommand(commandText);
+    , runCommand: function(command) {
+      this.model.get('ship').runCommand(command.full_path());
     }
 
     , commandsChanged: function() {
