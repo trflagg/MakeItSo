@@ -1,7 +1,5 @@
 mis:
   environment:
-    NODE_ENV: docker
-  volumes:
-    - '.:/usr/src/app'
+    NODE_ENV: production
 sass:
   command: '/src/sass/main.scss /src/client/css/main.css'

@@ -7,7 +7,8 @@ mis:
   links:
     - mongo:mongo
   environment:
-    NODE_ENV: docker
+    NODE_ENV: development
+    DB_ENV: compose
 mongo:
   image: "mongo:3.2"
 sass:
