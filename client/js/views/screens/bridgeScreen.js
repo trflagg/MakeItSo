@@ -18,8 +18,26 @@ define(['./gameScreen'
 
       this.render();
 
+      this.rootCommands = new CommandHolderView({
+        model: this.model.get('ship')
+        , el: this.$("#rootCommands")
+      });
+
+      this.shipCommands = new CommandHolderView({
+        model: this.model.get('ship').get('shipControls')
+        , el: this.$("#shipCommands")
+      });
+
+      this.crewCommands = new CommandHolderView({
+        model: this.model.get('ship').get('crew')
+        , el: this.$('#crewCommands')
+      });
+
+      this.listenTo(this.rootCommands, 'run', this.runCommand);
+      this.listenTo(this.shipCommands, 'run', this.runCommand);
+      this.listenTo(this.crewCommands, 'run', this.runCommand);
+
       this.model.get('ship').set('show_children', true);
-      this.setNewCommands();
 
       this.listenTo(this.model.get('ship'), 'change:children', this.commandsChanged);
       this.outputLastResult();
@@ -44,31 +62,9 @@ define(['./gameScreen'
     }
 
     , commandsChanged: function() {
-      this.setNewCommands();
-    }
-
-    , setNewCommands: function() {
-      //TODO: avoid memory leak
-      // probably have view reload if it already exists
-      // rather than recreate it every time
-      this.rootCommands = new CommandHolderView({
-        model: this.model.get('ship')
-        , el: this.$("#rootCommands")
-      });
-
-      this.shipCommands = new CommandHolderView({
-        model: this.model.get('ship').get('shipControls')
-        , el: this.$("#shipCommands")
-      });
-
-      this.crewCommands = new CommandHolderView({
-        model: this.model.get('ship').get('crew')
-        , el: this.$('#crewCommands')
-      });
-
-      this.listenTo(this.rootCommands, 'run', this.runCommand);
-      this.listenTo(this.shipCommands, 'run', this.runCommand);
-      this.listenTo(this.crewCommands, 'run', this.runCommand);
+      this.rootCommands.render();
+      this.shipCommands.render();
+      this.crewCommands.render();
     }
 
     , outputDone: function() {
