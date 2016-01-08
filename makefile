@@ -38,5 +38,5 @@ update-dev-fixtures:
 
 update-compose-fixtures:
 	docker run  --rm --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo -v $(shell pwd):/usr/src/app mis \
-				node --harmony node_modules/argie/messageLoader ../../environment-docker.js
+				node --harmony node_modules/argie/messageLoader ../../db-environment-compose.js
 
