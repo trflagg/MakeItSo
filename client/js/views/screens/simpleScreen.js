@@ -20,6 +20,7 @@ define(['./gameScreen'
       this.template = template;
 
       this.render();
+
       this.rootCommands = new CommandHolderView({
         model: this.model.get('ship')
         , el: this.$("#rootCommands")
@@ -41,17 +42,12 @@ define(['./gameScreen'
       })
     }
 
-    , runCommand: function(commandText) {
-      this.model.get('ship').runCommand(commandText);
+    , runCommand: function(command) {
+      this.model.get('ship').runCommand(command.get('text'));
     }
 
     , commandsChanged: function() {
-      //TODO: avoid memory leak
-      // probably have view reload rather than recreate it every time
-      this.rootCommands = new CommandHolderView({
-        model: this.model.get('ship')
-        , el: this.$("#rootCommands")
-      });
+      this.rootCommands.render();
     }
 
     , outputDone: function() {

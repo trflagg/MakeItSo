@@ -20,18 +20,19 @@ define([
 
             // handle circular reference
             var CommandCollection = require('./commandCollection');
+            this.set("children", new CommandCollection());
+
             if (attrs && attrs.children) {
-                this.set("children", new CommandCollection(attrs.children));
-            }
-            else {
-                this.set("children", new CommandCollection());
+                this.setChildren(attrs.children);
             }
         }
 
     });
 
     commandHolderModel.prototype.setChildren = function(children) {
-        this.get("children").reset(children);
+        this.get("children").reset(children).forEach(function(child) {
+          child.parent = this;
+        }, this);
         this.trigger('change:children');
     }
 
