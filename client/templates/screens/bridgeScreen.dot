@@ -11,6 +11,7 @@
 
   <div id="mainBody">
     <div class="output">
+      <div></div>
     </div>
     <div id="commands">
       <div id="rootCommands">
