@@ -72,10 +72,8 @@ define(['backbone'
                   currentLine = regEx.functionBody(currentLine, regExArray);
                 }
               });
-              $innerDiv.append($("<p></p>").addClass("outputText").append(currentLine));
-              if (isScrolledToBottom) {
-                this.scrollToBottom($output);
-              }
+              var appendedLine = $innerDiv.append($("<p></p>").addClass("outputText").append(currentLine));
+              this.scrollToBottom($output);
             }
           }
 

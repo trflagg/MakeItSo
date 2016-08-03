@@ -10,7 +10,7 @@ build-compose:
 docker-start:
 	docker-machine start default
 	eval $(docker-machine env default)
-	
+
 docker-stop:
 	docker-machine stop default
 
@@ -29,7 +29,7 @@ run-prod:
 start-docker:
 	docker-machine start default
 	eval $(docker-machine env default)
-	
+
 stop-docker:
 	docker-machine stop default
 
