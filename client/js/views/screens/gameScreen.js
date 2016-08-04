@@ -27,15 +27,19 @@
         , outputLastResult: function() {
           this.$("#commands").hide();
           var lastResult = this.model.get('ship').get('lastResult')
-              , lines = lastResult.split('\n')
+            , lines = ''
               // grab the existing output
-              , $innerDiv = $("div.output > div");
+              , $outputDiv = $("div.output > div");
+
+            if (lastResult) {
+              lines = lastResult.split('\n')
+            }
 
           this.waiters = 0;
 
-          this.outputLines(lines, $innerDiv);
+          this.outputLines(lines, $outputDiv);
 
-          this.$(".output").html($innerDiv);
+          this.$(".output").html($outputDiv);
         }
 
         , outputDone: function() {
@@ -53,7 +57,7 @@
           }
         }
 
-        , outputLine: function(currentLine, lines, $innerDiv) {
+        , outputLine: function(currentLine, lines, $outputDiv) {
           var print = true;
           var gameScreen = this;
 
@@ -62,7 +66,7 @@
             _.each(regExList, function(regEx) {
               if ((regExArray = regEx.regEx.exec(currentLine)) != null) {
                 // run the regEx
-                lines = regEx.functionBody.call(gameScreen, lines, $innerDiv, regExArray);
+                lines = regEx.functionBody.call(gameScreen, lines, $outputDiv, regExArray);
                 print = false;
               }
             });
@@ -77,7 +81,7 @@
                   currentLine = regEx.functionBody(currentLine, regExArray);
                 }
               });
-              var appendedLine = $innerDiv.append($("<p></p>").addClass("outputText").append(currentLine));
+              var appendedLine = this.printLine(currentLine, $outputDiv);
               this.scrollToBottom($output);
             }
           }
@@ -87,5 +91,12 @@
 
         , scrollToBottom: function($output) {
           $output.scrollTop($output.prop('scrollHeight'));
+        }
+
+        , printLine: function(line, $outputDiv) {
+          $newDiv = $("<p></p>").addClass("outputText");
+            $newDiv.append(line);
+            $outputDiv.append($newDiv);
+            return $newDiv;
         }
     });
