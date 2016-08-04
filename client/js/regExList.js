@@ -7,7 +7,7 @@ define(function(require, exports, module) {
     , placeholder: '{% CLEAR_SCREEN %}'
     , regEx: /^{% CLEAR_SCREEN %}/
     , functionBody: function(lines, $output, args) {
-      console.dir('clear screen');
+        $output.empty();
       return lines;
     }
   }
