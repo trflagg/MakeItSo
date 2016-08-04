@@ -127,6 +127,12 @@ module.exports = function(db) {
         return client_ship;
     };
 
+    Ship.prototype.reset = function*() {
+        yield Avatar.prototype.reset();
+        this.lastResult = null;
+    };
+
+
     // add to the system wrapper
     systemWrapper.prototype.registerFunction({
         functionName: 'setScreen'
