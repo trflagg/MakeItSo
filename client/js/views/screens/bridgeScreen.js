@@ -57,6 +57,13 @@ define(['./gameScreen'
       })
     }
 
+      , onClose: function() {
+          this.rootCommands.close();
+          this.shipCommands.close();
+          this.crewCommands.close();
+          $(window).off('resize');
+      }
+
     , runCommand: function(command) {
       this.model.get('ship').runCommand(command.full_path());
     }

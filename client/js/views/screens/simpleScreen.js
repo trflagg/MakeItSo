@@ -40,7 +40,13 @@ define(['./gameScreen'
       $(window).resize(function() {
           $("#simpleScreen").height($(window).height());
       })
+
     }
+        , onClose: function() {
+
+            this.rootCommands.close();
+            $(window).off('resize');
+        }
 
     , runCommand: function(command) {
       this.model.get('ship').runCommand(command.get('text'));

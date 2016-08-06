@@ -43,6 +43,13 @@ define([
             }
 
             return this;
+        },
+
+        close: function() {
+            this.stopListening();
+            if (this.onClose) {
+                this.onClose();
+            }
         }
     });
 

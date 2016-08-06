@@ -37,7 +37,10 @@ define(['./mode'
         }
 
         , setScreen: function(screenName) {
-            // TODO: avoid memory leaks
+            if (this.screen) {
+                this.screen.close();
+            }
+
             switch(screenName) {
                 case 'TITLE':
                     this.screen = new TitleScreen({

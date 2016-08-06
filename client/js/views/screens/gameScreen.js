@@ -19,6 +19,13 @@ define(['backbone'
           this.listenTo(this, 'output_done', this.outputDone);
         }
 
+        , close: function()  {
+            this.stopListening();
+            if (this.onClose) {
+                this.onClose();
+            }
+        }
+
         , outputLastResult: function() {
           this.$("#commands").hide();
           var lastResult = this.model.get('ship').get('lastResult')
