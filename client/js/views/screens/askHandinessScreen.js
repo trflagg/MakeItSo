@@ -4,15 +4,11 @@
  * Right handed or left handed?
  *
  */
+    var Screen = require('./screen')
+    , dot = require('dot')
+    , template = require('../../../templates/screens/askHandinessScreen.dot');
 
-define(['./screen'
-        , 'doT!/templates/screens/askHandinessScreen'
-
-], function(Screen
-            , template
-) {
-
-    var askHandinessScreen = Screen.extend({
+    module.exports = askHandinessScreen = Screen.extend({
         events: {
             'click #rightHand': function() { this.buttonClicked('right'); }
             , 'click #leftHand': function() { this.buttonClicked('left'); }
@@ -27,7 +23,7 @@ define(['./screen'
         , initialize: function() {
             Screen.prototype.initialize.apply(this);
 
-            this.template = template;
+            this.template = dot.template(template);
             this.render();
         }
 
@@ -102,6 +98,3 @@ define(['./screen'
             this.$("#handinessError").html(message);
         }
     });
-
-    return askHandinessScreen;
-});

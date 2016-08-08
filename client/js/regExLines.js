@@ -1,6 +1,5 @@
-define([], function() {
 
-  regExLines = [
+  module.exports =regExLines = [
   {
     regEx: /^(\[Rdml. Collins\]:)(.*)$/
     , functionBody: function(currentLine, args) {
@@ -30,6 +29,3 @@ define([], function() {
   }
 
   ];
-
-  return regExLines;
-});

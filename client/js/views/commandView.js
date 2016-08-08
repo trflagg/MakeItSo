@@ -1,9 +1,8 @@
-define([
-    'backbone',
-    'doT!/templates/commandView'
-], function(Backbone, template) {
+    var Backbone = require('backbone')
+    , dot = require('dot')
+    , template = require('../../templates/commandView.dot')
 
-    var commandView = Backbone.View.extend({
+    module.exports =  commandView = Backbone.View.extend({
 
 
         events: function() {
@@ -15,7 +14,7 @@ define([
         },
 
         initialize: function() {
-            this.template = template;
+            this.template = dot.template(template);
 
             if (this.model) {
                 this.listenTo(this.model, 'change', this.render);
@@ -36,6 +35,3 @@ define([
     commandView.prototype.clicked = function() {
         this.model.trigger('run', this.model);
     };
-
-    return commandView;
-});

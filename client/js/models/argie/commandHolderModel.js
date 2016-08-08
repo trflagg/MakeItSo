@@ -1,13 +1,9 @@
-define([
-    // need require to resolve circular reference w/ commandCollection
-    'require'
-    , 'underscore'
-    , 'backbone'
-    , './commandCollection'
-    , './commandModel'
-], function(require, _, Backbone, CommandCollection, CommandModel) {
+    var _ = require('underscore')
+    , Backbone = require('backbone')
+    , CommandCollection = require('./commandHolderModel')
+    , CommandModel = require('./commandModel')
 
-    var commandHolderModel = CommandModel.extend({
+    module.exports = commandHolderModel = CommandModel.extend({
         defaults: {
             childMessageCount: 0
             , children: {}
@@ -49,6 +45,3 @@ define([
     commandHolderModel.prototype.getChildById = function(id) {
         return this.get("children").findWhere({id: id});
     }
-
-   return commandHolderModel;
-});

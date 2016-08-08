@@ -1,13 +1,10 @@
 
 
-define(['./gameScreen'
-        , 'doT!/templates/screens/titleScreen'
+var dot = require('dot')
+, GameScreen = require('./gameScreen')
+    , template = require('../../../templates/screens/titleScreen.dot');
 
-], function(GameScreen
-            , template
-) {
-
-  var titleScreen = GameScreen.extend({
+  module.exports = titleScreen = GameScreen.extend({
     events: {
       'click .continue': 'continue'
     }
@@ -15,7 +12,7 @@ define(['./gameScreen'
     , initialize: function() {
       GameScreen.prototype.initialize.apply(this);
 
-      this.template = template;
+        this.template = dot.template(template);
       this.render();
     }
 
@@ -32,6 +29,3 @@ define(['./gameScreen'
       this.model.get('ship').runCommand('Continue');
     }
   });
-
-  return titleScreen;
-});

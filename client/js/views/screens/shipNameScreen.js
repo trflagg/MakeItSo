@@ -3,15 +3,11 @@
  *
  * name your ship.
  */
+var dot = require('dot')
+, Screen = require('./screen')
+    , template = require('../../../templates/screens/ShipNameScreen.dot');
 
-define(['./screen'
-        , 'doT!/templates/screens/ShipNameScreen'
-
-], function(Screen
-            , template
-) {
-
-    var shipNameScreen = Screen.extend({
+    module.exports = shipNameScreen = Screen.extend({
         events: {
             'keydown #nameInput': 'keyDown'
         }
@@ -25,7 +21,7 @@ define(['./screen'
         , initialize: function() {
             Screen.prototype.initialize.apply(this);
 
-            this.template = template;
+            this.template = dot.template(template);
             this.render();
         }
 
@@ -129,6 +125,3 @@ define(['./screen'
             this.$("#nameError").html(message);
         }
     });
-
-    return shipNameScreen;
-});

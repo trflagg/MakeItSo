@@ -5,9 +5,9 @@
  *
  */
 
-define(['backbone'], function(Backbone) {
+var Backbone = require('backbone')
 
-    var screen = Backbone.View.extend({
+    module.exports =  screen = Backbone.View.extend({
 
         /**
          * initialize()
@@ -55,6 +55,3 @@ define(['backbone'], function(Backbone) {
         }
 
     });
-
-    return screen;
-});

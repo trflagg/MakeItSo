@@ -1,15 +1,11 @@
 
 
-define(['./gameScreen'
-        , 'views/commandHolderView'
-        , 'doT!/templates/screens/simpleScreen'
+var dot = require('dot')
+, GameScreen = require('./gameScreen')
+    , CommandHolderView = require('../commandHolderView')
+    , template = require('../../../templates/screens/simpleScreen.dot');
 
-], function(GameScreen
-            , CommandHolderView
-            , template
-) {
-
-  var simpleScreen = GameScreen.extend({
+  module.exports = simpleScreen = GameScreen.extend({
     events: {
       'click .continue': 'continue'
     }
@@ -17,7 +13,7 @@ define(['./gameScreen'
     , initialize: function() {
       GameScreen.prototype.initialize.apply(this);
 
-      this.template = template;
+        this.template = dot.template(template);
 
       this.render();
 
@@ -60,6 +56,3 @@ define(['./gameScreen'
       this.$("#commands").show();
     }
   });
-
-  return simpleScreen;
-});
