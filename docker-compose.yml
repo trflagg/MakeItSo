@@ -16,3 +16,10 @@ sass:
   volumes:
     - '.:/src'
   command:  --watch /src/client/sass:/src/client/build/css
+browserify:
+  build: "https://github.com/trflagg/browserify-docker.git"
+  volumes:
+    - '.:/src'
+  environment:
+    NODE_PATH: '/src/node_modules/'
+  command: --list /src/client/js/main.js -o /src/client/build/js/main.js
