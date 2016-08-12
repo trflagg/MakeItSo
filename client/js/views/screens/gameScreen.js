@@ -6,7 +6,8 @@
  */
 
     var Backbone = require('backbone')
-, _ = require('underscore')
+    , _ = require('underscore')
+    , Promise = require('promise')
     , regExLines = require('../../regExLines')
     , regExList = require('../../regExList')
 
@@ -81,8 +82,10 @@
                   currentLine = regEx.functionBody(currentLine, regExArray);
                 }
               });
-              var appendedLine = this.printLine(currentLine, $outputDiv);
-              this.scrollToBottom($output);
+              var printPromise = this.printLine(currentLine, $outputDiv);
+                printPromise.then(_.bind(function() {
+                    this.scrollToBottom($output);
+                }, this));
             }
           }
 
@@ -94,9 +97,11 @@
         }
 
         , printLine: function(line, $outputDiv) {
-          $newDiv = $("<p></p>").addClass("outputText");
-            $newDiv.append(line);
-            $outputDiv.append($newDiv);
-            return $newDiv;
+            return new Promise(function(resolve, reject) {
+                $newDiv = $("<p></p>").addClass("outputText");
+                $newDiv.append(line);
+                $outputDiv.append($newDiv);
+                resolve($outputDiv);
+            });
         }
     });
