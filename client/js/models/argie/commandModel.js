@@ -1,8 +1,6 @@
-define([
-    'backbone'
-], function(Backbone) {
+    var Backbone = require('backbone');
 
-    var commandModel = Backbone.Model.extend({
+    module.exports =  commandModel = Backbone.Model.extend({
         defaults: {
             text: ''
         }
@@ -23,5 +21,3 @@ define([
 
         return parent_path + this.get("id");
     }
-   return commandModel;
-});

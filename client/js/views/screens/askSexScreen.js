@@ -5,14 +5,11 @@
  *
  */
 
-define(['./screen'
-        , 'doT!/templates/screens/askSexScreen'
+var dot = require('dot')
+, Screen = require('./screen')
+    , template = require('../../../templates/screens/askSexScreen.dot');
 
-], function(Screen
-            , template
-) {
-
-    var askSexScreen = Screen.extend({
+    module.exports = askSexScreen = Screen.extend({
         events: {
             'click #male': function() { this.buttonClicked('male'); }
             , 'click #female': function() { this.buttonClicked('female'); }
@@ -27,7 +24,7 @@ define(['./screen'
         , initialize: function() {
             Screen.prototype.initialize.apply(this);
 
-            this.template = template;
+            this.template = dot.template(template);
             this.render();
         }
 
@@ -102,6 +99,3 @@ define(['./screen'
             this.$("#sexError").html(message);
         }
     });
-
-    return askSexScreen;
-});

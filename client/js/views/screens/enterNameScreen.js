@@ -4,15 +4,11 @@
  * Enter your name.
  *
  */
+var dot = require('dot')
+, Screen = require('./screen')
+    , template = require('../../../templates/screens/enterNameScreen.dot');
 
-define(['./screen'
-        , 'doT!/templates/screens/enterNameScreen'
-
-], function(Screen
-            , template
-) {
-
-    var enterNameScreen = Screen.extend({
+    module.exports = enterNameScreen = Screen.extend({
         events: {
             'keydown #nameInput': 'keyDown'
         }
@@ -26,7 +22,7 @@ define(['./screen'
         , initialize: function() {
             Screen.prototype.initialize.apply(this);
 
-            this.template = template;
+            this.template = dot.template(template);
             this.render();
         }
 
@@ -126,6 +122,3 @@ define(['./screen'
             this.$("#nameError").html(message);
         }
     });
-
-    return enterNameScreen;
-});

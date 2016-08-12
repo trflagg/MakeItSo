@@ -1,10 +1,10 @@
-define([
-    'backbone'
-    , 'views/commandView'
-    , 'doT!/templates/commandHolderView'
-], function(Backbone, commandView, template) {
+    var Backbone = require('backbone')
+, _ = require('underscore')
+    , dot = require('dot')
+    , commandView = require('./commandView')
+    , template = require('../../templates/commandHolderView.dot')
 
-    var commandHolderView = Backbone.View.extend({
+    module.exports = commandHolderView = Backbone.View.extend({
 
         events: function() {
             events = {};
@@ -15,7 +15,7 @@ define([
         },
 
         initialize: function() {
-            this.setTemplate(template);
+            this.setTemplate(dot.template(template));
 
             if (this.model) {
                 this.listenTo(this.model, 'change', this.render);
@@ -93,6 +93,3 @@ define([
     commandHolderView.prototype.clicked = function() {
         this.model.toggleChildren();
     };
-
-    return commandHolderView;
-});

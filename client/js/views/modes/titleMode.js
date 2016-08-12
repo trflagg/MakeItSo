@@ -5,15 +5,12 @@
  *
  */
 
-define(['./mode'
-        , 'doT!/templates/modes/titleMode'
-        , 'blast'
+    var Mode = require('./mode')
+    , blast = require('blast-text')
+    , dot = require('dot')
+    , template = require('../../../templates/modes/titleMode.dot');
 
-], function(Mode
-            , template
-) {
-
-    var titleMode = Mode.extend({
+    module.exports = titleMode = Mode.extend({
         events: {
             'click': 'keyPressed'
             , 'keyDown': 'keyPressed'
@@ -26,13 +23,16 @@ define(['./mode'
          * @return {None}
          */
         , init: function() {
-            this.template = template;
+            this.template = dot.template(template);
             this.timeout = setTimeout(this.showContinueMessage.bind(this), 1000);
         }
 
         , render: function() {
             $(this.el).html(this.template());
-            this.continueChars = this.$("#continueMessage p")
+            // I want to use this.$('#continue...').blast() but blast installs
+            // itself on the global $, which apparently is not the same one
+            // installed on this.$
+            this.continueChars = $("#continueMessage p")
                                     .blast({delimiter: "character"})
                                     .css('opacity', 0);
 
@@ -62,6 +62,3 @@ define(['./mode'
         }
 
     });
-
-    return titleMode;
-});

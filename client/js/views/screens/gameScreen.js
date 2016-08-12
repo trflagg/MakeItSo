@@ -5,14 +5,12 @@
  *
  */
 
-define(['backbone'
-        , 'regExList'
-        , 'regExLines'
-], function(Backbone
-            , regExList
-            , regExLines ) {
+    var Backbone = require('backbone')
+, _ = require('underscore')
+    , regExLines = require('../../regExLines')
+    , regExList = require('../../regExList')
 
-    var screen = Backbone.View.extend({
+    module.exports = screen = Backbone.View.extend({
 
         initialize: function() {
           this.listenTo(this.model.get('ship'), 'change:lastResult', this.outputLastResult);
@@ -91,6 +89,3 @@ define(['backbone'
           $output.scrollTop($output.prop('scrollHeight'));
         }
     });
-
-    return screen;
-});

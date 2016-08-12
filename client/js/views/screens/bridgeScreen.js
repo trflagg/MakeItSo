@@ -1,20 +1,16 @@
-define(['./gameScreen'
-        , 'views/commandHolderView'
-        , 'doT!/templates/screens/bridgeScreen'
 
-], function(GameScreen
-            , CommandHolderView
-            , template
-) {
-
-  var bridgeScreen = GameScreen.extend({
+var dot = require('dot')
+, GameScreen = require('./gameScreen')
+    , CommandHolderView = require('../commandHolderView')
+    , template = require('../../../templates/screens/bridgeScreen.dot');
+  module.exports = bridgeScreen = GameScreen.extend({
     events: {
     }
 
     , initialize: function() {
       GameScreen.prototype.initialize.apply(this);
 
-      this.template = template;
+        this.template = dot.template(template);
 
       this.render();
 
@@ -78,6 +74,3 @@ define(['./gameScreen'
       this.$("#commands").show();
     }
   });
-
-  return bridgeScreen;
-});

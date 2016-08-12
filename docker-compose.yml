@@ -15,4 +15,11 @@ sass:
   build: "https://github.com/trflagg/sass-docker.git"
   volumes:
     - '.:/src'
-  command:  --watch /src/sass:/src/client/css
+  command:  --watch /src/client/sass:/src/client/build/css
+browserify:
+  build: "https://github.com/trflagg/browserify-docker.git"
+  volumes:
+    - '.:/src'
+  environment:
+    NODE_PATH: '/src/node_modules/'
+  command: -t [ /src/node_modules/stringify --extensions [ '.dot' ] ] -d /src/client/js/main.js -o /src/client/build/js/main.min.js

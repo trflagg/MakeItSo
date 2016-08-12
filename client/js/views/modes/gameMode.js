@@ -5,24 +5,19 @@
  *
  */
 
-define(['./mode'
-        , '../screens/titleScreen'
-        , '../screens/simpleScreen'
-        , '../screens/bridgeScreen'
-        , 'doT!/templates/modes/gameMode'
 
-], function(Mode
-            , TitleScreen
-            , SimpleScreen
-            , BridgeScreen
-            , template
-) {
+var dot = require('dot')
+, Mode = require('./mode')
+    , TitleScreen = require('../screens/titleScreen')
+    , SimpleScreen = require('../screens/simpleScreen')
+    , BridgeScreen = require('../screens/bridgeScreen')
+    , template = require('../../../templates/modes/gameMode.dot');
 
-    var gameMode = Mode.extend({
+    module.exports = gameMode = Mode.extend({
 
         init: function() {
             this.listenTo(this.model.get('ship'), 'change:screen', this.screenChanged);
-            this.template = template;
+            this.template = dot.template(template);
         }
 
         , render: function() {
@@ -66,6 +61,3 @@ define(['./mode'
         }
 
     });
-
-    return gameMode;
-});

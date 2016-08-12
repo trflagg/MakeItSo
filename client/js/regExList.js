@@ -1,7 +1,4 @@
-if (typeof define !== 'function') { var define = require('amdefine')(module) }
-
-define(function(require, exports, module) {
-  regExList = [
+  module.exports = regExList = [
   {
     functionName: 'clearScreen'
     , placeholder: '{% CLEAR_SCREEN %}'
@@ -49,6 +46,3 @@ define(function(require, exports, module) {
       return this.outputLines(lines, $outDiv);
     }
   }];
-
-  return regExList;
-});
