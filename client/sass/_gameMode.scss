@@ -1,0 +1,188 @@
+#gameMode {
+
+  p.commandItem {
+    border: 1px solid white;
+    cursor: pointer;
+    padding: 10px !important;
+    width: 100% !important;
+    margin: 0px;
+  }
+
+  ul.command-list {
+    li {
+      list-style: none;
+      display: inline-block;
+      text-align: center;
+      margin-left: 20px;
+    }
+  }
+
+  #titleScreen {
+    margin-top: 60px;
+
+    h1 {
+      font-size: 90px;
+      text-align: center;
+    }
+
+    p {
+      margin-top: 0px;
+      white-space: pre;
+      text-align: center;
+      line-height: 22px;
+      font-size: 20px;
+      letter-spacing: 3px;
+      align-self: center;
+    }
+
+    a.continue {
+      display: block;
+      font-size: 40px;
+      text-align: center;
+      letter-spacing: 8px;
+      margin-top: 90px;
+    }
+  }
+
+  #simpleScreen {
+    p {
+      width: 75%;
+      margin: auto;
+      margin-top: 100px;
+    }
+
+    .output {
+      height: 75%;
+      overflow: scroll;
+    }
+
+    .outputText {
+      margin-top: 40px;
+    }
+
+    .chat .outputText {
+      margin-top: 0px;
+
+      .collins {
+        color: #B44;
+      }
+      .mackenzie {
+        color: #499;
+      }
+      .hawkins {
+        color: #55C;
+      }
+      .golz {
+        color: #494;
+      }
+      .banerjee {
+        color: #949;
+      }
+    }
+
+    #rootCommands {
+      text-align: center;
+      margin-top: 10px;
+      width: 100%;
+    }
+  }
+
+  #bridgeScreen {
+    display: flex;
+    flex-direction: column;
+
+    div {
+      //border: 1px solid white;
+    }
+
+    #header {
+      h1, h2 {
+        margin: 0px;
+        display: inline;
+      }
+    }
+
+    #mainBody {
+      display: flex;
+      flex-direction: row;
+      height: 100%;
+    }
+
+    .output {
+      flex: 3;
+      overflow: scroll;
+    }
+
+    #commands {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      margin-top: 10px;
+      min-width: 250px;
+      flex: 1;
+      overflow: scroll;
+
+      ul {
+        display: flex;
+        flex-direction: column;
+        padding: 0px;
+        margin: 0px;
+      }
+    }
+
+
+  }
+
+  // #bridgeScreen {
+  //   #header {
+  //     margin-top: 0px;
+  //     margin-bottom: 5px;
+  //     color: #68434F;
+  //   }
+
+  //   #header a {
+  //     color: #68434F;
+  //   }
+
+  //   #headerLine {
+  //     border-top: 3px solid white;
+  //     width: 0%;
+  //     margin-top: -1.1em;
+  //   }
+
+  //   #menu {
+  //     text-align: right;
+  //     font-size: 14px;
+  //   }
+
+  //   #locationHeader {
+  //     background: #68434F;
+  //     padding: 10px;
+  //     border: 0px solid #1C259C;
+  //     border-bottom : 3px solid #330C1C;
+  //     color: #330C1C;
+  //     border-radius: 30px 10px;
+  //     padding-left: 20px;
+  //     font-family: Coda, sans-serif;
+  //     border-top: 3px solid;
+  //     margin-top: 10px;
+  //   }
+
+  //   #locationHeader p {
+  //     font-size: 10px;
+  //     color: #330C1C;
+  //   }
+
+  //   p#locationName {
+  //     font-size: 42px;
+  //     margin-top: -.2em;
+  //     font-family: Audiowide;
+  //   }
+
+  //   p#locationInfo {
+  //     font-size: 16px;
+  //     margin-right: 45px;
+  //   }
+  // }
+
+}

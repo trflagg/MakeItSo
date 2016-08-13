@@ -1,33 +1,30 @@
-/**
- * selectShipMode.js
- *
- * Mode for the user to select his ship.
- *
- */
+    /**
+    * selectShipMode.js
+    *
+    * Mode for the user to select his ship.
+    *
+    */
 
-define(['./mode'
-        , '../../models/shipModel'
-        , 'doT!/templates/modes/selectShipMode'
+    var Mode = require('./mode')
+    , $ = require('jquery')
+    , dot = require('dot')
+    , ShipModel = require('../../models/shipModel')
+    , template = require('../../../templates/modes/selectShipMode.dot')
 
-], function(Mode
-            , ShipModel
-            , template
-) {
-
-    var selectShipMode = Mode.extend({
+    module.exports = selectShipMode = Mode.extend({
         events: {
             'click #newShipLink': 'newShip'
             , 'click .shipLink': 'shipSelected'
         }
 
         /**
-         * init()
-         *
-         * initialize this mode
-         * @return {None}
-         */
+            * init()
+            *
+            * initialize this mode
+            * @return {None}
+            */
         , init: function() {
-            this.template = template;
+            this.template = dot.template(template);
         }
 
         , render: function() {
@@ -54,6 +51,3 @@ define(['./mode'
         }
 
     });
-
-    return selectShipMode;
-});

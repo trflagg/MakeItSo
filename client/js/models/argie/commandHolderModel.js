@@ -1,13 +1,9 @@
-define([
-    // need require to resolve circular reference w/ commandCollection
-    'require'
-    , 'underscore'
-    , 'backbone'
-    , './commandCollection'
-    , './commandModel'
-], function(require, _, Backbone, CommandCollection, CommandModel) {
+    var _ = require('underscore')
+    , Backbone = require('backbone')
+    , CommandCollection = require('./commandHolderModel')
+    , CommandModel = require('./commandModel')
 
-    var commandHolderModel = CommandModel.extend({
+    module.exports = commandHolderModel = CommandModel.extend({
         defaults: {
             childMessageCount: 0
             , children: {}
@@ -20,18 +16,19 @@ define([
 
             // handle circular reference
             var CommandCollection = require('./commandCollection');
+            this.set("children", new CommandCollection());
+
             if (attrs && attrs.children) {
-                this.set("children", new CommandCollection(attrs.children));
-            }
-            else {
-                this.set("children", new CommandCollection());
+                this.setChildren(attrs.children);
             }
         }
 
     });
 
     commandHolderModel.prototype.setChildren = function(children) {
-        this.get("children").reset(children);
+        this.get("children").reset(children).forEach(function(child) {
+          child.parent = this;
+        }, this);
         this.trigger('change:children');
     }
 
@@ -48,6 +45,3 @@ define([
     commandHolderModel.prototype.getChildById = function(id) {
         return this.get("children").findWhere({id: id});
     }
-
-   return commandHolderModel;
-});

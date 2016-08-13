@@ -7,27 +7,27 @@
  *
  */
 
-define(['backbone'], function(Backbone) {
+var Backbone = require('backbone');
 
-    var mode = Backbone.View.extend({
+    module.exports =  mode = Backbone.View.extend({
 
         /**
-         * initialize()
-         *
-         * general initialization for all modes
-         * @return {None}
-         */
+            * initialize()
+            *
+            * general initialization for all modes
+            * @return {None}
+            */
         initialize: function() {
 
             this.init();
         }
 
         /**
-         * init()
-         *
-         * to be overridden by subclasses
-         * @return {None}
-         */
+            * init()
+            *
+            * to be overridden by subclasses
+            * @return {None}
+            */
         , init: function() {
             // noop
         }
@@ -41,6 +41,3 @@ define(['backbone'], function(Backbone) {
         }
 
     });
-
-    return mode;
-});

@@ -1,16 +1,12 @@
-define([
-    'require',
-    'backbone',
-    './commandModel',
-    './commandHolderModel'
-], function(require, Backbone, CommandModel, CommandHolderModel) {
+    var Backbone = require('backbone')
+    , CommandModel = require('./commandModel')
+    , CommandHolderModel = require('./commandHolderModel');
 
-    var commandCollection = Backbone.Collection.extend({
+    module.exports = commandCollection = Backbone.Collection.extend({
 
         model: function(attrs, options) {
             if (attrs.children) {
                 // handle circular reference
-                var CommandHolderModel = require('./commandHolderModel');
                 return new CommandHolderModel(attrs, options);
             }
             else {
@@ -18,6 +14,3 @@ define([
             }
         }
     });
-
-   return commandCollection;
-});

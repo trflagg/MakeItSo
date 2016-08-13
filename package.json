@@ -1,10 +1,10 @@
 {
   "name": "MakeItSo",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "OpenSource engine for the game I'm working on. Uses Node, MongoDB, & Koa.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --harmony app.js",
+    "start": "nodemon -L --harmony app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,12 +16,26 @@
   "bugs": {
     "url": "https://github.com/trflagg/MakeItSo/issues"
   },
+    "browserify": {
+        "transform": [
+            "browserify-global-shim"
+        ]
+    },
+    "browserify-global-shim": {
+        "jquery": "$"
+    },
   "homepage": "https://github.com/trflagg/MakeItSo",
   "dependencies": {
     "amdefine": "^0.1.0",
     "argie": "git://github.com/trflagg/argie.git",
     "argieDB": "git://github.com/trflagg/argieDB.git",
+    "backbone": "^1.3.3",
+    "blast-text": "^2.0.0",
+    "browserify-global-shim": "^1.0.3",
     "co-views": "~2.1.0",
+    "dot": "^1.0.3",
+    "javascript-state-machine": "^2.3.5",
+    "jquery": "^3.1.0",
     "koa": "~1.1.2",
     "koa-body": "~1.4.0",
     "koa-logger": "~1.3.0",
@@ -29,6 +43,8 @@
     "koa-session": "~3.3.1",
     "koa-static": "~1.5.2",
     "mongodb": "~2.1.0",
+    "promise": "^7.1.1",
+    "stringify": "^5.1.0",
     "superagent": "~1.5.0",
     "swig": "^1.4.2"
   },

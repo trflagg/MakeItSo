@@ -7,33 +7,40 @@ build:
 build-compose:
 	docker-compose build
 
-mongo-dev:
-	mongo $(MONGO_HOST) -u $(MONGO_USERNAME) -p $(MONGO_PASSWORD)
+docker-start:
+	docker-machine start default
+	eval $(docker-machine env default)
+
+docker-stop:
+	docker-machine stop default
+
+mongo-compose:
+	docker run -it --link makeitso_mongo_1:mongo --rm mongo sh -c 'exec mongo "$$MONGO_PORT_27017_TCP_ADDR:$$MONGO_PORT_27017_TCP_PORT"'
 
 mongo:
 	mongo $(MONGO_HOST_DEV) -u $(MONGO_USERNAME) -p $(MONGO_PASSWORD)
 
 run:
-	docker run -d -p 3000:3000 --name='mis' -e MONGO_URL=$(MONGO_URL) mis
-
-run-docker:
-	docker run -d -p 3000:3000 --name='mis' -e NODE_ENV=docker --link mongo:mongo mis
-
-run-compose:
 	docker-compose up
 
 run-prod:
-	docker pull trflagg/makeitso
-	docker run -d -p 3000:3000 --name='mis' -e MONGO_URL=$(MONGO_URL) trflagg/makeitso
+	docker-compose -f docker-compose.yml -f docker-compose.production.yml up -d
+
+start-docker:
+	docker-machine start default
+	eval $(docker-machine env default)
+
+stop-docker:
+	docker-machine stop default
 
 update-dev-fixtures:
 	node --harmony node_modules/argie/messageLoader ../../environment-default.js
 
-update-docker-fixtures:
-	docker run  --name='mis_fixtures' -e NODE_ENV=docker --link mongo:mongo mis \
-				node --harmony node_modules/argie/messageLoader ../../environment-docker.js
-
 update-compose-fixtures:
-	docker run  --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo mis \
-				node --harmony node_modules/argie/messageLoader ../../environment-docker.js
+	docker run  --rm --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo -v $(shell pwd):/usr/src/app mis \
+				node --harmony node_modules/argie/messageLoader ../../db-environment-compose.js
 
+# this shouldn't be necessary because I should have watchify run w/ docker-compose
+# BUT I can't get it to work right now, so 'make watchify' will have to do
+watchify:
+	watchify -t [ ./node_modules/stringify --extensions [ '.dot' ] ] -d ./client/js/main.js -o ./client/build/js/main.min.js

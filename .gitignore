@@ -9,5 +9,6 @@ client/bower-components/
 
 client/css/main.css
 client/css/main.css.map
+client/build/
 
 fixtures/

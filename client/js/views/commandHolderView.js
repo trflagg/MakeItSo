@@ -1,10 +1,10 @@
-define([
-    'backbone'
-    , 'views/commandView'
-    , 'doT!/templates/commandHolderView'
-], function(Backbone, commandView, template) {
+    var Backbone = require('backbone')
+, _ = require('underscore')
+    , dot = require('dot')
+    , commandView = require('./commandView')
+    , template = require('../../templates/commandHolderView.dot')
 
-    var commandHolderView = Backbone.View.extend({
+    module.exports = commandHolderView = Backbone.View.extend({
 
         events: function() {
             events = {};
@@ -15,7 +15,7 @@ define([
         },
 
         initialize: function() {
-            this.setTemplate(template);
+            this.setTemplate(dot.template(template));
 
             if (this.model) {
                 this.listenTo(this.model, 'change', this.render);
@@ -37,10 +37,19 @@ define([
                 }
 
                 var children = this.model.get("children").models;
-                _.each(children, this.renderChildren, {parent: this});
+                if (this.model.get("show_children")) {
+                  _.each(children, this.renderChild, {parent: this});
+                }
             }
 
             return this;
+        },
+
+        close: function() {
+            this.stopListening();
+            if (this.onClose) {
+                this.onClose();
+            }
         }
     });
 
@@ -48,7 +57,7 @@ define([
         this.template = givenTemplate;
     };
 
-    commandHolderView.prototype.renderChildren = function(child) {
+    commandHolderView.prototype.renderChild = function(child) {
         if (child.get("children")) {
             this.parent.renderChildCommandHolder(child);
         }
@@ -64,6 +73,7 @@ define([
                 model: commandHolder
             })
         .el);
+        this.listenTo(commandHolder.get('children'), 'run', this.runCommand);
     };
 
     commandHolderView.prototype.renderCommand = function(command) {
@@ -75,15 +85,11 @@ define([
         .el);
     };
 
-    commandHolderView.prototype.runCommand = function(text) {
+    commandHolderView.prototype.runCommand = function(command) {
         // bubble up the event
-        this.trigger('run', text);
+        this.trigger('run', command);
     };
 
     commandHolderView.prototype.clicked = function() {
-        console.log(this.model.get("text") + " clicked");
         this.model.toggleChildren();
     };
-
-    return commandHolderView;
-});

@@ -1,6 +1,9 @@
 <div id="simpleScreen">
   <div  class="output">
+    <div></div>
   </div>
   <div id="commands">
+    <div id="rootCommands">
+    </div>
   </div>
 </div>

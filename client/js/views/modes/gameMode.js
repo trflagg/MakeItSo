@@ -5,22 +5,19 @@
  *
  */
 
-define(['./mode'
-        , '../screens/titleScreen'
-        , '../screens/simpleScreen'
-        , 'doT!/templates/modes/gameMode'
 
-], function(Mode
-            , TitleScreen
-            , SimpleScreen
-            , template
-) {
+var dot = require('dot')
+, Mode = require('./mode')
+    , TitleScreen = require('../screens/titleScreen')
+    , SimpleScreen = require('../screens/simpleScreen')
+    , BridgeScreen = require('../screens/bridgeScreen')
+    , template = require('../../../templates/modes/gameMode.dot');
 
-    var gameMode = Mode.extend({
+    module.exports = gameMode = Mode.extend({
 
         init: function() {
             this.listenTo(this.model.get('ship'), 'change:screen', this.screenChanged);
-            this.template = template;
+            this.template = dot.template(template);
         }
 
         , render: function() {
@@ -35,7 +32,10 @@ define(['./mode'
         }
 
         , setScreen: function(screenName) {
-            // TODO: avoid memory leaks
+            if (this.screen) {
+                this.screen.close();
+            }
+
             switch(screenName) {
                 case 'TITLE':
                     this.screen = new TitleScreen({
@@ -50,10 +50,14 @@ define(['./mode'
                         , el: this.$("#screen")
                     })
                     break;
+
+                case 'BRIDGE':
+                    this.screen = new BridgeScreen({
+                        model: this.model
+                        , el: this.$("#screen")
+                    })
+                    break;
             }
         }
 
     });
-
-    return gameMode;
-});

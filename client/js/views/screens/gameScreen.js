@@ -5,30 +5,32 @@
  *
  */
 
-define(['backbone'
-        , 'regExList'
-        , 'regExLines'
-], function(Backbone
-            , regExList
-            , regExLines ) {
+    var Backbone = require('backbone')
+, _ = require('underscore')
+    , regExLines = require('../../regExLines')
+    , regExList = require('../../regExList')
 
-    var screen = Backbone.View.extend({
+    module.exports = screen = Backbone.View.extend({
 
         initialize: function() {
           this.listenTo(this.model.get('ship'), 'change:lastResult', this.outputLastResult);
           this.listenTo(this, 'output_done', this.outputDone);
         }
 
+        , close: function()  {
+            this.stopListening();
+            if (this.onClose) {
+                this.onClose();
+            }
+        }
+
         , outputLastResult: function() {
           this.$("#commands").hide();
           var lastResult = this.model.get('ship').get('lastResult')
               , lines = lastResult.split('\n')
-              , $innerDiv = $("<div></div>");
+              // grab the existing output
+              , $innerDiv = $("div.output > div");
 
-          // here is our semaphore..
-          // node is single-threaded so it should be threadsafe
-          // wait a second...
-          // this on the client!
           this.waiters = 0;
 
           this.outputLines(lines, $innerDiv);
@@ -75,11 +77,8 @@ define(['backbone'
                   currentLine = regEx.functionBody(currentLine, regExArray);
                 }
               });
-
-              $innerDiv.append($("<p></p>").addClass("outputText").append(currentLine));
-              if (isScrolledToBottom) {
-                this.scrollToBottom($output);
-              }
+              var appendedLine = $innerDiv.append($("<p></p>").addClass("outputText").append(currentLine));
+              this.scrollToBottom($output);
             }
           }
 
@@ -90,6 +89,3 @@ define(['backbone'
           $output.scrollTop($output.prop('scrollHeight'));
         }
     });
-
-    return screen;
-});

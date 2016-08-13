@@ -1,15 +1,11 @@
 
 
-define(['./gameScreen'
-        , 'views/commandHolderView'
-        , 'doT!/templates/screens/simpleScreen'
+var dot = require('dot')
+, GameScreen = require('./gameScreen')
+    , CommandHolderView = require('../commandHolderView')
+    , template = require('../../../templates/screens/simpleScreen.dot');
 
-], function(GameScreen
-            , CommandHolderView
-            , template
-) {
-
-  var simpleScreen = GameScreen.extend({
+  module.exports = simpleScreen = GameScreen.extend({
     events: {
       'click .continue': 'continue'
     }
@@ -17,12 +13,13 @@ define(['./gameScreen'
     , initialize: function() {
       GameScreen.prototype.initialize.apply(this);
 
-      this.template = template;
+        this.template = dot.template(template);
 
       this.render();
+
       this.rootCommands = new CommandHolderView({
         model: this.model.get('ship')
-        , el: this.$("#commands")
+        , el: this.$("#rootCommands")
       });
       this.listenTo(this.rootCommands, 'run', this.runCommand);
       this.listenTo(this.model.get('ship'), 'change:children', this.commandsChanged);
@@ -39,25 +36,23 @@ define(['./gameScreen'
       $(window).resize(function() {
           $("#simpleScreen").height($(window).height());
       })
-    }
 
-    , runCommand: function(commandText) {
-      this.model.get('ship').runCommand(commandText);
+    }
+        , onClose: function() {
+
+            this.rootCommands.close();
+            $(window).off('resize');
+        }
+
+    , runCommand: function(command) {
+      this.model.get('ship').runCommand(command.get('text'));
     }
 
     , commandsChanged: function() {
-      //TODO: avoid memory leak
-      // probably have view reload rather than recreate it every time
-      this.rootCommands = new CommandHolderView({
-        model: this.model.get('ship')
-        , el: this.$("#commands")
-      });
+      this.rootCommands.render();
     }
 
     , outputDone: function() {
       this.$("#commands").show();
     }
   });
-
-  return simpleScreen;
-});
