@@ -23,9 +23,30 @@
          * @return {None}
          */
         , init: function() {
+            var bufferTime = 0.40;
+            var messageDelay = 1000;
             this.template = dot.template(template);
-            // this.timeout = setTimeout(this.showContinueMessage.bind(this), 1);
-            this.first = true;
+
+
+            // the buffered event listener starts the loop a _little_ bit
+            // before it ends, trying to reduce the gap that happens with
+            // html5 looping
+            var audio_file = new Audio('sounds/titleScreen/ProducerBass.m4a')
+            var titleMode = this;
+            audio_file.addEventListener('timeupdate', function(){
+                var buffer = bufferTime;
+                if(this.currentTime > this.duration - buffer){
+                    this.currentTime = 0
+                    this.play()
+                    setTimeout(titleMode.showContinueMessage.bind(titleMode), messageDelay);
+                }
+            }, false);
+            var audioDiv = $("<div></div>");
+            audioDiv.html(audio_file);
+            var $body = $("body");
+            $body.append(audioDiv);
+            audio_file.play();
+            setTimeout(titleMode.showContinueMessage.bind(titleMode), messageDelay);
         }
 
         , render: function() {
@@ -40,25 +61,26 @@
         }
 
         , showContinueMessage: function() {
+            var letterSpacingMS = 30;
             this.$("#continueMessage").show();
             for(var i=0, ll=this.continueChars.length; i<ll; i++) {
                 // need intermediate function to avoid sharing 'i'
                 (function(index) {
                     // every 4 secondsj
-                    this.interval = setInterval(function() {
+                    // this.interval = setTimeout(function() {
                         // 20ms between each letter showing
                         setTimeout(function() {
                             $(this.continueChars[index]).addClass('messageIn');
                             $(this.continueChars[index]).removeClass('messageOut');
-                        }.bind(this), index * 20);
+                        }.bind(this), index * letterSpacingMS);
 
                         // and wait 1700ms before hiding each letter
                         // (again with 20ms between each letter hiding)
                         setTimeout(function() {
                             $(this.continueChars[index]).removeClass('messageIn');
                             $(this.continueChars[index]).addClass('messageOut');
-                        }.bind(this), (index * 20) + 1700);
-                    }.bind(this), 4000);
+                        }.bind(this), (index * letterSpacingMS) + 500);
+                    // }.bind(this), 1);
                 }).call(this, i);
             }
         }
