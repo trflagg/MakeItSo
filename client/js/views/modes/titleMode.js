@@ -44,14 +44,16 @@
             for(var i=0, ll=this.continueChars.length; i<ll; i++) {
                 // need intermediate function to avoid sharing 'i'
                 (function(index) {
+                    // every 3 secondsj
                     this.interval = setInterval(function() {
                         setTimeout(function() {
                             $(this.continueChars[index]).css('opacity', 1);
                         }.bind(this), index * 30);
+
                         setTimeout(function() {
                             $(this.continueChars[index]).css('opacity', 0);
-                        }.bind(this), (index * 30) + 1100);
-                    }.bind(this), 3000);
+                        }.bind(this), (index * 30) + 1500);
+                    }.bind(this), 4000);
                 }).call(this, i);
             }
         }
