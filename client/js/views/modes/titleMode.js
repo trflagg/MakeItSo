@@ -24,7 +24,8 @@
          */
         , init: function() {
             this.template = dot.template(template);
-            this.timeout = setTimeout(this.showContinueMessage.bind(this), 1000);
+            // this.timeout = setTimeout(this.showContinueMessage.bind(this), 1);
+            this.first = true;
         }
 
         , render: function() {
@@ -42,6 +43,7 @@
             this.$("#continueMessage").show();
             for(var i=0, ll=this.continueChars.length; i<ll; i++) {
                 // need intermediate function to avoid sharing 'i'
+                //
                 (function(index) {
                     // every 4 secondsj
                     this.interval = setInterval(function() {
@@ -61,9 +63,14 @@
             }
         }
 
-        , keyPressed: function() {
-            clearTimeout(this.timeout);
-            this.model.set('mode', 'newProfile');
+        , keyPressed: function(k) {
+            //clearTimeout(this.timeout);
+            //this.model.set('mode', 'newProfile');
+            console.log(this.first);
+            if (this.first) {
+                this.showContinueMessage.bind(this)();
+            }
+            this.first = false;
         }
 
     });
