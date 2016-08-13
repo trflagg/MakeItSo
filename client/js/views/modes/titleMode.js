@@ -35,7 +35,7 @@
             // installed on this.$
             this.continueChars = $("#continueMessage p")
                                     .blast({delimiter: "character"})
-                .addClass('messageOut');
+                                    .addClass('messageOut');
             return this;
         }
 
@@ -43,18 +43,18 @@
             this.$("#continueMessage").show();
             for(var i=0, ll=this.continueChars.length; i<ll; i++) {
                 // need intermediate function to avoid sharing 'i'
-                //
                 (function(index) {
                     // every 4 secondsj
                     this.interval = setInterval(function() {
+                        // 20ms between each letter showing
                         setTimeout(function() {
-                            // $(this.continueChars[index]).css('opacity', 1);
                             $(this.continueChars[index]).addClass('messageIn');
                             $(this.continueChars[index]).removeClass('messageOut');
                         }.bind(this), index * 20);
 
+                        // and wait 1700ms before hiding each letter
+                        // (again with 20ms between each letter hiding)
                         setTimeout(function() {
-                            // $(this.continueChars[index]).css('opacity', 0);
                             $(this.continueChars[index]).removeClass('messageIn');
                             $(this.continueChars[index]).addClass('messageOut');
                         }.bind(this), (index * 20) + 1700);
