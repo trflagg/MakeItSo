@@ -1,6 +1,6 @@
 {
   "name": "MakeItSo",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "OpenSource engine for the game I'm working on. Uses Node, MongoDB, & Koa.",
   "main": "index.js",
   "scripts": {
