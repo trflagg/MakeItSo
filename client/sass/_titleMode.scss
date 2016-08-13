@@ -34,9 +34,21 @@
             font-family: 'Audiowide', sans;
             letter-spacing: -.1em;
             font-size: 30px;
+
+            span {
+                transition: opacity 0.5s ease-in-out;
+            }
         }
+
+    }
+
+    .messageOut
+    {
+        opacity: 0;
+    }
+
+    .messageIn
+    {
+        opacity: 1;
     }
 }
-
-
-
