@@ -9,6 +9,7 @@
 var Backbone = require('backbone')
 , StateMachine = require('javascript-state-machine')
 , $ = require('jquery')
+, MusicView = require('./musicView')
 , AppModel = require('../models/appModel')
 , ShipModel = require('../models/shipModel')
 , EditOptionsMode = require('../views/modes/editOptionsMode')
@@ -29,6 +30,8 @@ module.exports =  appView = Backbone.View.extend({
         this.listenTo(this.model, 'change:mode', this.updateMode);
 
         this.fsm = this.createFSM();
+
+        this.musicView = new MusicView();
 
         // start the app
         this.start();

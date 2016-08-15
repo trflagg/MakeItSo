@@ -7,7 +7,7 @@
 
 var Backbone = require('backbone')
 , $ = require('jquery')
-, ProfileModel = require('../models/profileModel.js');
+, ProfileModel = require('../models/profileModel');
 
 
 module.exports = appModel = Backbone.Model.extend({
@@ -72,4 +72,5 @@ module.exports = appModel = Backbone.Model.extend({
             appModel.set('ships', data.ships);
         });
     }
+
 });

@@ -27,25 +27,6 @@
             var messageDelay = 1000;
             this.template = dot.template(template);
 
-
-            // the buffered event listener starts the loop a _little_ bit
-            // before it ends, trying to reduce the gap that happens with
-            // html5 looping
-            var audio_file = new Audio('sounds/titleScreen/ProducerBass.m4a')
-            var titleMode = this;
-            audio_file.addEventListener('timeupdate', function(){
-                var buffer = bufferTime;
-                if(this.currentTime > this.duration - buffer){
-                    this.currentTime = 0
-                    this.play()
-                    setTimeout(titleMode.showContinueMessage.bind(titleMode), messageDelay);
-                }
-            }, false);
-            var audioDiv = $("<div></div>");
-            audioDiv.html(audio_file);
-            var $body = $("body");
-            $body.append(audioDiv);
-            audio_file.play();
             setTimeout(titleMode.showContinueMessage.bind(titleMode), messageDelay);
         }
 
@@ -86,13 +67,6 @@
         }
 
         , keyPressed: function(k) {
-            //clearTimeout(this.timeout);
-            //this.model.set('mode', 'newProfile');
-            console.log(this.first);
-            if (this.first) {
-                this.showContinueMessage.bind(this)();
-            }
-            this.first = false;
+           this.model.set('mode', 'newProfile');
         }
-
     });
