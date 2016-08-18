@@ -8,9 +8,11 @@ module.exports = regExList = [
     functionName: 'clearScreen'
     , placeholder: '{% CLEAR_SCREEN %}'
     , regEx: /^{% CLEAR_SCREEN %}/
-    , functionBody: function(lines, $output, args) {
-        $output.empty();
-        return lines;
+    , promiseForLine: function(line, $output, args) {
+        return new Promise(function(resolve, reject) {
+            $output.empty();
+            resolve($output);
+        });
     }
 }
 
@@ -19,28 +21,23 @@ module.exports = regExList = [
     functionName: 'wait'
     , placeholder: '{% WAIT(%d) %}'
     , regEx: /^{% WAIT\((\d+)\) %}/
-    , functionBody: function(lines, $output, args) {
-        var gameScreen = this;
-        // set semaphore to say someone is waiting
-        this.waiters++;
-        setTimeout(function() {
-            // unset to say we're done
-            gameScreen.waiters--;
-            gameScreen.outputLines(lines, $output);
-        }, args[1])
-        return [];
+    , promiseForLine: function(line, $output, args) {
+        return new Promise(function(resolve, reject) {
+            setTimeout(function() {resolve($output)}, args[1]);
+        });
     }
 }
-
 // startChat
 , {
     functionName: 'startChat'
     , placeholder: '{% START_CHAT %}'
     , regEx: /^{% START_CHAT %}/
-    , functionBody: function(lines, $output, args) {
-        var $innerDiv = $("<div></div>").addClass('chat');
-        $output.append($innerDiv);
-        return this.outputLines(lines, $innerDiv);
+    , promiseForLine: function(line, $output, args) {
+        return new Promise(function(resolve, reject) {
+            var $innerDiv = $("<div></div>").addClass('chat');
+            $output.append($innerDiv);
+            resolve($innerDiv);
+        });
     }
 }
 
@@ -49,8 +46,10 @@ module.exports = regExList = [
     functionName: 'endChat'
     , placeholder: '{% END_CHAT %}'
     , regEx: /^{% END_CHAT %}/
-    , functionBody: function(lines, $output, args) {
-        var $outDiv = $output.parent()
-        return this.outputLines(lines, $outDiv);
+    , promiseForLine: function(line, $output, args) {
+        return new Promise(function(resolve, reject) {
+            var $outDiv = $output.parent();
+            resolve($outDiv);
+        });
     }
 }];
