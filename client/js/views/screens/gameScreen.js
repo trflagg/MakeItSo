@@ -178,7 +178,7 @@ module.exports = screen = Backbone.View.extend({
     }
 
     , isScrolledToBottom: function(output) {
-        return (output.prop('scrollHeight') - output.prop('clientHeight')) <= output.scrollTop() + 1;
+        return (output.prop('scrollHeight') - output.prop('clientHeight')) <= output.scrollTop() + 30;
     }
 
     , scrollToBottom: function(output) {
