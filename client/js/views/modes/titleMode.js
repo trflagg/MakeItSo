@@ -27,7 +27,7 @@
             var messageDelay = 1000;
             this.template = dot.template(template);
 
-            setTimeout(titleMode.showContinueMessage.bind(titleMode), messageDelay);
+            //setTimeout(titleMode.showContinueMessage.bind(titleMode), messageDelay);
         }
 
         , render: function() {
