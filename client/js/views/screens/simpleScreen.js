@@ -23,6 +23,7 @@ var dot = require('dot')
       });
       this.listenTo(this.rootCommands, 'run', this.runCommand);
       this.listenTo(this.model.get('ship'), 'change:children', this.commandsChanged);
+        this.listenTo(this, 'output_begin', this.outputBegin);
       this.outputLastResult();
     }
 
@@ -51,6 +52,10 @@ var dot = require('dot')
     , commandsChanged: function() {
       this.rootCommands.render();
     }
+
+      , outputBegin: function() {
+          this.$("#commands").hide();
+      }
 
     , outputDone: function() {
       this.$("#commands").show();

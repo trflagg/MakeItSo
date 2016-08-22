@@ -15,6 +15,10 @@ module.exports = screen = Backbone.View.extend({
     initialize: function() {
         this.listenTo(this.model.get('ship'), 'change:lastResult', this.outputLastResult);
         this.listenTo(this, 'output_done', this.outputDone);
+
+        // set to false to stop printing lines
+        // character by character
+        this.revealLines = true;
     }
 
     , close: function()  {
@@ -25,11 +29,13 @@ module.exports = screen = Backbone.View.extend({
     }
 
     , outputLastResult: function() {
-        this.$("#commands").hide();
+        // this.$("#commands").hide();
         var lastresult = this.model.get('ship').get('lastResult')
         , lines = ''
-        // grab the existing output
-        , $outputdiv = $("div.output > div");
+        , $outputdiv = $("div.output > div"); // grab the existing output
+
+        this.trigger('output_begin');
+
 
         if (lastresult) {
             lines = lastresult.split('\n')
@@ -131,41 +137,44 @@ module.exports = screen = Backbone.View.extend({
     }
 
     , printLine: function(line, $outputDiv) {
-        return new Promise(function(resolve, reject) {
+        return new Promise(_.bind(function(resolve, reject) {
             var charTime = 20;
 
             $newDiv = $("<p></p>").addClass("outputText");
             $outputDiv.append($newDiv);
 
-            // function to add a single character from the front of the line
-            // to the $newDiv. If it's an html tag, add that all at once
-            addNextChar = function(currentLine, lineRemaining) {
+            if (this.revealLines) {
+                // function to add a single character from the front of the line
+                // to the $newDiv. If it's an html tag, add that all at once
+                addNextChar = function(currentLine, lineRemaining) {
+                    // check for html tag
+                    var tagArray = lineRemaining.split(/^(<.*?>)/);
+                    if (tagArray.length > 1) {
+                        currentLine += tagArray[1];
+                        $newDiv.html(currentLine);
+                        return addNextChar(currentLine, tagArray[2]);
+                    }
+                    else {
+                        // grab first letter
+                        currentLine += lineRemaining[0];
+                        lineRemaining = lineRemaining.slice(1);
+                        $newDiv.html(currentLine);
+                    }
 
-                // check for html tag
-                var tagArray = lineRemaining.split(/^(<.*?>)/);
-                if (tagArray.length > 1) {
-                    currentLine += tagArray[1];
-                    $newDiv.html(currentLine);
-                    return addNextChar(currentLine, tagArray[2]);
+                    // do we keep going?
+                    if (lineRemaining.length > 0) {
+                        setTimeout(addNextChar, charTime, currentLine, lineRemaining);
+                    }
+                    else {
+                        resolve($outputDiv);
+                    }
                 }
-                else {
-                    // grab first letter
-                    currentLine += lineRemaining[0];
-                    lineRemaining = lineRemaining.slice(1);
-                    $newDiv.html(currentLine);
-                }
-
-                // do we keep going?
-                if (lineRemaining.length > 0) {
-                    setTimeout(addNextChar, charTime, currentLine, lineRemaining);
-                }
-                else {
-                    resolve($outputDiv);
-                }
+                addNextChar("", line);
+            } else {
+                $newDiv.html(line);
+                resolve($outputDiv);
             }
-            addNextChar("", line);
-
-        });
+        }, this));
     }
 
     , isScrolledToBottom: function(output) {
