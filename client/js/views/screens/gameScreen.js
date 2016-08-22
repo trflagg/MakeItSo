@@ -40,6 +40,7 @@ module.exports = screen = Backbone.View.extend({
                 this.trigger('output_done');
             }, this));
 
+
         this.$(".output").html($outputdiv);
     }
 
@@ -57,7 +58,9 @@ module.exports = screen = Backbone.View.extend({
         var p = Promise.resolve($output)
         , gameScreen = this;
 
-        lines.forEach(function(line) {
+        lines.filter(function(line) {
+            return line.length > 0;
+        }).forEach(function(line) {
             p = p.then(function($nextOutput) {
                 var scroll = false;
                 if (gameScreen.isScrolledToBottom($('.output'))) {
@@ -108,25 +111,20 @@ module.exports = screen = Backbone.View.extend({
 
         // not a regEx, so make a promise to print it
         if (print) {
-            promiseResult = new Promise(_.bind(function(resolve, reject) {
-                // need to check if we're at the bottom before we print
-                var atBottom = this.isScrolledToBottom($output);
+            // need to check if we're at the bottom before we print
+            var atBottom = this.isScrolledToBottom($output);
 
-                // match against regExLines which may modify our output line
-                _.each(regExLines, function(regEx) {
-                    regExResultsArray = regEx.regEx.exec(line);
-                    if (regExResultsArray != null) {
-                        line = regEx.transformLine.call(this, line, regExResultsArray);
-                    }
-                }, this);
+            // match against regExLines which may modify our output line
+            _.each(regExLines, function(regEx) {
+                regExResultsArray = regEx.regEx.exec(line);
+                if (regExResultsArray != null) {
+                    line = regEx.transformLine.call(this, line, regExResultsArray);
+                }
+            }, this);
 
-                // print it!
-                $newDiv = $("<p></p>").addClass("outputText");
-                $newDiv.append(line);
-                $output.append($newDiv);
+            // print it!
+            promiseResult = this.printLine(line, $output);
 
-                resolve($output);
-            }, this));
         }
 
         return promiseResult;
@@ -134,10 +132,39 @@ module.exports = screen = Backbone.View.extend({
 
     , printLine: function(line, $outputDiv) {
         return new Promise(function(resolve, reject) {
+            var charTime = 20;
+
             $newDiv = $("<p></p>").addClass("outputText");
-            $newDiv.append(line);
             $outputDiv.append($newDiv);
-            resolve($outputDiv);
+
+            // function to add a single character from the front of the line
+            // to the $newDiv. If it's an html tag, add that all at once
+            addNextChar = function(currentLine, lineRemaining) {
+
+                // check for html tag
+                var tagArray = lineRemaining.split(/^(<.*?>)/);
+                if (tagArray.length > 1) {
+                    currentLine += tagArray[1];
+                    $newDiv.html(currentLine);
+                    return addNextChar(currentLine, tagArray[2]);
+                }
+                else {
+                    // grab first letter
+                    currentLine += lineRemaining[0];
+                    lineRemaining = lineRemaining.slice(1);
+                    $newDiv.html(currentLine);
+                }
+
+                // do we keep going?
+                if (lineRemaining.length > 0) {
+                    setTimeout(addNextChar, charTime, currentLine, lineRemaining);
+                }
+                else {
+                    resolve($outputDiv);
+                }
+            }
+            addNextChar("", line);
+
         });
     }
 
