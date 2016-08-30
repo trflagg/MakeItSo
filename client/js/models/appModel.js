@@ -7,8 +7,8 @@
 
 var Backbone = require('backbone')
 , $ = require('jquery')
-, ProfileModel = require('../models/profileModel');
-
+, ProfileModel = require('../models/profileModel')
+, MusicModel = require('../models/musicModel');
 
 module.exports = appModel = Backbone.Model.extend({
 
@@ -16,6 +16,7 @@ module.exports = appModel = Backbone.Model.extend({
     defaults: {
         mode: 'test'
         , profile: null
+        , music: null
     },
 
     /**
@@ -25,6 +26,7 @@ module.exports = appModel = Backbone.Model.extend({
         * @return {None}
         */
     initialize: function() {
+        this.set({music: new MusicModel()});
     }
 
     /**

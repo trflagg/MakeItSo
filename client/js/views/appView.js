@@ -31,7 +31,7 @@ module.exports =  appView = Backbone.View.extend({
 
         this.fsm = this.createFSM();
 
-        this.musicView = new MusicView();
+        this.musicView = new MusicView({model: this.model});
 
         // start the app
         this.start();

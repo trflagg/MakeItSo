@@ -6,6 +6,7 @@
  */
 
     var Mode = require('./mode')
+    , _ = require('underscore')
     , blast = require('blast-text')
     , dot = require('dot')
     , template = require('../../../templates/modes/titleMode.dot');
@@ -23,11 +24,21 @@
          * @return {None}
          */
         , init: function() {
-            var bufferTime = 0.40;
-            var messageDelay = 1000;
             this.template = dot.template(template);
 
+            var music = this.model.get('music');
+            music.set({source: 'sounds/titleScreen//ProducerBass.m4a'});
+            music.set({update: _.bind(this.musicUpdate,this)});
+            music.play();
+
+            this.first = true
+            titleMode = this;
             //setTimeout(titleMode.showContinueMessage.bind(titleMode), messageDelay);
+        }
+
+        , musicUpdate: function() {
+            var messageDelay = 1000;
+            setTimeout(this.showContinueMessage.bind(this), messageDelay);
         }
 
         , render: function() {
@@ -48,7 +59,7 @@
                 // need intermediate function to avoid sharing 'i'
                 (function(index) {
                     // every 4 secondsj
-                    // this.interval = setTimeout(function() {
+                    this.interval = setTimeout(function() {
                         // 20ms between each letter showing
                         setTimeout(function() {
                             $(this.continueChars[index]).addClass('messageIn');
@@ -61,12 +72,19 @@
                             $(this.continueChars[index]).removeClass('messageIn');
                             $(this.continueChars[index]).addClass('messageOut');
                         }.bind(this), (index * letterSpacingMS) + 500);
-                    // }.bind(this), 1);
+                    }.bind(this), 1);
                 }).call(this, i);
             }
         }
 
         , keyPressed: function(k) {
-           this.model.set('mode', 'newProfile');
+            if (!this.first) {
+                this.model.set('mode', 'newProfile');
+            }
+            this.first = false;
+        }
+
+        , onClose: function() {
+            this.model.get('music').stop();
         }
     });
