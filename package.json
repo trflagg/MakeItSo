@@ -16,14 +16,14 @@
   "bugs": {
     "url": "https://github.com/trflagg/MakeItSo/issues"
   },
-    "browserify": {
-        "transform": [
-            "browserify-global-shim"
-        ]
-    },
-    "browserify-global-shim": {
-        "jquery": "$"
-    },
+  "browserify": {
+    "transform": [
+      "browserify-global-shim"
+    ]
+  },
+  "browserify-global-shim": {
+    "jquery": "$"
+  },
   "homepage": "https://github.com/trflagg/MakeItSo",
   "dependencies": {
     "amdefine": "^0.1.0",
@@ -43,6 +43,7 @@
     "koa-session": "~3.3.1",
     "koa-static": "~1.5.2",
     "mongodb": "~2.1.0",
+    "pizzicato": "^0.3.2",
     "promise": "^7.1.1",
     "stringify": "^5.1.0",
     "superagent": "~1.5.0",

@@ -3,12 +3,8 @@ var Backbone = require('backbone')
 
 module.exports =  musicView = Backbone.View.extend({
 
-    initialize: function(options) {
-        this.model = options.model.get('music');
-
-        if (options && options.source) {
-            this.model.set({source: options.source});
-        }
+    initialize: function() {
+        this.sourceChanged = false;
 
         this.listenTo(this.model, 'change:source', this.updateSource);
         this.listenTo(this.model, 'change:state', this.changeState);
@@ -16,39 +12,59 @@ module.exports =  musicView = Backbone.View.extend({
     }
 
     , render: function() {
-        // the buffered event listener starts the loop a _little_ bit
-        // before it ends, trying to reduce the gap that happens with
-        // html5 looping
-        var audio_file = new Audio(this.model.get('source'));
-        var musicView = this;
-        var bufferTime = 0.40;
-        audio_file.addEventListener('timeupdate', function(){
-            var buffer = bufferTime;
-            if(this.currentTime > this.duration - buffer){
-                this.currentTime = 0
-                this.play()
-                musicView.model.update();
-            }
-        }, false);
+        var audio = new Audio('');
         var audioDiv = $("<div></div>");
-        audioDiv.html(audio_file);
         var $body = $("body");
+        var source = document.createElement('source');
+        var musicView = this;
+
+        audio.addEventListener('timeupdate',
+                                function() {musicView.updateLoop(this, musicView)},
+                                false);
+        this.audio = audio;
+        source.src = '';
+        this.source = source;
+        audio.appendChild(source);
+        audioDiv.html(audio);
         $body.append(audioDiv);
-        this.audio_file = audio_file;
+    }
+
+    // the buffered event listener starts the loop a _little_ bit
+    // before it ends, trying to reduce the gap that happens with
+    // html5 looping
+    , updateLoop: function(audio, musicView) {
+        var bufferTime = 0.40;
+
+        if(audio.currentTime > audio.duration - bufferTime){
+            // change sources only on loop replay
+            if (this.sourceChanged) {
+                //this.audio.src = this.model.get('source');
+            }
+            audio.currentTime = 0
+            audio.play()
+            musicView.model.update();
+        }
     }
 
     , updateSource: function() {
-        this.audio_file.src = this.model.get('source');
+        // if we're going from nothing, change immediately
+        // otherwise, we only want to chane on loop replay
+        if (this.source.getAttribute('src') === '') {
+            this.source.setAttribute('src', this.model.get('source'));
+            this.audio.load();
+        } else {
+            this.sourceChanged = true;
+        }
     }
 
     , changeState: function() {
         var state = this.model.get('state');
 
-        if (state === 'playing') {
-            this.audio_file.play();
+        if (state === 'playing' && this.audio.src !== '') {
+            this.audio.play();
         }
         else if (state === 'stopped') {
-            this.audio_file.src = '';
+            this.audio.src = '';
         }
     }
 

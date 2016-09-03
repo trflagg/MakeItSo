@@ -13,7 +13,8 @@ module.exports = musicModel = Backbone.Model.extend({
     }
 
     , play: function() {
-        if (this.get('source') !== '') {
+        var source = this.get('source')
+        if (source && source !== '') {
             this.set({state: 'playing'});
         }
     }

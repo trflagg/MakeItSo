@@ -31,6 +31,8 @@ module.exports = editOptionsMode = Mode.extend({
         this.screens = [];
         this.template = dot.template(template);
         this.endFunction = null;
+        this.model.get('music').set({source: 'sounds/titleScreen/Loop.m4a'});
+        this.model.get('music').play();
     }
 
     , render: function() {

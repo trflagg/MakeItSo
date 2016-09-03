@@ -85,6 +85,8 @@
         }
 
         , onClose: function() {
-            this.model.get('music').stop();
+            var music = this.model.get('music');
+            music.set({update: null});
+            music.stop();
         }
     });
