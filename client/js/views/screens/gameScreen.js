@@ -155,8 +155,10 @@ module.exports = screen = Backbone.View.extend({
                         return addNextChar(currentLine, tagArray[2]);
                     }
                     else {
+                        // yank off the cursor
+                        currentLine = currentLine.slice(0, -1);
                         // grab first letter
-                        currentLine += lineRemaining[0];
+                        currentLine += lineRemaining[0] + "#";
                         lineRemaining = lineRemaining.slice(1);
                         $newDiv.html(currentLine);
                     }
@@ -166,6 +168,9 @@ module.exports = screen = Backbone.View.extend({
                         setTimeout(addNextChar, charTime, currentLine, lineRemaining);
                     }
                     else {
+                        // yank off the cursor
+                        currentLine = currentLine.slice(0, -1);
+                        $newDiv.html(currentLine);
                         resolve($outputDiv);
                     }
                 }
