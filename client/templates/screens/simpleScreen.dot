@@ -1,4 +1,8 @@
 <div id="simpleScreen">
+  <div id="directMessagesContainer">
+    <div id="directMessages">
+    </div>
+  </div>
   <div  class="output">
     <div></div>
   </div>
