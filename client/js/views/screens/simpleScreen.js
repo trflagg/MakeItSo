@@ -22,6 +22,14 @@ module.exports = simpleScreen = GameScreen.extend({
             , el: this.$("#rootCommands")
         });
         this.listenTo(this.rootCommands, 'run', this.runCommand);
+
+        this.directMessageCommands = new CommandHolderView({
+            model: this.model.get('ship').get('directMessages')
+            , el: this.$("#directMessages")
+        });
+        this.listenTo(this.directMessageCommands, 'run', this.runCommand);
+        this.model.get('ship').set('show_children', true);
+
         this.listenTo(this.model.get('ship'), 'change:children', this.commandsChanged);
         this.listenTo(this, 'output_begin', this.outputBegin);
         this.outputLastResult();
@@ -42,6 +50,7 @@ module.exports = simpleScreen = GameScreen.extend({
 
     , onClose: function() {
         this.rootCommands.close();
+        this.directMessageCommands.close();
         $(window).off('resize');
     }
 
@@ -51,6 +60,7 @@ module.exports = simpleScreen = GameScreen.extend({
 
     , commandsChanged: function() {
         this.rootCommands.render();
+        this.directMessageCommands.render();
     }
 
     , outputBegin: function() {
