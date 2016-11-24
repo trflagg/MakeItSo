@@ -37,7 +37,7 @@ update-dev-fixtures:
 	node --harmony node_modules/argie/messageLoader ../../environment-default.js
 
 update-compose-fixtures:
-	docker run  --rm --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo -v $(shell pwd):/usr/src/app mis \
+	docker run  --rm --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo -v $(shell pwd):/usr/src/app trflagg/makeitso:latest \
 				node --harmony node_modules/argie/messageLoader ../../db-environment-compose.js
 
 # this shouldn't be necessary because I should have watchify run w/ docker-compose
