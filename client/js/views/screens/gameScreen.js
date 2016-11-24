@@ -22,9 +22,13 @@ define(['backbone'
         , outputLastResult: function() {
           this.$("#commands").hide();
           var lastResult = this.model.get('ship').get('lastResult')
-              , lines = lastResult.split('\n')
               // grab the existing output
-              , $innerDiv = $("div.output > div");
+            , $innerDiv = $("div.output > div")
+            , lines;
+
+          if (lastResult) {
+              lines = lastResult.split('\n');
+          }
 
           this.waiters = 0;
 
