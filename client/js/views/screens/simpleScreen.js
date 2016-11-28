@@ -36,15 +36,17 @@ module.exports = simpleScreen = GameScreen.extend({
     }
 
     , render: function() {
-        $(this.el).html(this.template({}));
+        $(this.el).html(this.template({
+            ship: this.model.get('ship')
+        }));
 
         // TODO: unbind this event handler in an onClose() method
         // Probably also need to call that onClose() from the mode's
         // onClose()
-        $("#simpleScreen").height($(window).height());
-        $(window).resize(function() {
-            $("#simpleScreen").height($(window).height());
-        })
+        // $("#simpleScreen").height($(window).height());
+        // $(window).resize(function() {
+        //     $("#simpleScreen").height($(window).height());
+        // })
 
     }
 
