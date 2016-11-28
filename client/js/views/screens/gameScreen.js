@@ -138,7 +138,7 @@ module.exports = screen = Backbone.View.extend({
 
     , printLine: function(line, $outputDiv) {
         return new Promise(_.bind(function(resolve, reject) {
-            var charTime = 20;
+            var charTime = 30;
 
             $newDiv = $("<p></p>").addClass("outputText");
             $outputDiv.append($newDiv);

@@ -46,45 +46,70 @@
   }
 
   #simpleScreen {
-    p {
-      width: 75%;
-      margin: auto;
-      margin-top: 100px;
-    }
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    margin: auto;
+    min-height: 100vh;
 
-    .output {
-      height: 75%;
-      overflow: scroll;
-    }
+    #header {
+      display: flex;
+      align-items: flex-end;
 
-    .outputText {
-      margin-top: 40px;
-    }
+      h1, h2 {
+        margin: 0px;
+        display: inline;
+      }
 
-    .chat .outputText {
-      margin-top: 0px;
-
-      .collins {
-        color: #B44;
-      }
-      .mackenzie {
-        color: #499;
-      }
-      .hawkins {
-        color: #55C;
-      }
-      .golz {
-        color: #494;
-      }
-      .banerjee {
-        color: #949;
+      #subheader {
+          display: flex;
+          flex-direction: column;
+          flex-grow: 2;
+          flex-shrink: 1;
       }
     }
 
+        .output {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            max-height: 75vh;
+            margin-top: 15px;
+            overflow: scroll;
+        }
+
+        p.outputText {
+            width: 75%;
+            margin: auto;
+            margin-top: 40px;
+        }
+
+        .chat .outputText {
+        margin-top: 0px;
+
+            .collins {
+                color: #B44;
+            }
+            .mackenzie {
+                color: #499;
+            }
+            .hawkins {
+                color: #55C;
+            }
+            .golz {
+                color: #494;
+            }
+            .banerjee {
+                color: #949;
+            }
+        }
+
+    #commands {
     #rootCommands {
       text-align: center;
       margin-top: 10px;
       width: 100%;
+    }
     }
   }
 
