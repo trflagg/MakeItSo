@@ -14,6 +14,12 @@ docker-start:
 docker-stop:
 	docker-machine stop default
 
+# This is a destructive tool for cleaning up after updating throws an error.
+# A better solution is to make the compose-update not get stuck on error
+kill-update-fixtures:
+	pkill -9 -n make
+	docker rm -f mis_fixtures
+
 mongo-compose:
 	docker run -it --link makeitso_mongo_1:mongo --rm mongo sh -c 'exec mongo "$$MONGO_PORT_27017_TCP_ADDR:$$MONGO_PORT_27017_TCP_PORT"'
 
