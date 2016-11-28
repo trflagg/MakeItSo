@@ -55,7 +55,7 @@ module.exports = simpleScreen = GameScreen.extend({
     }
 
     , runCommand: function(command) {
-        this.model.get('ship').runCommand(command.get('text'));
+        this.model.get('ship').runCommand(command.full_path());
     }
 
     , commandsChanged: function() {
