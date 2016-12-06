@@ -3,6 +3,7 @@
 var dot = require('dot')
 , GameScreen = require('./gameScreen')
 , CommandHolderView = require('../commandHolderView')
+, DirectMessageCommandHolderView = require('../directMessageCommandHolderView')
 , template = require('../../../templates/screens/simpleScreen.dot');
 
 module.exports = simpleScreen = GameScreen.extend({
@@ -23,11 +24,11 @@ module.exports = simpleScreen = GameScreen.extend({
         });
         this.listenTo(this.rootCommands, 'run', this.runCommand);
 
-        this.directMessageCommands = new CommandHolderView({
+        this.directMessageCommands = new DirectMessageCommandHolderView({
             model: this.model.get('ship').get('directMessages')
             , el: this.$("#directMessages")
         });
-        this.listenTo(this.directMessageCommands, 'run', this.runCommand);
+        this.listenTo(this.directMessageCommands, 'showDirectMessages', this.showDirectMessages);
         this.model.get('ship').set('show_children', true);
 
         this.listenTo(this.model.get('ship'), 'change:children', this.commandsChanged);
@@ -72,4 +73,9 @@ module.exports = simpleScreen = GameScreen.extend({
     , outputDone: function() {
       this.$("#commands").show();
     }
+
+    , showDirectMessages: function() {
+      this.model.set('mode', 'dm');
+    }
+
   });
