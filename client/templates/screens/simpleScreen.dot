@@ -10,6 +10,8 @@
     </div>
   </div>
 
+  <div id="directMessageScreen">
+  </div>
   <div  class="output">
     <div></div>
   </div>

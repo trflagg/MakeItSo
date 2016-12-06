@@ -1,0 +1,18 @@
+<div>
+
+  <h2>Direct Messages</h2>
+
+  <table>
+    <tr>
+      <th>Subject</th>
+      <th>Read?</th>
+    </tr>
+    {{~it.messages :message:index}}
+    <tr>
+      <td>{{= message.text }}</td>
+      <td> Unread</td>
+    </tr>
+    {{~}}
+  </table>
+
+</div>

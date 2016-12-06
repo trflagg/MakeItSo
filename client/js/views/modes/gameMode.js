@@ -11,6 +11,7 @@ var dot = require('dot')
     , TitleScreen = require('../screens/titleScreen')
     , SimpleScreen = require('../screens/simpleScreen')
     , BridgeScreen = require('../screens/bridgeScreen')
+    , DirectMessageScreen = require('../screens/directMessageScreen')
     , template = require('../../../templates/modes/gameMode.dot');
 
     module.exports = gameMode = Mode.extend({
@@ -62,7 +63,10 @@ var dot = require('dot')
         }
 
         , showDirectMessages: function() {
-          console.log('showDirectMessages');
+          this.directMessageScreen = new DirectMessageScreen({
+            model: this.model
+            , el: this.$("#directMessageScreen")
+          });
         }
 
     });

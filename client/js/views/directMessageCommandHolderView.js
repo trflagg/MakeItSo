@@ -17,7 +17,6 @@
         },
 
       newMessages: function() {
-        console.dir(this.model);
         return (this.model.get("children") >  0);
       },
 
