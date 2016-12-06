@@ -75,7 +75,7 @@ module.exports = simpleScreen = GameScreen.extend({
     }
 
     , showDirectMessages: function() {
-      this.model.set('mode', 'dm');
+      this.trigger('showDirectMessages');
     }
 
   });
