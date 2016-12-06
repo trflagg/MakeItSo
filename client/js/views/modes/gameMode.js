@@ -58,6 +58,11 @@ var dot = require('dot')
                     })
                     break;
             }
+            this.listenTo(this.screen, 'showDirectMessages', this.showDirectMessages);
+        }
+
+        , showDirectMessages: function() {
+          console.log('showDirectMessages');
         }
 
     });
