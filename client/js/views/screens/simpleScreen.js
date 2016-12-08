@@ -4,6 +4,7 @@ var dot = require('dot')
 , GameScreen = require('./gameScreen')
 , CommandHolderView = require('../commandHolderView')
 , DirectMessagesButton = require('../directMessagesButton')
+, DirectMessageScreen = require('./directMessageScreen')
 , template = require('../../../templates/screens/simpleScreen.dot');
 
 module.exports = simpleScreen = GameScreen.extend({
@@ -28,6 +29,12 @@ module.exports = simpleScreen = GameScreen.extend({
             model: this.model.get('ship').get('directMessages')
             , el: this.$("#directMessages")
         });
+        this.directMessageScreen = new DirectMessageScreen({
+          model: this.model
+          , el: this.$("#directMessageScreen")
+        })
+      this.$("#directMessageScreen").hide();
+      this.directMessagesVisible = false;
         this.listenTo(this.directMessagesButton, 'toggleDirectMessages', this.toggleDirectMessages);
 
         this.model.get('ship').set('show_children', true);
@@ -73,10 +80,6 @@ module.exports = simpleScreen = GameScreen.extend({
 
     , outputDone: function() {
       this.$("#commands").show();
-    }
-
-    , toggleDirectMessages: function() {
-      this.trigger('toggleDirectMessages');
     }
 
   });

@@ -184,4 +184,15 @@ module.exports = screen = Backbone.View.extend({
     , scrollToBottom: function(output) {
         output.scrollTop(output.prop('scrollHeight'));
     }
+
+
+  , toggleDirectMessages: function() {
+    if (!this.directMessagesVisible) {
+      this.$("#directMessageScreen").show();
+      this.directMessagesVisible = true;
+    } else {
+      this.$("#directMessageScreen").hide();
+      this.directMessagesVisible = false;
+    }
+  }
 });

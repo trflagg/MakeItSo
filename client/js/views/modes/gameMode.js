@@ -61,22 +61,7 @@ var dot = require('dot')
                     })
                     break;
             }
-            this.listenTo(this.screen, 'toggleDirectMessages', this.toggleDirectMessages);
         }
 
-        , toggleDirectMessages: function() {
-          if (!this.directMessagesVisible) {
-            this.directMessageScreen = new DirectMessageScreen({
-              model: this.model
-              , el: this.$("#directMessageScreen")
-            });
-            this.directMessagesVisible = true;
-          } else {
-            this.directMessageScreen.undelegateEvents();
-            this.$("#directMessageScreen").children().remove();
-            this.directMessageScreen = null;
-            this.directMessagesVisible = false;
-          }
-        }
 
     });
