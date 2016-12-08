@@ -19,6 +19,8 @@ var dot = require('dot')
         init: function() {
             this.listenTo(this.model.get('ship'), 'change:screen', this.screenChanged);
             this.template = dot.template(template);
+
+          this.directMessagesVisible = false;
         }
 
         , render: function() {
@@ -59,14 +61,22 @@ var dot = require('dot')
                     })
                     break;
             }
-            this.listenTo(this.screen, 'showDirectMessages', this.showDirectMessages);
+            this.listenTo(this.screen, 'toggleDirectMessages', this.toggleDirectMessages);
         }
 
-        , showDirectMessages: function() {
-          this.directMessageScreen = new DirectMessageScreen({
-            model: this.model
-            , el: this.$("#directMessageScreen")
-          });
+        , toggleDirectMessages: function() {
+          if (!this.directMessagesVisible) {
+            this.directMessageScreen = new DirectMessageScreen({
+              model: this.model
+              , el: this.$("#directMessageScreen")
+            });
+            this.directMessagesVisible = true;
+          } else {
+            this.directMessageScreen.undelegateEvents();
+            this.$("#directMessageScreen").children().remove();
+            this.directMessageScreen = null;
+            this.directMessagesVisible = false;
+          }
         }
 
     });

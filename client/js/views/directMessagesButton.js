@@ -36,7 +36,7 @@
       }
 
       , clicked: function() {
-        this.trigger('showDirectMessages');
+        this.trigger('toggleDirectMessages');
       }
 
     });

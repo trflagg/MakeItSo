@@ -28,7 +28,7 @@ module.exports = simpleScreen = GameScreen.extend({
             model: this.model.get('ship').get('directMessages')
             , el: this.$("#directMessages")
         });
-        this.listenTo(this.directMessagesButton, 'showDirectMessages', this.showDirectMessages);
+        this.listenTo(this.directMessagesButton, 'toggleDirectMessages', this.toggleDirectMessages);
 
         this.model.get('ship').set('show_children', true);
 
@@ -75,8 +75,8 @@ module.exports = simpleScreen = GameScreen.extend({
       this.$("#commands").show();
     }
 
-    , showDirectMessages: function() {
-      this.trigger('showDirectMessages');
+    , toggleDirectMessages: function() {
+      this.trigger('toggleDirectMessages');
     }
 
   });
