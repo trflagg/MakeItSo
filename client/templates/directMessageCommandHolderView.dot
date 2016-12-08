@@ -1,6 +1,0 @@
-{{? it.text }}
-  <p id="{{= it.cid }}-item" class="commandItem directMessageComandHolder">{{= it.text }} </p>
-{{?}}
-<ul id="{{= it.cid }}-children" class="command-list">
-
-</ul>
