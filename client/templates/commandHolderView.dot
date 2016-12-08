@@ -1,5 +1,7 @@
-{{? it.text }}
-  <p id="{{= it.cid }}-item" class="commandItem">{{= it.text }} ({{= it.childMessageCount }})</p>
+{{? it.childMessageCount > 0 }}
+  {{? it.text }}
+    <p id="{{= it.cid }}-item" class="commandItem">{{= it.text }} ({{= it.childMessageCount }})</p>
+  {{?}}
 {{?}}
 <ul id="{{= it.cid }}-children" class="command-list">
 
