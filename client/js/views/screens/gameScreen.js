@@ -188,10 +188,11 @@ module.exports = screen = Backbone.View.extend({
 
   , toggleDirectMessages: function() {
     if (!this.directMessagesVisible) {
-      this.$("#directMessageScreen").show();
+      this.$("#directMessageScreen").addClass('animate').addClass('visible');
       this.directMessagesVisible = true;
     } else {
-      this.$("#directMessageScreen").hide();
+      this.$("#directMessageScreen").removeClass('visible');
+      setTimeout(function() {this.$("#directMessageScreen").removeClass('animate')}, 1000);
       this.directMessagesVisible = false;
     }
   }
