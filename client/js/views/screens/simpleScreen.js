@@ -33,8 +33,7 @@ module.exports = simpleScreen = GameScreen.extend({
           model: this.model
           , el: this.$("#directMessageScreen")
         })
-      this.$("#directMessageScreen").hide();
-      this.directMessagesVisible = false;
+        this.directMessagesVisible = false;
         this.listenTo(this.directMessagesButton, 'toggleDirectMessages', this.toggleDirectMessages);
 
         this.model.get('ship').set('show_children', true);
