@@ -44,7 +44,9 @@ regExs.registerRegExs();
  * load models in /models
  */
 fs.readdirSync('./models').forEach(function(file) {
+  if (!file.startsWith('.')) {
     require('./models/' + file)(db);
+  }
 })
 
 /**
@@ -66,4 +68,3 @@ fs.readdirSync('./controllers').forEach(function (file) {
 
 // Start!
 if (!module.parent) app.listen(3000);
-
