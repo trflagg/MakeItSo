@@ -135,7 +135,49 @@ module.exports = function(db) {
         }
     });
 
-    db.register('Ship', Ship);
+  // add to the avatar wrapper
+  AvatarWrapper.prototype.registerFunction({
+    functionName: 'pronoun'
+    , functionBody: function() {
+      if (this.avatar.getGlobal('gender') === 'female') {
+        return {
+          lowercase: 'she'
+          , uppercase: 'She'
+          , object: {
+            lowercase: 'her'
+            , uppercase: 'Her'
+          }
+          , possessive: {
+            lowercase: 'her'
+            , uppercase: 'Her'
+            , adjective: {
+              lowercase: 'hers'
+              , uppercase: 'Hers'
+            }
+          }
+        }
+      } else {
+        return {
+          lowercase: 'he'
+          , uppercase: 'He'
+          , object: {
+            lowercase: 'him'
+            , uppercase: 'Him'
+          }
+          , possessive: {
+            lowercase: 'his'
+            , uppercase: 'His'
+            , adjective: {
+              lowercase: 'his'
+              , uppercase: 'His'
+            }
+          }
+        }
+      }
+    }
+  });
+
+  db.register('Ship', Ship);
 
     return Ship;
 }
