@@ -9,7 +9,9 @@
     </tr>
     {{~it.messages :message:index}}
     <tr>
-      <td>{{= message.text }}</td>
+      <td>
+        <a href="#" class="directMessageLink">{{= message.text }}</a>
+      </td>
       <td> Unread</td>
     </tr>
     {{~}}

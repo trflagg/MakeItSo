@@ -60,7 +60,7 @@ module.exports = simpleScreen = GameScreen.extend({
 
     , onClose: function() {
         this.rootCommands.close();
-        this.directMessageCommands.close();
+        this.directMessageScreen.close();
         $(window).off('resize');
     }
 
@@ -70,7 +70,7 @@ module.exports = simpleScreen = GameScreen.extend({
 
     , commandsChanged: function() {
         this.rootCommands.render();
-        this.directMessageCommands.render();
+        this.directMessageScreen.render();
     }
 
     , outputBegin: function() {
