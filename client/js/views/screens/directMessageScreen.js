@@ -6,7 +6,11 @@ var Backbone = require('backbone')
 
 module.exports = directMessageScreen = Backbone.View.extend({
 
-  initialize: function() {
+  events: {
+    'click .directMessageLink': 'showMessage'
+  }
+
+  , initialize: function() {
     this.template = dot.template(template);
     this.render();
   }
@@ -15,6 +19,11 @@ module.exports = directMessageScreen = Backbone.View.extend({
     $(this.el).html(this.template({
       messages: this.model.get('ship').get('directMessages').get('children').toJSON()
     }));
+  }
+
+  , showMessage: function(event) {
+    var messageText = event.target.text;
+    this.model.get('ship').runCommand('direct_messages.' + messageText);
   }
 
 });
