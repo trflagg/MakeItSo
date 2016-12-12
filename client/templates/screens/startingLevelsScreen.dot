@@ -1,0 +1,12 @@
+<div id="startingLevels" class="centerDiv">
+    <h2>Captain {{= it.name }},</h2>
+    <h2>please select your leadership style:</h2>
+    <div id="personalitiesDiv">
+      {{~it.personalities :personality}}
+      <div class="personalityDiv" data-personality-id='{{=personality.id}}'>
+        <h2>{{=personality.name}}</h2>
+        <p>{{=personality.description}}</p>
+      </div>
+      {{~}}
+    </div>
+</div>
