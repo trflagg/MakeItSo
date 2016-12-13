@@ -21,6 +21,22 @@ module.exports = function(db) {
         this.shipName = null;
         this.profile_id = null;
 
+        this.levels = {
+            security: 1
+            , medical: 1
+            , empat: 1
+            , engineer: 1
+            , cultural: 1
+            , upgrades: 1
+            , info: 1
+            , weapons: 1
+            , shields: 1
+            , sensors: 1
+            , databank: 1
+            , processors: 1
+            , engines: 1
+        }
+
         this.setNewMessageText('** New command added: %s **');
         // controls and crew members are child messageHolders
         var crew = new MessageHolder();
@@ -76,6 +92,7 @@ module.exports = function(db) {
         doc.shipName = this.shipName;
         doc.lastResult = this.lastResult;
         doc.screen = this.screen;
+        doc.levels = this.levels;
         doc.profile_id = this.profile_id;
 
         return doc;
@@ -87,6 +104,7 @@ module.exports = function(db) {
         if(doc.shipName) this.shipName = doc.shipName;
         if(doc.lastResult) this.lastResult = doc.lastResult;
         if(doc.screen) this.screen = doc.screen;
+        if(doc.levels) this.levels = doc.levels;
         if(doc.profile_id) this.profile_id = doc.profile_id
     };
 
@@ -122,11 +140,22 @@ module.exports = function(db) {
         client_ship.shipName = this.shipName;
         client_ship.lastResult = this.lastResult;
         client_ship.screen = this.screen;
+        client_ship.levels = this.levels;
         client_ship.commands = this.getCommandTextList();
         client_ship.location = this.getLocation();
 
         return client_ship;
     };
+
+    Ship.prototype.getLevel = function(child) {
+      return this.levels[child] || "";
+    }
+
+    Ship.prototype.increaseLevel = function(child) {
+      if (this.levels[child]) {
+        this.levels[child]++;
+      }
+    }
 
     // add to the system wrapper
     systemWrapper.prototype.registerFunction({
@@ -137,6 +166,13 @@ module.exports = function(db) {
     });
 
   // add to the avatar wrapper
+  AvatarWrapper.prototype.registerFunction({
+    functionName: 'getLevel'
+    , functionBody: function(child) {
+      return this.avatar.getLevel(child);
+    }
+  });
+
   AvatarWrapper.prototype.registerFunction({
     functionName: 'pronoun'
     , functionBody: function() {

@@ -11,6 +11,7 @@ var dot = require('dot')
 , AskHandinessScreen = require('../screens/askHandinessScreen')
 , AskSexScreen = require('../screens/askSexScreen')
 , ShipNameScreen = require('../screens/shipNameScreen')
+, StartingLevelsScreen = require('../screens/startingLevelsScreen')
 , ShipCrewScreen = require('../screens/shipCrewScreen')
 , template = require('../../../templates/modes/editOptionsMode.dot')
 
@@ -133,6 +134,7 @@ module.exports = editOptionsMode = Mode.extend({
         this.render();
 
         this.addScreen(ShipNameScreen);
+        this.addScreen(StartingLevelsScreen);
         this.addScreen(ShipCrewScreen);
 
         this.currentScreen = 0;
