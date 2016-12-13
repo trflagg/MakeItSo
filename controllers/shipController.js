@@ -95,45 +95,49 @@ module.exports = function(app, db) {
             , idMatchesSession(db, {load: false})
             , setStartingLevels);
     function *setStartingLevels() {
-      var ship = yield db.load('Ship', {_id: new ObjectID(this.params.id)});
+      try {
+        var ship = yield db.load('Ship', {_id: new ObjectID(this.params.id)});
 
-      switch (this.request.body.type_selected) {
-        case 'ISTJ':
-          ship.increaseLevel('shields');
-          ship.increaseLevel('medical');
-          ship.increaseLevel('sensors');
-          ship.increaseLevel('info');
-          ship.increaseLevel('processors');
-          ship.increaseLevel('engineer');
-          break;
-        case 'ENTJ':
-          ship.increaseLevel('weapons');
-          ship.increaseLevel('security');
-          ship.increaseLevel('databank');
-          ship.increaseLevel('empat');
-          ship.increaseLevel('processors');
-          ship.increaseLevel('engineer');
-          break;
-        case 'INFP':
-          ship.increaseLevel('shields');
-          ship.increaseLevel('medical');
-          ship.increaseLevel('databank');
-          ship.increaseLevel('empat');
-          ship.increaseLevel('upgrades');
-          ship.increaseLevel('cultural');
-          break;
-        case 'ESFP':
-          ship.increaseLevel('weapons');
-          ship.increaseLevel('security');
-          ship.increaseLevel('sensors');
-          ship.increaseLevel('info');
-          ship.increaseLevel('upgrades');
-          ship.increaseLevel('cultural');
-          break;
+        switch (this.request.body.type_selected) {
+          case 'ISTJ':
+            ship.increaseLevel('shields');
+            ship.increaseLevel('medical');
+            ship.increaseLevel('sensors');
+            ship.increaseLevel('info');
+            ship.increaseLevel('processors');
+            ship.increaseLevel('engineer');
+            break;
+          case 'ENTJ':
+            ship.increaseLevel('weapons');
+            ship.increaseLevel('security');
+            ship.increaseLevel('databank');
+            ship.increaseLevel('empat');
+            ship.increaseLevel('processors');
+            ship.increaseLevel('engineer');
+            break;
+          case 'INFP':
+            ship.increaseLevel('shields');
+            ship.increaseLevel('medical');
+            ship.increaseLevel('databank');
+            ship.increaseLevel('empat');
+            ship.increaseLevel('upgrades');
+            ship.increaseLevel('cultural');
+            break;
+          case 'ESFP':
+            ship.increaseLevel('weapons');
+            ship.increaseLevel('security');
+            ship.increaseLevel('sensors');
+            ship.increaseLevel('info');
+            ship.increaseLevel('upgrades');
+            ship.increaseLevel('cultural');
+            break;
+        }
+        yield db.save('Ship', ship);
+
+        this.body = ship.toClient();
+      } catch(e) {
+        throw e;
       }
-      yield db.save('Ship', ship);
-
-      this.body = ship.toClient();
     }
 
     /**

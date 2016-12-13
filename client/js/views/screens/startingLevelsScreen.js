@@ -59,8 +59,8 @@ module.exports = startingLevelsScreen = Screen.extend({
       }
     }).done(function() {
       screen.next();
-    }).fail(function() {
-      // TODO: handle error
+    }).fail(function(jqXHR, textStatus) {
+      screen.$("#errorMessage").html("Error occurred on server: "+textStatus);
     });
   }
 });
