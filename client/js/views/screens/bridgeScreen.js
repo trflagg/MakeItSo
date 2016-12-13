@@ -43,14 +43,6 @@ var dot = require('dot')
       $(this.el).html(this.template({
         ship: this.model.get('ship')
       }));
-
-      // TODO: unbind this event handler in an onClose() method
-      // Probably also need to call that onClose() from the mode's
-      // onClose()
-      $("#bridgeScreen").height($(window).height());
-      $(window).resize(function() {
-          $("#bridgeScreen").height($(window).height());
-      })
     }
 
       , onClose: function() {

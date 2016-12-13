@@ -3,8 +3,6 @@
 var dot = require('dot')
 , GameScreen = require('./gameScreen')
 , CommandHolderView = require('../commandHolderView')
-, DirectMessagesButton = require('../directMessagesButton')
-, DirectMessageScreen = require('./directMessageScreen')
 , template = require('../../../templates/screens/simpleScreen.dot');
 
 module.exports = simpleScreen = GameScreen.extend({
@@ -24,18 +22,6 @@ module.exports = simpleScreen = GameScreen.extend({
             , el: this.$("#rootCommands")
         });
         this.listenTo(this.rootCommands, 'run', this.runCommand);
-
-        this.directMessagesButton = new DirectMessagesButton({
-            model: this.model.get('ship').get('directMessages')
-            , el: this.$("#directMessages")
-        });
-        this.directMessageScreen = new DirectMessageScreen({
-          model: this.model
-          , el: this.$("#directMessageScreen")
-        })
-        this.directMessagesVisible = false;
-        this.listenTo(this.directMessagesButton, 'toggleDirectMessages', this.toggleDirectMessages);
-
         this.model.get('ship').set('show_children', true);
 
         this.listenTo(this.model.get('ship'), 'change:children', this.commandsChanged);
@@ -47,20 +33,10 @@ module.exports = simpleScreen = GameScreen.extend({
         $(this.el).html(this.template({
             ship: this.model.get('ship')
         }));
-
-        // TODO: unbind this event handler in an onClose() method
-        // Probably also need to call that onClose() from the mode's
-        // onClose()
-        // $("#simpleScreen").height($(window).height());
-        // $(window).resize(function() {
-        //     $("#simpleScreen").height($(window).height());
-        // })
-
     }
 
     , onClose: function() {
         this.rootCommands.close();
-        this.directMessageScreen.close();
         $(window).off('resize');
     }
 
@@ -70,15 +46,14 @@ module.exports = simpleScreen = GameScreen.extend({
 
     , commandsChanged: function() {
         this.rootCommands.render();
-        this.directMessageScreen.render();
     }
 
     , outputBegin: function() {
-        this.$("#commands").hide();
+        this.$("#rootCommands").hide();
     }
 
     , outputDone: function() {
-      this.$("#commands").show();
+      this.$("#rootCommands").show();
     }
 
   });

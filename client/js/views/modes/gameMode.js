@@ -12,54 +12,81 @@ var dot = require('dot')
     , SimpleScreen = require('../screens/simpleScreen')
     , BridgeScreen = require('../screens/bridgeScreen')
     , DirectMessageScreen = require('../screens/directMessageScreen')
+    , DirectMessagesButton = require('../directMessagesButton')
     , template = require('../../../templates/modes/gameMode.dot');
 
     module.exports = gameMode = Mode.extend({
 
         init: function() {
-            this.listenTo(this.model.get('ship'), 'change:screen', this.render);
+            this.listenTo(this.model.get('ship'), 'change:screen', this.renderScreen);
             this.template = dot.template(template);
-
-          this.directMessagesVisible = false;
-        }
-
-        , screens: {
-          TITLE: TitleScreen
-          , SIMPLE: SimpleScreen
-          , BRIDGE: BridgeScreen
         }
 
         , render: function() {
-            var screenName = this.model.get('ship').get('screen');
-            var showHeader = true;
-
-            // set screen-specific options
-            switch(screenName) {
-              case 'TITLE':
-                showHeader = false;
-                break;
-            }
 
             // render self
             $(this.el).html(this.template({
-                showHeader: showHeader
-                , ship: this.model.get('ship')
+                ship: this.model.get('ship')
             }));
 
             // render screen
-            if (this.screen) {
-              this.screen.close();
-            }
-            if (this.screens[screenName]) {
+            this.renderScreen();
 
-              this.screen = new this.screens[screenName]({
+            // render other stuff
+            this.directMessagesButton = new DirectMessagesButton({
+                model: this.model.get('ship').get('directMessages')
+                , el: this.$("#directMessages")
+            });
+            this.directMessageScreen = new DirectMessageScreen({
                 model: this.model
-                , el: this.$("#screen")
-              });
+                , el: this.$("#directMessageScreen")
+            })
+            this.directMessagesVisible = false;
 
-            }
+            this.listenTo(this.directMessagesButton, 'toggleDirectMessages', this.toggleDirectMessages);
+            console.log('gameMode.render() - memory leak check');
 
             return this;
+        }
+
+        , onClose: function() {
+            this.stopListening(this.directMessagesButton);
+        }
+
+        , screens: {
+            TITLE: TitleScreen
+            , SIMPLE: SimpleScreen
+            , BRIDGE: BridgeScreen
+        }
+
+        , renderScreen: function() {
+            var screenName = this.model.get('ship').get('screen');
+
+            if (this.screen) {
+                this.screen.close();
+            }
+
+            if (this.screens[screenName]) {
+                // set screen-specific options
+                if (screenName === "TITLE") {
+                    this.hideHeader();
+                } else {
+                    this.showHeader();
+                }
+
+                this.screen = new this.screens[screenName]({
+                    model: this.model
+                    , el: this.$("#screen")
+                });
+            }
+        }
+
+        , hideHeader: function() {
+            this.$("#header").hide();
+        }
+
+        , showHeader: function() {
+            this.$("#header").show();
         }
 
     });
