@@ -19,8 +19,7 @@ var dot = require('dot')
         init: function() {
             this.listenTo(this.model.get('ship'), 'change:screen', this.render);
             this.template = dot.template(template);
-
-          this.directMessagesVisible = false;
+            this.showHeader = false;
         }
 
         , screens: {
