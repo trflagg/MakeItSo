@@ -17,51 +17,49 @@ var dot = require('dot')
     module.exports = gameMode = Mode.extend({
 
         init: function() {
-            this.listenTo(this.model.get('ship'), 'change:screen', this.screenChanged);
+            this.listenTo(this.model.get('ship'), 'change:screen', this.render);
             this.template = dot.template(template);
 
           this.directMessagesVisible = false;
         }
 
+        , screens: {
+          TITLE: TitleScreen
+          , SIMPLE: SimpleScreen
+          , BRIDGE: BridgeScreen
+        }
+
         , render: function() {
-            $(this.el).html(this.template());
-            this.setScreen(this.model.get('ship').get('screen'));
+            var screenName = this.model.get('ship').get('screen');
+            var showHeader = true;
+
+            // set screen-specific options
+            switch(screenName) {
+              case 'TITLE':
+                showHeader = false;
+                break;
+            }
+
+            // render self
+            $(this.el).html(this.template({
+                showHeader: showHeader
+                , ship: this.model.get('ship')
+            }));
+
+            // render screen
+            if (this.screen) {
+              this.screen.close();
+            }
+            if (this.screens[screenName]) {
+
+              this.screen = new this.screens[screenName]({
+                model: this.model
+                , el: this.$("#screen")
+              });
+
+            }
 
             return this;
         }
-
-        , screenChanged: function() {
-            this.setScreen(this.model.get('ship').get('screen'));
-        }
-
-        , setScreen: function(screenName) {
-            if (this.screen) {
-                this.screen.close();
-            }
-
-            switch(screenName) {
-                case 'TITLE':
-                    this.screen = new TitleScreen({
-                        model: this.model
-                        , el: this.$("#screen")
-                    })
-                    break;
-
-                case 'SIMPLE':
-                    this.screen = new SimpleScreen({
-                        model: this.model
-                        , el: this.$("#screen")
-                    })
-                    break;
-
-                case 'BRIDGE':
-                    this.screen = new BridgeScreen({
-                        model: this.model
-                        , el: this.$("#screen")
-                    })
-                    break;
-            }
-        }
-
 
     });
