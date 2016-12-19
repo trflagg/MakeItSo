@@ -44,7 +44,6 @@ var dot = require('dot')
             this.directMessagesVisible = false;
 
             this.listenTo(this.directMessagesButton, 'toggleDirectMessages', this.toggleDirectMessages);
-            console.log('gameMode.render() - memory leak check');
 
             return this;
         }
