@@ -4,11 +4,11 @@
       <h1>{{=it.ship.get('shipName')}}</h1>
       <h2>Prologue - Andromedae cluster</h2>
     </div>
-    <div id="directMessagesContainer">
-      <div id="directMessages">
-      </div>
+      <div id="buttons">
     </div>
   </div>
-  <div id="screen" class="gameScreen">
+  <div class="screen" id="directMessageScreen">
+  </div>
+  <div id="screen" class="gameScreen screen">
   </div>
 </div>

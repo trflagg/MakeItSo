@@ -53,6 +53,18 @@ $header_height: 100px;
     }
   }
 
+  .screen {
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .gameScreen {
+    transform: translateY(0);
+
+    &.moveDown {
+      transform: translateY(100vh);
+    }
+  }
+
   .gameScreen > div{
     height: calc(100vh - #{$header_height});
     display: flex;
@@ -61,21 +73,17 @@ $header_height: 100px;
 
   #directMessageScreen {
     position: absolute;
-    top: -100%;
+    transform: translateY(-100vh);
     height: 75vh;
     background: #000;
-    width: 75vw;
+    margin-top: 20px;
+    width: 90vw;
     border: 1px solid white;
+    align-self: center;
     z-index: 100;
 
-    transition-timing-function: linear;
-
     &.visible {
-      top: 110px;
-    }
-
-    &.animate {
-      transition: top 0.5s;
+      transform: translateY($header_height);
     }
   }
 

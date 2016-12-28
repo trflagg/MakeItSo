@@ -35,17 +35,29 @@ var dot = require('dot')
             // render other stuff
             this.directMessagesButton = new DirectMessagesButton({
                 model: this.model.get('ship').get('directMessages')
-                , el: this.$("#directMessages")
+                , el: this.$("#buttons")
             });
             this.directMessageScreen = new DirectMessageScreen({
                 model: this.model
                 , el: this.$("#directMessageScreen")
             })
             this.directMessagesVisible = false;
-
             this.listenTo(this.directMessagesButton, 'toggleDirectMessages', this.toggleDirectMessages);
 
             return this;
+        }
+
+        , toggleDirectMessages: function() {
+            if (!this.directMessagesVisible) {
+                this.$("#directMessageScreen").addClass('visible');
+                this.$(".gameScreen").addClass('moveDown');
+                this.directMessagesVisible = true;
+            } else {
+                this.$("#directMessageScreen").removeClass('visible');
+                this.$(".gameScreen").removeClass('moveDown');
+                this.directMessagesVisible = false;
+            }
+            console.log('toggleDirectMessages');
         }
 
         , onClose: function() {
