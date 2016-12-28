@@ -85,6 +85,14 @@ $header_height: 100px;
     &.visible {
       transform: translateY($header_height);
     }
+
+    table {
+      width: 75%;
+
+      td {
+        text-align: left;
+      }
+    }
   }
 
   #titleScreen {
