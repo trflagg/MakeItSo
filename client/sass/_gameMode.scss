@@ -180,6 +180,13 @@ $header_height: 100px;
       overflow: scroll;
     }
 
+
+    #rootCommands ul.command-list {
+      li {
+        margin-left: 0px !important;
+      }
+    }
+
     #commands {
       display: flex;
       flex-direction: column;
