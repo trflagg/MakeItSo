@@ -35,7 +35,6 @@ module.exports = regExList = [
     , regEx: /^{% START_CHAT %}/
     , promiseForLine: function(line, $output, args) {
         return new Promise(_.bind(function(resolve, reject) {
-            debugger;
             this.revealLines = false;
             var $innerDiv = $("<div></div>").addClass('chat');
             $output.append($innerDiv);

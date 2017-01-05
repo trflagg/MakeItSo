@@ -1,14 +1,4 @@
 <div id="bridgeScreen" class="container-fluid">
-  <div id="header">
-    <div id="shipName">
-      <h1>{{=it.ship.get('shipName')}}</h1>
-    </div>
-    <div id="subheader">
-      <h2>Prologue</h2>
-      <h2>Andromedae cluster</h2>
-    </div>
-  </div>
-
   <div id="mainBody">
     <div class="output">
       <div></div>

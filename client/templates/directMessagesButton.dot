@@ -1,0 +1,3 @@
+{{? it.text }}
+  <p id="{{= it.cid }}-item" class="commandItem directMessagesButton">{{= it.text }} </p>
+{{?}}

@@ -69,7 +69,7 @@ module.exports =  appView = Backbone.View.extend({
                 , { name: 'newProfile', from: 'title', to: 'newProfile' }
                 , { name: 'selectShip', from: ['none', 'newProfile'], to: 'selectShip'}
                 , { name: 'newShip', from: 'selectShip', to: 'newShip' }
-                , { name: 'startGame', from: ['selectShip', 'newShip'], to: 'startGame'}
+                , { name: 'startGame', from: ['selectShip', 'newShip'], to: 'playGame'}
             ]
             , callbacks: {
                 onentertitle: function(event, from, to) {
@@ -126,7 +126,7 @@ module.exports =  appView = Backbone.View.extend({
                     });
                     return StateMachine.ASYNC;
                 }
-                , onenterstartGame: function(event, from, to, model) {
+                , onenterplayGame: function(event, from, to, model) {
                     // fetch ship from server
                     appModel.get('ship').fetch();
 

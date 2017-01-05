@@ -138,7 +138,7 @@ module.exports = screen = Backbone.View.extend({
 
     , printLine: function(line, $outputDiv) {
         return new Promise(_.bind(function(resolve, reject) {
-            var charTime = 20;
+            var charTime = 30;
 
             $newDiv = $("<p></p>").addClass("outputText");
             $outputDiv.append($newDiv);
@@ -184,4 +184,16 @@ module.exports = screen = Backbone.View.extend({
     , scrollToBottom: function(output) {
         output.scrollTop(output.prop('scrollHeight'));
     }
+
+
+  , toggleDirectMessages: function() {
+    if (!this.directMessagesVisible) {
+      this.$("#directMessageScreen").addClass('animate').addClass('visible');
+      this.directMessagesVisible = true;
+    } else {
+      this.$("#directMessageScreen").removeClass('visible');
+      setTimeout(function() {this.$("#directMessageScreen").removeClass('animate')}, 1000);
+      this.directMessagesVisible = false;
+    }
+  }
 });
