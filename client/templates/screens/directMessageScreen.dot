@@ -1,6 +1,6 @@
 <div>
 
-  <table>
+  <table id="directMessagesTable">
     <tr>
       <th>Subject</th>
       <th>Read?</th>
@@ -15,4 +15,9 @@
     {{~}}
   </table>
 
+  <div id="directMessagesOutput">
+    <div class="output">
+    </div>
+    <a id="directMessagesBackButton">Back</a>
+  </div>
 </div>
