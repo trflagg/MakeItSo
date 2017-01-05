@@ -21,63 +21,59 @@ module.exports = function(db) {
         this.shipName = null;
         this.profile_id = null;
 
-        this.levels = {
-            security: 1
-            , medical: 1
-            , empat: 1
-            , engineer: 1
-            , cultural: 1
-            , upgrades: 1
-            , info: 1
-            , weapons: 1
-            , shields: 1
-            , sensors: 1
-            , databank: 1
-            , processors: 1
-            , engines: 1
-        }
-
         this.setNewMessageText('** New command added: %s **');
         // controls and crew members are child messageHolders
         var crew = new MessageHolder();
         var securityHolder = new MessageHolder();
         securityHolder.setNewMessageText('** New crew command added to crew->security: %s **');
+        securityHolder.supportLevels();
         crew.addChild('security', securityHolder);
         var medicalHolder = new MessageHolder();
         medicalHolder.setNewMessageText('** New crew command added to crew->medical: %s **');
+        medicalHolder.supportLevels();
         crew.addChild('medical', medicalHolder);
         var empatHolder = new MessageHolder();
         empatHolder.setNewMessageText('** New crew command added to crew->empat: %s **');
+        empatHolder.supportLevels();
         crew.addChild('empat', empatHolder);
         var engineeringHolder = new MessageHolder();
         engineeringHolder.setNewMessageText('** New crew command added to crew->engineering: %s **');
+        engineeringHolder.supportLevels();
         crew.addChild('engineering', engineeringHolder);
         var culturalHolder = new MessageHolder();
         culturalHolder.setNewMessageText('** New crew command added to crew->cultural: %s **');
+        culturalHolder.supportLevels();
         crew.addChild('cultural', culturalHolder);
         var infoHolder = new MessageHolder();
         infoHolder.setNewMessageText('** New crew command added to crew->info: %s **');
+        infoHolder.supportLevels();
         crew.addChild('info', infoHolder);
         this.addChild('crew', crew);
 
         var shipControls = new MessageHolder();
         var weaponHolder = new MessageHolder();
         weaponHolder.setNewMessageText('** New command added to ship_controls->weapons: %s **');
+        weaponHolder.supportLevels();
         shipControls.addChild('weapons', weaponHolder);
         var shieldHolder = new MessageHolder();
         shieldHolder.setNewMessageText('** New command added to ship_controls->shields: %s **');
+        shieldHolder.supportLevels();
         shipControls.addChild('shields', shieldHolder);
         var sensorHolder = new MessageHolder();
         sensorHolder.setNewMessageText('** New command added to ship_controls->sensors: %s **');
+        sensorHolder.supportLevels();
         shipControls.addChild('sensors', sensorHolder);
         var databankHolder = new MessageHolder();
         databankHolder.setNewMessageText('** New command added to ship_controls->databank: %s **');
+        databankHolder.supportLevels();
         shipControls.addChild('databank', databankHolder);
         var processorHolder = new MessageHolder();
         processorHolder.setNewMessageText('** New command added to ship_controls->processor: %s **');
+        processorHolder.supportLevels();
         shipControls.addChild('processor', processorHolder);
         var enginesHolder = new MessageHolder();
         enginesHolder.setNewMessageText('** New command added to ship_controls->engines: %s **');
+        enginesHolder.supportLevels();
         shipControls.addChild('engines', enginesHolder);
         this.addChild('ship_controls', shipControls);
 
@@ -92,7 +88,6 @@ module.exports = function(db) {
         doc.shipName = this.shipName;
         doc.lastResult = this.lastResult;
         doc.screen = this.screen;
-        doc.levels = this.levels;
         doc.profile_id = this.profile_id;
 
         return doc;
@@ -104,7 +99,6 @@ module.exports = function(db) {
         if(doc.shipName) this.shipName = doc.shipName;
         if(doc.lastResult) this.lastResult = doc.lastResult;
         if(doc.screen) this.screen = doc.screen;
-        if(doc.levels) this.levels = doc.levels;
         if(doc.profile_id) this.profile_id = doc.profile_id
     };
 
@@ -140,22 +134,11 @@ module.exports = function(db) {
         client_ship.shipName = this.shipName;
         client_ship.lastResult = this.lastResult;
         client_ship.screen = this.screen;
-        client_ship.levels = this.levels;
         client_ship.commands = this.getCommandTextList();
         client_ship.location = this.getLocation();
 
         return client_ship;
     };
-
-    Ship.prototype.getLevel = function(child) {
-      return this.levels[child] || "";
-    }
-
-    Ship.prototype.increaseLevel = function(child) {
-      if (this.levels[child]) {
-        this.levels[child]++;
-      }
-    }
 
     // add to the system wrapper
     systemWrapper.prototype.registerFunction({
