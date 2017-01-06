@@ -100,36 +100,38 @@ module.exports = function(app, db) {
 
         switch (this.request.body.type_selected) {
           case 'ISTJ':
-            ship.increaseLevel('shields');
-            ship.increaseLevel('medical');
-            ship.increaseLevel('sensors');
-            ship.increaseLevel('info');
-            ship.increaseLevel('processors');
-            ship.increaseLevel('engineer');
+            ship.increaseLevel('ship_controls.shields');
+            ship.increaseLevel('crew.medical');
+            ship.increaseLevel('ship_controls.sensors');
+            ship.increaseLevel('crew.info');
+            ship.increaseLevel('ship_controls.processor');
+            ship.increaseLevel('crew.engineering');
             break;
           case 'ENTJ':
-            ship.increaseLevel('weapons');
-            ship.increaseLevel('security');
-            ship.increaseLevel('databank');
-            ship.increaseLevel('empat');
-            ship.increaseLevel('processors');
-            ship.increaseLevel('engineer');
+            ship.increaseLevel('ship_controls.weapons');
+            ship.increaseLevel('crew.security');
+            ship.increaseLevel('ship_controls.databank');
+            ship.increaseLevel('crew.empat');
+            ship.increaseLevel('ship_controls.processor');
+            ship.increaseLevel('crew.engineering');
             break;
           case 'INFP':
-            ship.increaseLevel('shields');
-            ship.increaseLevel('medical');
-            ship.increaseLevel('databank');
-            ship.increaseLevel('empat');
-            ship.increaseLevel('upgrades');
-            ship.increaseLevel('cultural');
+            ship.increaseLevel('ship_controls.shields');
+            ship.increaseLevel('crew.medical');
+            ship.increaseLevel('ship_controls.databank');
+            ship.increaseLevel('crew.empat');
+            // todo: figure out what to do with 'upgrades'
+            // engines??
+            //ship.increaseLevel('upgrades');
+            ship.increaseLevel('crew.cultural');
             break;
           case 'ESFP':
-            ship.increaseLevel('weapons');
-            ship.increaseLevel('security');
-            ship.increaseLevel('sensors');
-            ship.increaseLevel('info');
-            ship.increaseLevel('upgrades');
-            ship.increaseLevel('cultural');
+            ship.increaseLevel('ship_controls.weapons');
+            ship.increaseLevel('crew.security');
+            ship.increaseLevel('ship_controls.sensors');
+            ship.increaseLevel('crew.info');
+            // ship.increaseLevel('upgrades');
+            ship.increaseLevel('crew.cultural');
             break;
         }
         yield db.save('Ship', ship);

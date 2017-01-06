@@ -29,6 +29,7 @@
                 $(this.el).html(this.template({
                     text: this.model.get("text")
                     , childMessageCount: this.model.get("childMessageCount")
+                    , level: this.model.get("level")
                     , cid: this.cid
                 }));
 
