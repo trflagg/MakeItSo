@@ -66,6 +66,7 @@ module.exports = function(db) {
         var databankHolder = new MessageHolder();
         databankHolder.setNewMessageText('** New command added to ship_controls->databank: %s **');
         databankHolder.supportLevels();
+        databankHolder.setRecordUnread(true);
         shipControls.addChild('databank', databankHolder);
         var processorHolder = new MessageHolder();
         processorHolder.setNewMessageText('** New command added to ship_controls->processor: %s **');
@@ -79,6 +80,7 @@ module.exports = function(db) {
 
         var dmHolder = new MessageHolder();
         dmHolder.setNewMessageText('** New Direct Message Received: %s **');
+        dmHolder.setRecordUnread(true);
         this.addChild('direct_messages', dmHolder);
     };
 
