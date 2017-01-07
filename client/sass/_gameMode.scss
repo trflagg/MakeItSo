@@ -30,12 +30,34 @@ $header_height: 100px;
     }
   }
 
-  p.commandItem {
+  div.commandTextDiv {
     border: 1px solid white;
+  }
+
+  p.commandItem {
     cursor: pointer;
     padding: 10px !important;
     width: 100% !important;
     margin: 0px;
+
+    .glyphicon {
+      font-size: 0.7em;
+      padding-left: 7px;
+      transition: transform 1s linear;
+
+      &.rotated {
+        transform: translateY(-5px) rotateZ(90deg);
+      }
+    }
+
+  }
+
+  p.commandItemLevel {
+    font-size: 15px;
+    padding: 0px;
+    margin: 0px;
+    margin-top: -15px;
+    color: #666;
   }
 
   p.outputText {
@@ -214,57 +236,5 @@ $header_height: 100px;
 
 
   }
-
-  // #bridgeScreen {
-  //   #header {
-  //     margin-top: 0px;
-  //     margin-bottom: 5px;
-  //     color: #68434F;
-  //   }
-
-  //   #header a {
-  //     color: #68434F;
-  //   }
-
-  //   #headerLine {
-  //     border-top: 3px solid white;
-  //     width: 0%;
-  //     margin-top: -1.1em;
-  //   }
-
-  //   #menu {
-  //     text-align: right;
-  //     font-size: 14px;
-  //   }
-
-  //   #locationHeader {
-  //     background: #68434F;
-  //     padding: 10px;
-  //     border: 0px solid #1C259C;
-  //     border-bottom : 3px solid #330C1C;
-  //     color: #330C1C;
-  //     border-radius: 30px 10px;
-  //     padding-left: 20px;
-  //     font-family: Coda, sans-serif;
-  //     border-top: 3px solid;
-  //     margin-top: 10px;
-  //   }
-
-  //   #locationHeader p {
-  //     font-size: 10px;
-  //     color: #330C1C;
-  //   }
-
-  //   p#locationName {
-  //     font-size: 42px;
-  //     margin-top: -.2em;
-  //     font-family: Audiowide;
-  //   }
-
-  //   p#locationInfo {
-  //     font-size: 16px;
-  //     margin-right: 45px;
-  //   }
-  // }
 
 }

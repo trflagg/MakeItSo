@@ -1,3 +1,5 @@
-{{? it.text }}
-  <p id="{{= it.cid }}-item" class="commandItem directMessagesButton">{{= it.text }} </p>
-{{?}}
+<div class="commandTextDiv">
+  {{? it.text }}
+    <p id="{{= it.cid }}-item" class="commandItem directMessagesButton">{{= it.text }} </p>
+  {{?}}
+</div>
