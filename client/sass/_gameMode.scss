@@ -39,6 +39,17 @@ $header_height: 100px;
     padding: 10px !important;
     width: 100% !important;
     margin: 0px;
+
+    .glyphicon {
+      font-size: 0.7em;
+      padding-left: 7px;
+      transition: transform 1s linear;
+
+      &.rotated {
+        transform: translateY(-5px) rotateZ(90deg);
+      }
+    }
+
   }
 
   p.commandItemLevel {

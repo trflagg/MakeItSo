@@ -1,7 +1,10 @@
 {{? it.childMessageCount > 0 }}
   {{? it.text }}
     <div class='commandTextDiv'>
-      <p id="{{= it.cid }}-item" class="commandItem">{{= it.text }} ({{= it.childMessageCount }})</p>
+      <p id="{{= it.cid }}-item" class="commandItem">
+         {{= it.text }}
+         <span class="glyphicon glyphicon-play {{? it.showChildren }} rotated {{?}}"></span>
+      </p>
       {{? it.level }}
         <p class="commandItemLevel">Level {{= it.level }}</p>
       {{?}}
