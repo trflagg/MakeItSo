@@ -3,7 +3,7 @@
       {{= it.text }}
     </p>
     {{? it.level }}
-      <p>
+      <p class="commandItemLevel">
         Level {{= it.level }} Required
       </p>
     {{?}}
