@@ -30,12 +30,23 @@ $header_height: 100px;
     }
   }
 
-  p.commandItem {
+  div.commandTextDiv {
     border: 1px solid white;
+  }
+
+  p.commandItem {
     cursor: pointer;
     padding: 10px !important;
     width: 100% !important;
     margin: 0px;
+  }
+
+  p.commandItemLevel {
+    font-size: 15px;
+    padding: 0px;
+    margin: 0px;
+    margin-top: -15px;
+    color: #666;
   }
 
   p.outputText {

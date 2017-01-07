@@ -1,6 +1,11 @@
 {{? it.childMessageCount > 0 }}
   {{? it.text }}
-    <p id="{{= it.cid }}-item" class="commandItem">{{= it.text }} ({{= it.childMessageCount }}) {{? it.level }} Level {{= it.level }} {{?}} </p>
+    <div class='commandTextDiv'>
+      <p id="{{= it.cid }}-item" class="commandItem">{{= it.text }} ({{= it.childMessageCount }})</p>
+      {{? it.level }}
+        <p class="commandItemLevel">Level {{= it.level }}</p>
+      {{?}}
+    </div>
   {{?}}
 {{?}}
 <ul id="{{= it.cid }}-children" class="command-list">
