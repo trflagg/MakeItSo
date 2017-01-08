@@ -150,57 +150,85 @@ module.exports = function(db) {
         }
     });
 
-  // add to the avatar wrapper
-  AvatarWrapper.prototype.registerFunction({
-    functionName: 'getLevel'
-    , functionBody: function(child) {
-      return this.avatar.getLevel(child);
-    }
-  });
-
-  AvatarWrapper.prototype.registerFunction({
-    functionName: 'pronoun'
-    , functionBody: function() {
-
-      if (this.avatar.getGlobal('gender') === 'female') {
-        return {
-          lowercase: 'she'
-          , uppercase: 'She'
-          , object: {
-            lowercase: 'her'
-            , uppercase: 'Her'
-          }
-          , possessive: {
-            lowercase: 'her'
-            , uppercase: 'Her'
-            , adjective: {
-              lowercase: 'hers'
-              , uppercase: 'Hers'
-            }
-          }
+    // add to the avatar wrapper
+    AvatarWrapper.prototype.registerFunction({
+        functionName: 'getLevel'
+        , functionBody: function(child) {
+            return this.avatar.getLevel(child);
         }
-      } else {
-        return {
-          lowercase: 'he'
-          , uppercase: 'He'
-          , object: {
-            lowercase: 'him'
-            , uppercase: 'Him'
-          }
-          , possessive: {
-            lowercase: 'his'
-            , uppercase: 'His'
-            , adjective: {
-              lowercase: 'his'
-              , uppercase: 'His'
-            }
-          }
-        }
-      }
-    }
-  });
+    });
 
-  db.register('Ship', Ship);
+    AvatarWrapper.prototype.registerFunction({
+        functionName: 'crew_member_intercom'
+        , functionBody: function(crew) {
+            var name = this.avatar.getGlobal(crew);
+            var result = '';
+            switch(crew) {
+                case 'security':
+                    result = 'Security Ofc. '+name;
+                    break;
+                case 'medical':
+                    result = 'Medical Ofc. '+name;
+                    break;
+                case 'empat':
+                    result = 'Empat '+name;
+                    break;
+                case 'engineering':
+                    result = 'Engineer '+name;
+                    break;
+                case 'cultural':
+                    result = 'Cultural Ofc. '+name;
+                    break;
+            }
+
+            result += " [[over the intercom]]: ";
+            return result;
+        }
+    });
+
+    AvatarWrapper.prototype.registerFunction({
+        functionName: 'pronoun'
+        , functionBody: function() {
+
+        if (this.avatar.getGlobal('gender') === 'female') {
+            return {
+                lowercase: 'she'
+                , uppercase: 'She'
+                , object: {
+                    lowercase: 'her'
+                    , uppercase: 'Her'
+                }
+                , possessive: {
+                    lowercase: 'her'
+                    , uppercase: 'Her'
+                    , adjective: {
+                    lowercase: 'hers'
+                    , uppercase: 'Hers'
+                    }
+                }
+            }
+        } else {
+            return {
+                lowercase: 'he'
+                , uppercase: 'He'
+                , object: {
+                    lowercase: 'him'
+                    , uppercase: 'Him'
+                }
+                , possessive: {
+                    lowercase: 'his'
+                    , uppercase: 'His'
+                    , adjective: {
+                    lowercase: 'his'
+                    , uppercase: 'His'
+                    }
+                }
+            }
+        }
+        }
+    });
+
+    db.register('Ship', Ship);
 
     return Ship;
 }
