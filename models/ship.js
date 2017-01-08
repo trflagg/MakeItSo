@@ -159,6 +159,34 @@ module.exports = function(db) {
     });
 
     AvatarWrapper.prototype.registerFunction({
+        functionName: 'crew_member_intercom'
+        , functionBody: function(crew) {
+            var name = this.avatar.getGlobal(crew);
+            var result = '';
+            switch(crew) {
+                case 'security':
+                    result = 'Security Ofc. '+name;
+                    break;
+                case 'medical':
+                    result = 'Medical Ofc. '+name;
+                    break;
+                case 'empat':
+                    result = 'Empat '+name;
+                    break;
+                case 'engineering':
+                    result = 'Engineer '+name;
+                    break;
+                case 'cultural':
+                    result = 'Cultural Ofc. '+name;
+                    break;
+            }
+
+            result += " [[over the intercom]]: ";
+            return result;
+        }
+    });
+
+    AvatarWrapper.prototype.registerFunction({
         functionName: 'pronoun'
         , functionBody: function() {
 
