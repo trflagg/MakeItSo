@@ -16,7 +16,7 @@
   </table>
 
   <div id="directMessagesOutput">
-    <div class="output">
+    <div class="directMessagesoutput">
     </div>
     <a id="directMessagesBackButton">Back</a>
   </div>
