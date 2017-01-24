@@ -9,6 +9,7 @@
 var dot = require('dot')
 , Mode = require('./mode')
     , TitleScreen = require('../screens/titleScreen')
+    , CrawlScreen = require('../screens/crawlScreen')
     , SimpleScreen = require('../screens/simpleScreen')
     , BridgeScreen = require('../screens/bridgeScreen')
     , DirectMessageScreen = require('../screens/directMessageScreen')
@@ -66,6 +67,7 @@ var dot = require('dot')
 
         , screens: {
             TITLE: TitleScreen
+            , CRAWL: CrawlScreen
             , SIMPLE: SimpleScreen
             , BRIDGE: BridgeScreen
         }
@@ -79,7 +81,8 @@ var dot = require('dot')
 
             if (this.screens[screenName]) {
                 // set screen-specific options
-                if (screenName === "TITLE") {
+                if (screenName === "TITLE"
+                 || screenName == "CRAWL") {
                     this.hideHeader();
                 } else {
                     this.showHeader();
