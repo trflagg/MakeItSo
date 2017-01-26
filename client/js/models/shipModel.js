@@ -35,6 +35,10 @@ module.exports =  shipModel = CommandHolderModel.extend({
 
     , parse: function(response, options) {
 
+        // order matters here.
+        // we're triggering event handlers as we go.
+        // set screen first so it will properly handle the other events
+        this.set('screen', response.screen);
         this.set('id', response.id);
         this.set('shipName', response.shipName);
         this.set('output', response.output);
@@ -65,7 +69,6 @@ module.exports =  shipModel = CommandHolderModel.extend({
             }
         }
         this.setChildren(rootCommands);
-        this.set('screen', response.screen);
     }
 
     /**

@@ -11,6 +11,8 @@ var dot = require('dot')
 
     , initialize: function() {
       GameScreen.prototype.initialize.apply(this);
+        // forget the event listeners created by the superclass
+        this.stopListening();
 
         this.template = dot.template(template);
       this.render();
