@@ -7,7 +7,8 @@
 
 
 var dot = require('dot')
-, Mode = require('./mode')
+    , StateMachine = require('javascript-state-machine')
+    , Mode = require('./mode')
     , TitleScreen = require('../screens/titleScreen')
     , CrawlScreen = require('../screens/crawlScreen')
     , SimpleScreen = require('../screens/simpleScreen')
@@ -19,8 +20,76 @@ var dot = require('dot')
     module.exports = gameMode = Mode.extend({
 
         init: function() {
-            this.listenTo(this.model.get('ship'), 'change:screen', this.renderScreen);
+            this.fsm = this.createFSM();
+            this.listenTo(this.model.get('ship'), 'change:screen', this.changeScreen);
             this.template = dot.template(template);
+        }
+
+        , createFSM: function() {
+            // using fsm to hold state & use transition functions.
+            // each screen is the name of the event to transition to that screen.
+            // Right now, you can transition from any screen to any other.
+            var SCREEN_LIST = [
+                'none' // default starting state for javascript-state-machine
+                , 'CRAWL'
+                , 'TITLE'
+                , 'SIMPLE'
+                , 'BRIDGE'
+            ];
+
+            var fsm = StateMachine.create({
+                events: [
+                    {name: 'CRAWL', from: SCREEN_LIST, to: 'CRAWL'}
+                    , {name: 'TITLE', from: SCREEN_LIST, to: 'TITLE'}
+                    , {name: 'SIMPLE', from: SCREEN_LIST, to: 'SIMPLE'}
+                    , {name: 'BRIDGE', from: SCREEN_LIST, to: 'BRIDGE'}
+                ]
+                , callbacks: {
+                    onenterstate: function() {
+                        //header on by default
+                        this.showHeader();
+                    }.bind(this)
+
+                    , onleavestate: function() {
+                        if (this.screen) {
+                            this.screen.close()
+                        }
+                        this.screen = null;
+                    }.bind(this)
+
+                    , onenterCRAWL: function() {
+                        this.hideHeader();
+                        this.screen = new CrawlScreen({
+                            model: this.model
+                            , el: this.$("#screen")
+                        });
+                    }.bind(this)
+
+                    , onenterTITLE: function() {
+                        this.hideHeader();
+                        this.screen = new TitleScreen({
+                            model: this.model
+                            , el: this.$("#screen")
+                        });
+                    }.bind(this)
+
+                    , onenterSIMPLE: function() {
+                        this.screen = new SimpleScreen({
+                            model: this.model
+                            , el: this.$("#screen")
+                        });
+                    }.bind(this)
+
+                    , onenterBRIDGE: function() {
+                        this.screen = new BridgeScreen({
+                            model: this.model
+                            , el: this.$("#screen")
+                        });
+                    }.bind(this)
+                }
+            });
+
+            return fsm;
         }
 
         , render: function() {
@@ -29,9 +98,6 @@ var dot = require('dot')
             $(this.el).html(this.template({
                 ship: this.model.get('ship')
             }));
-
-            // render screen
-            this.renderScreen();
 
             // render other stuff
             this.directMessagesButton = new DirectMessagesButton({
@@ -45,6 +111,7 @@ var dot = require('dot')
             this.directMessagesVisible = false;
             this.listenTo(this.directMessagesButton, 'toggleDirectMessages', this.toggleDirectMessages);
 
+            this.changeScreen();
             return this;
         }
 
@@ -65,34 +132,10 @@ var dot = require('dot')
             this.stopListening(this.directMessagesButton);
         }
 
-        , screens: {
-            TITLE: TitleScreen
-            , CRAWL: CrawlScreen
-            , SIMPLE: SimpleScreen
-            , BRIDGE: BridgeScreen
-        }
-
-        , renderScreen: function() {
+        , changeScreen: function() {
             var screenName = this.model.get('ship').get('screen');
 
-            if (this.screen) {
-                this.screen.close();
-            }
-
-            if (this.screens[screenName]) {
-                // set screen-specific options
-                if (screenName === "TITLE"
-                 || screenName == "CRAWL") {
-                    this.hideHeader();
-                } else {
-                    this.showHeader();
-                }
-
-                this.screen = new this.screens[screenName]({
-                    model: this.model
-                    , el: this.$("#screen")
-                });
-            }
+            this.fsm[screenName]();
         }
 
         , hideHeader: function() {
