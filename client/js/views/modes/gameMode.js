@@ -51,14 +51,12 @@ var dot = require('dot')
             var ship = this.model.get('ship');
 
             // check screen first
-            if (ship.hasChanged('screen')) {
+            if (ship.get('screen') != this.screen.name) {
+                console.log('hasChanged screen');
                 this.renderScreen();
             }
 
-            // now look for new output
-            if (ship.hasChanged('lastResult')) {
-                this.screen.outputLastResult();
-            }
+            this.screen.outputLastResult();
         }
 
         , toggleDirectMessages: function() {
@@ -105,6 +103,7 @@ var dot = require('dot')
                     model: this.model
                     , el: this.$("#screen")
                 });
+                this.screen.name = screenName;
             }
         }
 
