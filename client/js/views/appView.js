@@ -74,7 +74,7 @@ module.exports =  appView = Backbone.View.extend({
             , callbacks: {
                 onentertitle: function(event, from, to) {
                     appView.setMode(new TitleMode({
-                            el: $("<div></div>")
+                            el: appView.newModeDiv()
                             , model: appModel
                     }));
                     appView.mode.render();
@@ -84,7 +84,7 @@ module.exports =  appView = Backbone.View.extend({
                     // fade out old mode.
                     $('#contents').fadeOut('slow', function() {
                         appView.setMode(new EditOptionsMode({
-                            el: $("<div></div>")
+                            el: appView.newModeDiv()
                             , model: appModel
                         }));
 
@@ -100,7 +100,7 @@ module.exports =  appView = Backbone.View.extend({
                         appModel.set('ship', new ShipModel());
 
                         appView.setMode(new EditOptionsMode({
-                            el: $("<div></div>")
+                            el: appView.newModeDiv()
                             , model: appModel
                         }));
 
@@ -116,7 +116,7 @@ module.exports =  appView = Backbone.View.extend({
 
                     $("#contents").fadeOut('slow', function() {
                         appView.setMode(new SelectShipMode({
-                            el: $("<div></div>")
+                            el: appView.newModeDiv()
                             , model: appModel
                         }));
 
@@ -132,7 +132,7 @@ module.exports =  appView = Backbone.View.extend({
 
                     $("#contents").fadeOut('slow', function() {
                         appView.setMode(new GameMode({
-                            el: $("<div></div>")
+                            el: appView.newModeDiv()
                             , model: appModel
                         }));
 
@@ -154,13 +154,15 @@ module.exports =  appView = Backbone.View.extend({
     , setMode: function(newMode) {
         if (this.mode) {
             this.mode.close();
-        }
-        else {
-            $("#contents").empty();
+        } else {
+            $("#defaultContents").remove();
         }
 
         this.mode = newMode;
-        $("#contents").append(newMode.$el);
+    }
+
+    , newModeDiv: function() {
+        return $("<div></div>").appendTo("#contents");
     }
 
 })

@@ -24,7 +24,6 @@ var dot = require('dot')
         }
 
         , render: function() {
-
             // render self
             $(this.el).html(this.template({
                 ship: this.model.get('ship')
