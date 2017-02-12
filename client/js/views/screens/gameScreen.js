@@ -13,7 +13,6 @@ var Backbone = require('backbone')
 module.exports = screen = Backbone.View.extend({
 
     initialize: function() {
-        this.listenTo(this.model.get('ship'), 'change:lastResult', this.outputLastResult);
         this.listenTo(this, 'output_done', this.outputDone);
 
         // set to false to stop printing lines

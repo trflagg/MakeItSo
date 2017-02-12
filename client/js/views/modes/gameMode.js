@@ -54,6 +54,11 @@ var dot = require('dot')
             if (ship.hasChanged('screen')) {
                 this.renderScreen();
             }
+
+            // now look for new output
+            if (ship.hasChanged('lastResult')) {
+                this.screen.outputLastResult();
+            }
         }
 
         , toggleDirectMessages: function() {
