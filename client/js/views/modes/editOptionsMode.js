@@ -114,8 +114,6 @@ module.exports = editOptionsMode = Mode.extend({
     }
 
     , newProfile: function() {
-        this.render();
-
         this.addScreen(EnterNameScreen);
         this.addScreen(AskSexScreen);
         this.addScreen(AskHandinessScreen);
@@ -131,8 +129,6 @@ module.exports = editOptionsMode = Mode.extend({
     }
 
     , newShip: function() {
-        this.render();
-
         this.addScreen(ShipNameScreen);
         this.addScreen(StartingLevelsScreen);
         this.addScreen(ShipCrewScreen);

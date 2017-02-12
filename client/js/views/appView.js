@@ -76,8 +76,8 @@ module.exports =  appView = Backbone.View.extend({
                     appView.setMode(new TitleMode({
                             el: appView.newModeDiv()
                             , model: appModel
-                    }));
-                    appView.mode.render();
+                    })).render();
+
                     return StateMachine.ASYNC;
                 }
                 , onenternewProfile: function(event, from, to) {
@@ -86,7 +86,7 @@ module.exports =  appView = Backbone.View.extend({
                         appView.setMode(new EditOptionsMode({
                             el: appView.newModeDiv()
                             , model: appModel
-                        }));
+                        })).render();
 
                         appView.mode.newProfile();
 
@@ -102,7 +102,7 @@ module.exports =  appView = Backbone.View.extend({
                         appView.setMode(new EditOptionsMode({
                             el: appView.newModeDiv()
                             , model: appModel
-                        }));
+                        })).render();
 
                         appView.mode.newShip();
 
@@ -118,9 +118,7 @@ module.exports =  appView = Backbone.View.extend({
                         appView.setMode(new SelectShipMode({
                             el: appView.newModeDiv()
                             , model: appModel
-                        }));
-
-                        appView.mode.render();
+                        })).render();
 
                         $("#contents").fadeIn('slow');
                     });
@@ -134,9 +132,7 @@ module.exports =  appView = Backbone.View.extend({
                         appView.setMode(new GameMode({
                             el: appView.newModeDiv()
                             , model: appModel
-                        }));
-
-                        appView.mode.render();
+                        })).render();
 
                         $("#contents").fadeIn('slow');
                     });
@@ -159,6 +155,8 @@ module.exports =  appView = Backbone.View.extend({
         }
 
         this.mode = newMode;
+
+        return newMode;
     }
 
     , newModeDiv: function() {
