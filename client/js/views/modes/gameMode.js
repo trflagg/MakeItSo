@@ -19,7 +19,7 @@ var dot = require('dot')
     module.exports = gameMode = Mode.extend({
 
         init: function() {
-            this.listenTo(this.model.get('ship'), 'change:screen', this.renderScreen);
+            this.listenTo(this.model.get('ship'), 'parse_done', this.shipChanged);
             this.template = dot.template(template);
         }
 
@@ -45,6 +45,15 @@ var dot = require('dot')
             this.listenTo(this.directMessagesButton, 'toggleDirectMessages', this.toggleDirectMessages);
 
             return this;
+        }
+
+        , shipChanged: function() {
+            var ship = this.model.get('ship');
+
+            // check screen first
+            if (ship.hasChanged('screen')) {
+                this.renderScreen();
+            }
         }
 
         , toggleDirectMessages: function() {
