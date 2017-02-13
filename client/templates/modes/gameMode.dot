@@ -7,8 +7,6 @@
       <div id="buttons">
     </div>
   </div>
-  <div class="screen" id="directMessageScreen">
-  </div>
   <div id="screen" class="gameScreen screen">
   </div>
 </div>
