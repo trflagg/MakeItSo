@@ -142,6 +142,29 @@ module.exports = function(db) {
         return client_ship;
     };
 
+    Ship.prototype.crewName = function(crew) {
+        var name = this.getGlobal(crew);
+        var result = '';
+        switch(crew) {
+            case 'security':
+                result = 'Security Ofc. '+name;
+                break;
+            case 'medical':
+                result = 'Medical Ofc. '+name;
+                break;
+            case 'empat':
+                result = 'Empat '+name;
+                break;
+            case 'engineering':
+                result = 'Engineer '+name;
+                break;
+            case 'cultural':
+                result = 'Cultural Ofc. '+name;
+                break;
+        }
+        return result;
+    }
+
     // add to the system wrapper
     systemWrapper.prototype.registerFunction({
         functionName: 'setScreen'
@@ -161,27 +184,17 @@ module.exports = function(db) {
     AvatarWrapper.prototype.registerFunction({
         functionName: 'crew_member_intercom'
         , functionBody: function(crew) {
-            var name = this.avatar.getGlobal(crew);
-            var result = '';
-            switch(crew) {
-                case 'security':
-                    result = 'Security Ofc. '+name;
-                    break;
-                case 'medical':
-                    result = 'Medical Ofc. '+name;
-                    break;
-                case 'empat':
-                    result = 'Empat '+name;
-                    break;
-                case 'engineering':
-                    result = 'Engineer '+name;
-                    break;
-                case 'cultural':
-                    result = 'Cultural Ofc. '+name;
-                    break;
-            }
-
+            var result = this.avatar.crewName(crew);
             result += " [[over the intercom]]: ";
+            return result;
+        }
+    });
+
+    AvatarWrapper.prototype.registerFunction({
+        functionName: 'crew_member'
+        , functionBody: function(crew) {
+            var result = this.avatar.crewName(crew);
+            result += ": ";
             return result;
         }
     });
