@@ -32,6 +32,9 @@ var dot = require('dot')
             // render screen
             this.renderScreen();
 
+            // render text
+            this.screen.outputLastResult();
+
             // render other stuff
             this.directMessagesButton = new DirectMessagesButton({
                 model: this.model.get('ship').get('directMessages')

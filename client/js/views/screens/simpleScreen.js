@@ -26,7 +26,6 @@ module.exports = simpleScreen = GameScreen.extend({
 
         this.listenTo(this.model.get('ship'), 'change:children', this.commandsChanged);
         this.listenTo(this, 'output_begin', this.outputBegin);
-        this.outputLastResult();
     }
 
     , render: function() {

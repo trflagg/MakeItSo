@@ -24,8 +24,8 @@ var dot = require('dot')
         , el: this.$("#shipCommands")
       });
 
-      this.crewCommands = new CommandHolderView({
-        model: this.model.get('ship').get('crew')
+        this.crewCommands = new CommandHolderView({
+            model: this.model.get('ship').get('crew')
         , el: this.$('#crewCommands')
       });
 
@@ -36,7 +36,6 @@ var dot = require('dot')
       this.model.get('ship').set('show_children', true);
 
       this.listenTo(this.model.get('ship'), 'change:children', this.commandsChanged);
-      this.outputLastResult();
     }
 
     , render: function() {

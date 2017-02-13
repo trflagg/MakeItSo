@@ -35,7 +35,6 @@ module.exports = screen = Backbone.View.extend({
 
         this.trigger('output_begin');
 
-
         if (lastresult) {
             lines = lastresult.split('\n')
         }
