@@ -36,6 +36,7 @@ var dot = require('dot')
       this.model.get('ship').set('show_children', true);
 
       this.listenTo(this.model.get('ship'), 'change:children', this.commandsChanged);
+      this.listenTo(this, 'output_begin', this.outputBegin);
     }
 
     , render: function() {
@@ -61,7 +62,15 @@ var dot = require('dot')
       this.crewCommands.render();
     }
 
+    , outputBegin: function() {
+        this.$("#rootCommands").hide();
+        this.$("#shipCommands").hide();
+        this.$("#crewCommands").hide();
+    }
+
     , outputDone: function() {
-      this.$("#commands").show();
+        this.$("#rootCommands").show();
+        this.$("#shipCommands").show();
+        this.$("#crewCommands").show();
     }
   });
