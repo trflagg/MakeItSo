@@ -36,14 +36,14 @@ var dot = require('dot')
             this.screen.outputLastResult();
 
             // render other stuff
-            this.directMessagesButton = new DirectMessagesButton({
-                model: this.model.get('ship').get('directMessages')
-                , el: this.$("#buttons")
-            });
-            this.directMessageScreen = new DirectMessageScreen({
-                model: this.model
-                , el: this.$("#directMessageScreen")
-            })
+            // this.directMessagesButton = new DirectMessagesButton({
+            //     model: this.model.get('ship').get('directMessages')
+            //     , el: this.$("#buttons")
+            // });
+            // this.directMessageScreen = new DirectMessageScreen({
+            //     model: this.model
+            //     , el: this.$("#directMessageScreen")
+            // })
             this.directMessagesVisible = false;
             this.listenTo(this.directMessagesButton, 'toggleDirectMessages', this.toggleDirectMessages);
 
