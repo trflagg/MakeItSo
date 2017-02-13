@@ -9,7 +9,7 @@ var dot = require('dot')
       'click .continue': 'continue'
     }
 
-    , initialize: function() {
+      , initialize: function() {
       GameScreen.prototype.initialize.apply(this);
 
         this.template = dot.template(template);
@@ -18,9 +18,14 @@ var dot = require('dot')
 
     , render: function() {
       $(this.el).html(this.template({
-        content: this.model.get('ship').get('lastResult')
       }));
       return this;
+    }
+
+    , outputLastResult: function() {
+        this.$el.html(this.template({
+            content: this.model.get('ship').get('lastResult')
+        }));
     }
 
     , continue: function() {
