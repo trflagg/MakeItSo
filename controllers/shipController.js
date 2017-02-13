@@ -81,6 +81,20 @@ module.exports = function(app, db) {
 
         for (var i=0, ll=crewChildren.length; i<ll; i++) {
             var crew_id = crewChildren[i].id;
+
+            // use default if empty
+            var DEFAULT_NAMES = {
+                security: 'Warf'
+                , medical: 'Crusher'
+                , info: 'Data'
+                , empat: 'Troi'
+                , engineering: 'LaForge'
+                , cultural: 'Picard'
+            }
+
+            if (crewChildren[i].name === "") {
+                crewChildren[i].name = DEFAULT_NAMES[crew_id];
+            }
             // avatarWrapper can access globals
             ship.setGlobal(crew_id, crewChildren[i].name);
             // but save to messageHolder name property as well
