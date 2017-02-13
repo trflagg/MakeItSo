@@ -41,7 +41,8 @@ var dot = require('dot')
 
     , render: function() {
       $(this.el).html(this.template({
-        ship: this.model.get('ship')
+            ship: this.model.get('ship')
+          , handiness: this.model.get('profile').get('handiness')
       }));
     }
 

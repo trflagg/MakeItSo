@@ -1,5 +1,5 @@
 <div id="bridgeScreen" class="container-fluid">
-  <div id="mainBody">
+  <div id="mainBody" class="{{=it.handiness}}">
     <div class="output">
       <div></div>
     </div>

@@ -198,14 +198,21 @@ $header_height: 100px;
 
     #mainBody {
       display: flex;
-      flex-direction: row;
       height: 100%;
       min-height:300px;
       margin-bottom: 50px;
+
+      &.right {
+        flex-direction: row;
+      }
+      &.left {
+        flex-direction: row-reverse;
+      }
     }
 
     .output {
       margin-right: 20px;
+      margin-left: 20px;
       flex: 3;
       overflow: scroll;
     }
