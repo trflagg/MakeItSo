@@ -66,6 +66,7 @@ module.exports =  shipModel = CommandHolderModel.extend({
         }
         this.setChildren(rootCommands);
         this.set('screen', response.screen);
+        this.trigger('parse_done');
     }
 
     /**

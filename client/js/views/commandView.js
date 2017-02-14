@@ -25,6 +25,7 @@
         render: function() {
             $(this.el).html(this.template({
                 text: this.model.get("text")
+                , level: this.model.get("level")
                 , cid: this.cid
             }));
 

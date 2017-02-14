@@ -1,91 +1,197 @@
 /**
- * screen.js
- *
- * Superclass for different form items shown one screen at a time.
- *
- */
+* screen.js
+*
+* Superclass for different form items shown one screen at a time.
+*
+*/
 
-    var Backbone = require('backbone')
+var Backbone = require('backbone')
 , _ = require('underscore')
-    , regExLines = require('../../regExLines')
-    , regExList = require('../../regExList')
+, regExLines = require('../../regExLines')
+, regExList = require('../../regExList')
 
-    module.exports = screen = Backbone.View.extend({
+module.exports = screen = Backbone.View.extend({
 
-        initialize: function() {
-          this.listenTo(this.model.get('ship'), 'change:lastResult', this.outputLastResult);
-          this.listenTo(this, 'output_done', this.outputDone);
+    initialize: function() {
+        this.listenTo(this, 'output_done', this.outputDone);
+
+        // set to false to stop printing lines
+        // character by character
+        this.revealLines = true;
+    }
+
+    , close: function()  {
+        this.stopListening();
+        if (this.onClose) {
+            this.onClose();
+        }
+    }
+
+    , outputLastResult: function() {
+        // this.$("#commands").hide();
+        var lastresult = this.model.get('ship').get('lastResult')
+        , lines = ''
+        , $outputdiv = $("div.output > div"); // grab the existing output
+
+        this.trigger('output_begin');
+
+        if (lastresult) {
+            lines = lastresult.split('\n')
         }
 
-        , close: function()  {
-            this.stopListening();
-            if (this.onClose) {
-                this.onClose();
-            }
-        }
+        this.outputLines(lines, $outputdiv)
+            .then(_.bind(function() {
+                this.trigger('output_done');
+            }, this));
 
-        , outputLastResult: function() {
-          this.$("#commands").hide();
-          var lastResult = this.model.get('ship').get('lastResult')
-              , lines = lastResult.split('\n')
-              // grab the existing output
-              , $innerDiv = $("div.output > div");
 
-          this.waiters = 0;
+        this.$(".output").html($outputdiv);
+    }
 
-          this.outputLines(lines, $innerDiv);
+    , outputDone: function() {
+        // noop
+    }
 
-          this.$(".output").html($innerDiv);
-        }
+    // outputLines
+    // Responsible for taking in an array of string and
+    // outputting them to the $output.
+    // Because lines may take a while to print each character
+    // individually, and because of the wait command, it builds
+    // a series of Promises which operate one after another.
+    , outputLines: function(lines, $output) {
+        var p = Promise.resolve($output)
+        , gameScreen = this;
 
-        , outputDone: function() {
-          // noop
-        }
-
-        , outputLines: function(lines, $output) {
-          while (lines && lines.length > 0) {
-            // remove the first one
-            var currentLine = lines.shift();
-            lines = this.outputLine(currentLine, lines, $output);
-          }
-          if (this.waiters === 0) {
-            this.trigger('output_done');
-          }
-        }
-
-        , outputLine: function(currentLine, lines, $innerDiv) {
-          var print = true;
-          var gameScreen = this;
-
-          if (currentLine.length > 0) {
-            // match against regEx's
-            _.each(regExList, function(regEx) {
-              if ((regExArray = regEx.regEx.exec(currentLine)) != null) {
-                // run the regEx
-                lines = regEx.functionBody.call(gameScreen, lines, $innerDiv, regExArray);
-                print = false;
-              }
-            });
-
-            if (print) {
-              // checked if scrolled to bottom before we print line
-              var $output = this.$('div.output');
-              var isScrolledToBottom = $output.prop('scrollHeight') - $output.prop('clientHeight') <= $output.scrollTop() + 1;
-              // match against lineStartRegExs
-              _.each(regExLines, function(regEx) {
-                if ((regExArray = regEx.regEx.exec(currentLine)) != null) {
-                  currentLine = regEx.functionBody(currentLine, regExArray);
+        lines.filter(function(line) {
+            return line.length > 0;
+        }).forEach(function(line) {
+            p = p.then(function($nextOutput) {
+                var scroll = false;
+                if (gameScreen.isScrolledToBottom($('.output'))) {
+                    scroll = true;
                 }
-              });
-              var appendedLine = $innerDiv.append($("<p></p>").addClass("outputText").append(currentLine));
-              this.scrollToBottom($output);
+
+                var nextPromise =  gameScreen.funcForLine(line)($nextOutput);
+
+                if(scroll) {
+                    gameScreen.scrollToBottom($('.output'));
+                }
+                return nextPromise;
+            });
+        }, this);
+
+        return p;
+    }
+
+    // Returns a function that returns a promise for dealing
+    // with the line provided. Necessary for handling the
+    // promises in series and not evaluating them automatically.
+    , funcForLine: function(line) {
+        var gameScreen = this;
+
+        return function($output){
+            return gameScreen.promiseForLine(line, $output);
+        }
+    }
+
+    // Returns a promise that will handle the line given
+    // either by printing the line to the screen or
+    // preforming an action in regExList.
+    // Necessary because it takes a little bit to output
+    // lines and there are waiters and such to add delays.
+    , promiseForLine: function(line, $output) {
+
+        var promiseResult = null
+        , print = true;
+
+        // first check if it is regExList
+        _.each(regExList, function(regEx) {
+            regExResultsArray = regEx.regEx.exec(line);
+            if (regExResultsArray != null) {
+                promiseResult = regEx.promiseForLine.call(this, line, $output, regExResultsArray);
+                print = false;
             }
-          }
+        }, this);
 
-          return lines;
+        // not a regEx, so make a promise to print it
+        if (print) {
+            // need to check if we're at the bottom before we print
+            var atBottom = this.isScrolledToBottom($output);
+
+            // match against regExLines which may modify our output line
+            _.each(regExLines, function(regEx) {
+                regExResultsArray = regEx.regEx.exec(line);
+                if (regExResultsArray != null) {
+                    line = regEx.transformLine.call(this, line, regExResultsArray);
+                }
+            }, this);
+
+            // print it!
+            promiseResult = this.printLine(line, $output);
+
         }
 
-        , scrollToBottom: function($output) {
-          $output.scrollTop($output.prop('scrollHeight'));
-        }
-    });
+        return promiseResult;
+    }
+
+    , printLine: function(line, $outputDiv) {
+        return new Promise(_.bind(function(resolve, reject) {
+            var charTime = 30;
+
+            $newDiv = $("<p></p>").addClass("outputText");
+            $outputDiv.append($newDiv);
+
+            if (this.revealLines) {
+                // function to add a single character from the front of the line
+                // to the $newDiv. If it's an html tag, add that all at once
+                addNextChar = function(currentLine, lineRemaining) {
+                    // check for html tag
+                    var tagArray = lineRemaining.split(/^(<.*?>)/);
+                    if (tagArray.length > 1) {
+                        currentLine += tagArray[1];
+                        $newDiv.html(currentLine);
+                        return addNextChar(currentLine, tagArray[2]);
+                    }
+                    else {
+                        // grab first letter
+                        currentLine += lineRemaining[0];
+                        lineRemaining = lineRemaining.slice(1);
+                        $newDiv.html(currentLine);
+                    }
+
+                    // do we keep going?
+                    if (lineRemaining.length > 0) {
+                        setTimeout(addNextChar, charTime, currentLine, lineRemaining);
+                    }
+                    else {
+                        resolve($outputDiv);
+                    }
+                }
+                addNextChar("", line);
+            } else {
+                $newDiv.html(line);
+                resolve($outputDiv);
+            }
+        }, this));
+    }
+
+    , isScrolledToBottom: function(output) {
+        return (output.prop('scrollHeight') - output.prop('clientHeight')) <= output.scrollTop() + 30;
+    }
+
+    , scrollToBottom: function(output) {
+        output.scrollTop(output.prop('scrollHeight'));
+    }
+
+
+  , toggleDirectMessages: function() {
+    if (!this.directMessagesVisible) {
+      this.$("#directMessageScreen").addClass('animate').addClass('visible');
+      this.directMessagesVisible = true;
+    } else {
+      this.$("#directMessageScreen").removeClass('visible');
+      setTimeout(function() {this.$("#directMessageScreen").removeClass('animate')}, 1000);
+      this.directMessagesVisible = false;
+    }
+  }
+});

@@ -1,1 +1,10 @@
-<p id="{{= it.cid }}-item" class="commandItem">{{= it.text }}</p>
+<div class="commandTextDiv">
+    <p id="{{= it.cid }}-item" class="commandItem">
+      {{= it.text }}
+    </p>
+    {{? it.level }}
+      <p class="commandItemLevel">
+        Level {{= it.level }} Required
+      </p>
+    {{?}}
+</div>

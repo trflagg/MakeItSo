@@ -47,6 +47,7 @@ module.exports = function(app, db) {
             ship.profile_id = this.params.profile._id;
             ship.shipName = this.request.body['shipName'];
             ship.setGlobal('name', this.params.profile.name);
+            ship.setGlobal('gender', this.params.profile.sex);
             yield ship.startGame();
 
             yield db.save('Ship', ship);
@@ -80,6 +81,23 @@ module.exports = function(app, db) {
 
         for (var i=0, ll=crewChildren.length; i<ll; i++) {
             var crew_id = crewChildren[i].id;
+
+            // use default if empty
+            var DEFAULT_NAMES = {
+                security: 'Warf'
+                , medical: 'Crusher'
+                , info: 'Data'
+                , empat: 'Troi'
+                , engineering: 'LaForge'
+                , cultural: 'Picard'
+            }
+
+            if (crewChildren[i].name === "") {
+                crewChildren[i].name = DEFAULT_NAMES[crew_id];
+            }
+            // avatarWrapper can access globals
+            ship.setGlobal(crew_id, crewChildren[i].name);
+            // but save to messageHolder name property as well
             ship.child('crew').child(crew_id).setName(crewChildren[i].name);
         }
 
@@ -87,6 +105,58 @@ module.exports = function(app, db) {
 
         this.body = ship.toClient();
 
+    }
+
+    app.post('/ship/:profile_id/:id/starting_levels'
+            , bodyParser()
+            , idMatchesSession(db, {load: false})
+            , setStartingLevels);
+    function *setStartingLevels() {
+      try {
+        var ship = yield db.load('Ship', {_id: new ObjectID(this.params.id)});
+
+        switch (this.request.body.type_selected) {
+          case 'ISTJ':
+            ship.increaseLevel('ship_controls.shields');
+            ship.increaseLevel('crew.medical');
+            ship.increaseLevel('ship_controls.sensors');
+            ship.increaseLevel('crew.info');
+            ship.increaseLevel('ship_controls.processor');
+            ship.increaseLevel('crew.engineering');
+            break;
+          case 'ENTJ':
+            ship.increaseLevel('ship_controls.weapons');
+            ship.increaseLevel('crew.security');
+            ship.increaseLevel('ship_controls.databank');
+            ship.increaseLevel('crew.empat');
+            ship.increaseLevel('ship_controls.processor');
+            ship.increaseLevel('crew.engineering');
+            break;
+          case 'INFP':
+            ship.increaseLevel('ship_controls.shields');
+            ship.increaseLevel('crew.medical');
+            ship.increaseLevel('ship_controls.databank');
+            ship.increaseLevel('crew.empat');
+            // todo: figure out what to do with 'upgrades'
+            // engines??
+            //ship.increaseLevel('upgrades');
+            ship.increaseLevel('crew.cultural');
+            break;
+          case 'ESFP':
+            ship.increaseLevel('ship_controls.weapons');
+            ship.increaseLevel('crew.security');
+            ship.increaseLevel('ship_controls.sensors');
+            ship.increaseLevel('crew.info');
+            // ship.increaseLevel('upgrades');
+            ship.increaseLevel('crew.cultural');
+            break;
+        }
+        yield db.save('Ship', ship);
+
+        this.body = ship.toClient();
+      } catch(e) {
+        throw e;
+      }
     }
 
     /**

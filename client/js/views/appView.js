@@ -9,6 +9,7 @@
 var Backbone = require('backbone')
 , StateMachine = require('javascript-state-machine')
 , $ = require('jquery')
+, MusicView = require('./musicView')
 , AppModel = require('../models/appModel')
 , ShipModel = require('../models/shipModel')
 , EditOptionsMode = require('../views/modes/editOptionsMode')
@@ -29,6 +30,8 @@ module.exports =  appView = Backbone.View.extend({
         this.listenTo(this.model, 'change:mode', this.updateMode);
 
         this.fsm = this.createFSM();
+
+        this.musicView = new MusicView();
 
         // start the app
         this.start();
@@ -66,24 +69,24 @@ module.exports =  appView = Backbone.View.extend({
                 , { name: 'newProfile', from: 'title', to: 'newProfile' }
                 , { name: 'selectShip', from: ['none', 'newProfile'], to: 'selectShip'}
                 , { name: 'newShip', from: 'selectShip', to: 'newShip' }
-                , { name: 'startGame', from: ['selectShip', 'newShip'], to: 'startGame'}
+                , { name: 'startGame', from: ['selectShip', 'newShip'], to: 'playGame'}
             ]
             , callbacks: {
                 onentertitle: function(event, from, to) {
                     appView.setMode(new TitleMode({
-                            el: $("<div></div>")
+                            el: appView.newModeDiv()
                             , model: appModel
-                    }));
-                    appView.mode.render();
+                    })).render();
+
                     return StateMachine.ASYNC;
                 }
                 , onenternewProfile: function(event, from, to) {
                     // fade out old mode.
                     $('#contents').fadeOut('slow', function() {
                         appView.setMode(new EditOptionsMode({
-                            el: $("<div></div>")
+                            el: appView.newModeDiv()
                             , model: appModel
-                        }));
+                        })).render();
 
                         appView.mode.newProfile();
 
@@ -97,9 +100,9 @@ module.exports =  appView = Backbone.View.extend({
                         appModel.set('ship', new ShipModel());
 
                         appView.setMode(new EditOptionsMode({
-                            el: $("<div></div>")
+                            el: appView.newModeDiv()
                             , model: appModel
-                        }));
+                        })).render();
 
                         appView.mode.newShip();
 
@@ -113,27 +116,23 @@ module.exports =  appView = Backbone.View.extend({
 
                     $("#contents").fadeOut('slow', function() {
                         appView.setMode(new SelectShipMode({
-                            el: $("<div></div>")
+                            el: appView.newModeDiv()
                             , model: appModel
-                        }));
-
-                        appView.mode.render();
+                        })).render();
 
                         $("#contents").fadeIn('slow');
                     });
                     return StateMachine.ASYNC;
                 }
-                , onenterstartGame: function(event, from, to, model) {
+                , onenterplayGame: function(event, from, to, model) {
                     // fetch ship from server
                     appModel.get('ship').fetch();
 
                     $("#contents").fadeOut('slow', function() {
                         appView.setMode(new GameMode({
-                            el: $("<div></div>")
+                            el: appView.newModeDiv()
                             , model: appModel
-                        }));
-
-                        appView.mode.render();
+                        })).render();
 
                         $("#contents").fadeIn('slow');
                     });
@@ -151,13 +150,17 @@ module.exports =  appView = Backbone.View.extend({
     , setMode: function(newMode) {
         if (this.mode) {
             this.mode.close();
-        }
-        else {
-            $("#contents").empty();
+        } else {
+            $("#defaultContents").remove();
         }
 
         this.mode = newMode;
-        $("#contents").append(newMode.$el);
+
+        return newMode;
+    }
+
+    , newModeDiv: function() {
+        return $("<div></div>").appendTo("#contents");
     }
 
 })

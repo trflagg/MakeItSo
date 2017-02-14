@@ -9,55 +9,113 @@
 var dot = require('dot')
 , Mode = require('./mode')
     , TitleScreen = require('../screens/titleScreen')
+    , CrawlScreen = require('../screens/crawlScreen')
     , SimpleScreen = require('../screens/simpleScreen')
     , BridgeScreen = require('../screens/bridgeScreen')
+    , DirectMessageScreen = require('../screens/directMessageScreen')
+    , DirectMessagesButton = require('../directMessagesButton')
     , template = require('../../../templates/modes/gameMode.dot');
 
     module.exports = gameMode = Mode.extend({
 
         init: function() {
-            this.listenTo(this.model.get('ship'), 'change:screen', this.screenChanged);
+            this.listenTo(this.model.get('ship'), 'parse_done', this.shipChanged);
             this.template = dot.template(template);
         }
 
         , render: function() {
-            $(this.el).html(this.template());
-            this.setScreen(this.model.get('ship').get('screen'));
+            // render self
+            $(this.el).html(this.template({
+                ship: this.model.get('ship')
+            }));
+
+            // render screen
+            this.renderScreen();
+
+            // render text
+            this.screen.outputLastResult();
+
+            // render other stuff
+            // this.directMessagesButton = new DirectMessagesButton({
+            //     model: this.model.get('ship').get('directMessages')
+            //     , el: this.$("#buttons")
+            // });
+            // this.directMessageScreen = new DirectMessageScreen({
+            //     model: this.model
+            //     , el: this.$("#directMessageScreen")
+            // })
+            this.directMessagesVisible = false;
+            this.listenTo(this.directMessagesButton, 'toggleDirectMessages', this.toggleDirectMessages);
 
             return this;
         }
 
-        , screenChanged: function() {
-            this.setScreen(this.model.get('ship').get('screen'));
+        , shipChanged: function() {
+            var ship = this.model.get('ship');
+
+            // check screen first
+            if (ship.get('screen') != this.screen.name) {
+                console.log('hasChanged screen');
+                this.renderScreen();
+            }
+
+            this.screen.outputLastResult();
         }
 
-        , setScreen: function(screenName) {
+        , toggleDirectMessages: function() {
+            if (!this.directMessagesVisible) {
+                this.$("#directMessageScreen").addClass('visible');
+                this.$(".gameScreen").addClass('moveDown');
+                this.directMessagesVisible = true;
+            } else {
+                this.$("#directMessageScreen").removeClass('visible');
+                this.$(".gameScreen").removeClass('moveDown');
+                this.directMessagesVisible = false;
+            }
+            console.log('toggleDirectMessages');
+        }
+
+        , onClose: function() {
+            this.stopListening(this.directMessagesButton);
+        }
+
+        , screens: {
+            TITLE: TitleScreen
+            , CRAWL: CrawlScreen
+            , SIMPLE: SimpleScreen
+            , BRIDGE: BridgeScreen
+        }
+
+        , renderScreen: function() {
+            var screenName = this.model.get('ship').get('screen');
+
             if (this.screen) {
                 this.screen.close();
             }
 
-            switch(screenName) {
-                case 'TITLE':
-                    this.screen = new TitleScreen({
-                        model: this.model
-                        , el: this.$("#screen")
-                    })
-                    break;
+            if (this.screens[screenName]) {
+                // set screen-specific options
+                if (screenName === "TITLE"
+                 || screenName == "CRAWL") {
+                    this.hideHeader();
+                } else {
+                    this.showHeader();
+                }
 
-                case 'SIMPLE':
-                    this.screen = new SimpleScreen({
-                        model: this.model
-                        , el: this.$("#screen")
-                    })
-                    break;
-
-                case 'BRIDGE':
-                    this.screen = new BridgeScreen({
-                        model: this.model
-                        , el: this.$("#screen")
-                    })
-                    break;
+                this.screen = new this.screens[screenName]({
+                    model: this.model
+                    , el: this.$("#screen")
+                });
+                this.screen.name = screenName;
             }
+        }
+
+        , hideHeader: function() {
+            this.$("#header").hide();
+        }
+
+        , showHeader: function() {
+            this.$("#header").show();
         }
 
     });

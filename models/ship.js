@@ -5,7 +5,8 @@ module.exports = function(db) {
     var Avatar = require('argie/models/avatar')(db, 'Ship')
         , Message = require('argie/models/message')(db)
         , MessageHolder = require('argie/models/messageHolder')(db)
-        , systemWrapper = require('argie/models/systemWrapper');
+        , systemWrapper = require('argie/models/systemWrapper')
+        , AvatarWrapper = require('argie/models/avatarWrapper');
 
     Ship = function(doc) {
         Ship.super_.call(this, doc);
@@ -25,47 +26,61 @@ module.exports = function(db) {
         var crew = new MessageHolder();
         var securityHolder = new MessageHolder();
         securityHolder.setNewMessageText('** New crew command added to crew->security: %s **');
+        securityHolder.supportLevels();
         crew.addChild('security', securityHolder);
         var medicalHolder = new MessageHolder();
         medicalHolder.setNewMessageText('** New crew command added to crew->medical: %s **');
+        medicalHolder.supportLevels();
         crew.addChild('medical', medicalHolder);
         var empatHolder = new MessageHolder();
         empatHolder.setNewMessageText('** New crew command added to crew->empat: %s **');
+        empatHolder.supportLevels();
         crew.addChild('empat', empatHolder);
         var engineeringHolder = new MessageHolder();
         engineeringHolder.setNewMessageText('** New crew command added to crew->engineering: %s **');
+        engineeringHolder.supportLevels();
         crew.addChild('engineering', engineeringHolder);
         var culturalHolder = new MessageHolder();
         culturalHolder.setNewMessageText('** New crew command added to crew->cultural: %s **');
+        culturalHolder.supportLevels();
         crew.addChild('cultural', culturalHolder);
         var infoHolder = new MessageHolder();
         infoHolder.setNewMessageText('** New crew command added to crew->info: %s **');
+        infoHolder.supportLevels();
         crew.addChild('info', infoHolder);
         this.addChild('crew', crew);
 
         var shipControls = new MessageHolder();
         var weaponHolder = new MessageHolder();
         weaponHolder.setNewMessageText('** New command added to ship_controls->weapons: %s **');
+        weaponHolder.supportLevels();
         shipControls.addChild('weapons', weaponHolder);
         var shieldHolder = new MessageHolder();
         shieldHolder.setNewMessageText('** New command added to ship_controls->shields: %s **');
+        shieldHolder.supportLevels();
         shipControls.addChild('shields', shieldHolder);
         var sensorHolder = new MessageHolder();
         sensorHolder.setNewMessageText('** New command added to ship_controls->sensors: %s **');
+        sensorHolder.supportLevels();
         shipControls.addChild('sensors', sensorHolder);
         var databankHolder = new MessageHolder();
         databankHolder.setNewMessageText('** New command added to ship_controls->databank: %s **');
+        databankHolder.supportLevels();
+        databankHolder.setRecordUnread(true);
         shipControls.addChild('databank', databankHolder);
         var processorHolder = new MessageHolder();
         processorHolder.setNewMessageText('** New command added to ship_controls->processor: %s **');
+        processorHolder.supportLevels();
         shipControls.addChild('processor', processorHolder);
         var enginesHolder = new MessageHolder();
         enginesHolder.setNewMessageText('** New command added to ship_controls->engines: %s **');
+        enginesHolder.supportLevels();
         shipControls.addChild('engines', enginesHolder);
         this.addChild('ship_controls', shipControls);
 
         var dmHolder = new MessageHolder();
         dmHolder.setNewMessageText('** New Direct Message Received: %s **');
+        dmHolder.setRecordUnread(true);
         this.addChild('direct_messages', dmHolder);
     };
 
@@ -127,11 +142,102 @@ module.exports = function(db) {
         return client_ship;
     };
 
+    Ship.prototype.crewName = function(crew) {
+        var name = this.getGlobal(crew);
+        var result = '';
+        switch(crew) {
+            case 'security':
+                result = 'Security Ofc. '+name;
+                break;
+            case 'medical':
+                result = 'Medical Ofc. '+name;
+                break;
+            case 'empat':
+                result = 'Empat '+name;
+                break;
+            case 'engineering':
+                result = 'Engineer '+name;
+                break;
+            case 'cultural':
+                result = 'Cultural Ofc. '+name;
+                break;
+        }
+        return result;
+    }
+
     // add to the system wrapper
     systemWrapper.prototype.registerFunction({
         functionName: 'setScreen'
         , functionBody: function(screenName) {
             this._avatar.screen = screenName;
+        }
+    });
+
+    // add to the avatar wrapper
+    AvatarWrapper.prototype.registerFunction({
+        functionName: 'getLevel'
+        , functionBody: function(child) {
+            return this.avatar.getLevel(child);
+        }
+    });
+
+    AvatarWrapper.prototype.registerFunction({
+        functionName: 'crew_member_intercom'
+        , functionBody: function(crew) {
+            var result = this.avatar.crewName(crew);
+            result += " [[over the intercom]]: ";
+            return result;
+        }
+    });
+
+    AvatarWrapper.prototype.registerFunction({
+        functionName: 'crew_member'
+        , functionBody: function(crew) {
+            var result = this.avatar.crewName(crew);
+            result += ": ";
+            return result;
+        }
+    });
+
+    AvatarWrapper.prototype.registerFunction({
+        functionName: 'pronoun'
+        , functionBody: function() {
+
+        if (this.avatar.getGlobal('gender') === 'female') {
+            return {
+                lowercase: 'she'
+                , uppercase: 'She'
+                , object: {
+                    lowercase: 'her'
+                    , uppercase: 'Her'
+                }
+                , possessive: {
+                    lowercase: 'her'
+                    , uppercase: 'Her'
+                    , adjective: {
+                    lowercase: 'hers'
+                    , uppercase: 'Hers'
+                    }
+                }
+            }
+        } else {
+            return {
+                lowercase: 'he'
+                , uppercase: 'He'
+                , object: {
+                    lowercase: 'him'
+                    , uppercase: 'Him'
+                }
+                , possessive: {
+                    lowercase: 'his'
+                    , uppercase: 'His'
+                    , adjective: {
+                    lowercase: 'his'
+                    , uppercase: 'His'
+                    }
+                }
+            }
+        }
         }
     });
 

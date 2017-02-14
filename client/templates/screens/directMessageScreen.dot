@@ -1,0 +1,23 @@
+<div>
+
+  <table id="directMessagesTable">
+    <tr>
+      <th>Subject</th>
+      <th>Read?</th>
+    </tr>
+    {{~it.messages :message:index}}
+    <tr>
+      <td>
+        <a href="#" class="directMessageLink">{{= message.text }}</a>
+      </td>
+      <td> Unread</td>
+    </tr>
+    {{~}}
+  </table>
+
+  <div id="directMessagesOutput">
+    <div class="directMessagesoutput">
+    </div>
+    <a id="directMessagesBackButton">Back</a>
+  </div>
+</div>

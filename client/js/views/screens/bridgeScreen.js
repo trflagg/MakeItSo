@@ -24,8 +24,8 @@ var dot = require('dot')
         , el: this.$("#shipCommands")
       });
 
-      this.crewCommands = new CommandHolderView({
-        model: this.model.get('ship').get('crew')
+        this.crewCommands = new CommandHolderView({
+            model: this.model.get('ship').get('crew')
         , el: this.$('#crewCommands')
       });
 
@@ -36,21 +36,14 @@ var dot = require('dot')
       this.model.get('ship').set('show_children', true);
 
       this.listenTo(this.model.get('ship'), 'change:children', this.commandsChanged);
-      this.outputLastResult();
+      this.listenTo(this, 'output_begin', this.outputBegin);
     }
 
     , render: function() {
       $(this.el).html(this.template({
-        ship: this.model.get('ship')
+            ship: this.model.get('ship')
+          , handiness: this.model.get('profile').get('handiness')
       }));
-
-      // TODO: unbind this event handler in an onClose() method
-      // Probably also need to call that onClose() from the mode's
-      // onClose()
-      $("#bridgeScreen").height($(window).height());
-      $(window).resize(function() {
-          $("#bridgeScreen").height($(window).height());
-      })
     }
 
       , onClose: function() {
@@ -70,7 +63,15 @@ var dot = require('dot')
       this.crewCommands.render();
     }
 
+    , outputBegin: function() {
+        this.$("#rootCommands").hide();
+        this.$("#shipCommands").hide();
+        this.$("#crewCommands").hide();
+    }
+
     , outputDone: function() {
-      this.$("#commands").show();
+        this.$("#rootCommands").show();
+        this.$("#shipCommands").show();
+        this.$("#crewCommands").show();
     }
   });
