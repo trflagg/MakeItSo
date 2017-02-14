@@ -24,10 +24,11 @@
          */
         , init: function() {
             var bufferTime = 0.40;
-            var messageDelay = 1000;
+            var messageDelay = 2000;
             this.template = dot.template(template);
 
-            //setTimeout(titleMode.showContinueMessage.bind(titleMode), messageDelay);
+            titleMode = this;
+            setInterval(titleMode.showContinueMessage.bind(titleMode), messageDelay);
         }
 
         , render: function() {
@@ -48,7 +49,7 @@
                 // need intermediate function to avoid sharing 'i'
                 (function(index) {
                     // every 4 secondsj
-                    // this.interval = setTimeout(function() {
+                    this.interval = setTimeout(function() {
                         // 20ms between each letter showing
                         setTimeout(function() {
                             $(this.continueChars[index]).addClass('messageIn');
@@ -61,7 +62,7 @@
                             $(this.continueChars[index]).removeClass('messageIn');
                             $(this.continueChars[index]).addClass('messageOut');
                         }.bind(this), (index * letterSpacingMS) + 500);
-                    // }.bind(this), 1);
+                    }.bind(this), 1);
                 }).call(this, i);
             }
         }
