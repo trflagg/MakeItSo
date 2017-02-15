@@ -3,11 +3,13 @@ RUN apt-get update
 
 WORKDIR /usr/src/app
 
-COPY . /usr/src/app
-
 RUN npm install nodemon -g
 RUN npm install -g browserify
+
+COPY ./package.json /usr/src/app/package.json
 RUN npm install
+
+COPY . /usr/src/app
 
 RUN apt-get install -y openssl
 RUN apt-get install -y ruby
