@@ -30,7 +30,7 @@ run:
 	docker-compose up
 
 run-prod:
-	docker-compose -f docker-compose.yml -f docker-compose.production.yml up -d
+	docker run -e "MONGO_URL=$MONGO_URL" -p 3000:3000 mis
 
 start-docker:
 	docker-machine start default
@@ -39,7 +39,7 @@ start-docker:
 stop-docker:
 	docker-machine stop default
 
-update-dev-fixtures:
+update-default-fixtures:
 	node --harmony node_modules/argie/messageLoader ../../environment-default.js
 
 update-compose-fixtures:

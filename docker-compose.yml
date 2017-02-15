@@ -9,6 +9,7 @@ mis:
   environment:
     NODE_ENV: development
     DB_ENV: compose
+  command: nodemon -L --harmony app.js
 mongo:
   image: "mongo:3.2"
 sass:
