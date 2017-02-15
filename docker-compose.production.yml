@@ -1,5 +1,0 @@
-mis:
-  environment:
-    NODE_ENV: production
-sass:
-  command: '/src/client/sass/main.scss /src/client/build/css/main.css'
