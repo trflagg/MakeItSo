@@ -3,17 +3,19 @@ RUN apt-get update
 
 WORKDIR /usr/src/app
 
-COPY package.json /usr/src/app/
-COPY bower.json /usr/src/app/
-RUN npm install nodemon -g
-RUN npm install bower -g
-RUN bower --allow-root install
-RUN npm install
 COPY . /usr/src/app
+RUN npm install nodemon -g
+RUN apt-get install -y openssl
+RUN apt-get install -y ruby
+RUN gem install sass
+RUN sass client/sass/main.scss client/build/css/main.css
+
+RUN npm install
+RUN npm install -g browserify
+RUN browserify -t [ ./node_modules/stringify --extensions [ '.dot' ] ] -d client/js/main.js -o client/build/js/main.min.js
 
 ENV NODE_ENV production
 
 CMD [ "npm", "start" ]
 
 EXPOSE 3000
-
