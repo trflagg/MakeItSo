@@ -37,5 +37,14 @@
               return "<span class='npc'>" + args[1] + "</span><span class='dialog'>" + args[2] + "</span>  ";
           }
       }
+      , {
+          // somewhere I do a replace in command text for periods to the literal [dot]
+          // probably better to use HTML character codes or something, but I'm too
+          // lazy to fix it now, so just use the regExLines to replace them back as periods.
+          regEx: /(.*)\[dot\](.*)/
+          , transformLine: function(currentLine, args) {
+              return args[1] + '.' + args[2]
+          }
+      }
 
   ];
