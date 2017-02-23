@@ -108,7 +108,7 @@ module.exports = function(db) {
             if (this.shipName.length < 3)
                 throw new Error(message='shipName must be at least 3 characters.');
 
-            if (!/^[a-zA-Z]+$/.test(this.shipName))
+            if (!/^[a-zA-Z0-9]+$/.test(this.shipName))
                 throw new Error(message='shipName may only contain uppercase and lowercase letters.');
         }
     };
