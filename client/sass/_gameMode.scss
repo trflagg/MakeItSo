@@ -64,6 +64,15 @@ $header_height: 100px;
       max-width: 1000px;
       margin: auto;
       margin-top: 40px;
+
+      .npc {
+        color: #aaa;
+        text-decoration: underline;
+      }
+
+      .dialog {
+        font-style: italic;
+      }
   }
 
   ul.command-list {

@@ -183,8 +183,8 @@ module.exports = function(db) {
     AvatarWrapper.prototype.registerFunction({
         functionName: 'crew_member_intercom'
         , functionBody: function(crew) {
-            var result = this.avatar.crewName(crew);
-            result += " [[over the intercom]]: ";
+            var result = '--' + this.avatar.crewName(crew);
+            result += " [[over the intercom]]:: ";
             return result;
         }
     });
@@ -192,8 +192,8 @@ module.exports = function(db) {
     AvatarWrapper.prototype.registerFunction({
         functionName: 'crew_member'
         , functionBody: function(crew) {
-            var result = this.avatar.crewName(crew);
-            result += ": ";
+            var result = '--' + this.avatar.crewName(crew);
+            result += ":: ";
             return result;
         }
     });
