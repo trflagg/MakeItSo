@@ -151,6 +151,9 @@ module.exports = function(db) {
             case 'medical':
                 result = 'Medical Ofc. '+name;
                 break;
+            case 'info':
+                result = 'Information Ofc. '+name;
+                break;
             case 'empat':
                 result = 'Empat '+name;
                 break;
