@@ -34,8 +34,6 @@ var dot = require('dot')
          */
         , activate: function() {
             Screen.prototype.activate();
-
-            this.$("#nameInput").focus();
         }
 
         /**
