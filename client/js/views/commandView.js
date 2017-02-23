@@ -23,9 +23,18 @@
         },
 
         render: function() {
+            var level_too_low = false;
+
+            if (this.model.parent.has("level")) {
+                if (this.model.parent.get("level") < this.model.get("level")) {
+                    level_too_low = true;
+                }
+            }
+
             $(this.el).html(this.template({
                 text: this.model.get("text")
                 , level: this.model.get("level")
+                , level_too_low: level_too_low
                 , cid: this.cid
             }));
 

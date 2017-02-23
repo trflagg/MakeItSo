@@ -81,8 +81,8 @@
     commandHolderView.prototype.renderCommand = function(command) {
         this.$('#'+this.cid+'-children').append(
             new commandView({
-                tagName: 'li',
-                model: command
+                tagName: 'li'
+                , model: command
             })
         .el);
     };
