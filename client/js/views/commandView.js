@@ -23,13 +23,7 @@
         },
 
         render: function() {
-            var level_too_low = false;
-
-            if (this.model.parent.has("level")) {
-                if (this.model.parent.get("level") < this.model.get("level")) {
-                    level_too_low = true;
-                }
-            }
+            var level_too_low = this.level_too_low();
 
             $(this.el).html(this.template({
                 text: this.model.get("text")
@@ -45,3 +39,8 @@
     commandView.prototype.clicked = function() {
         this.model.trigger('run', this.model);
     };
+
+    commandView.prototype.level_too_low = function() {
+        return (this.model.parent.has("level") &&
+                (this.model.parent.get("level") < this.model.get("level")));
+    }
