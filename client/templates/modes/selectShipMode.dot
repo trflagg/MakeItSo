@@ -19,7 +19,7 @@
     {{??}}
     <p>No ships found.</p>
     {{?}}
-    {{? it.ships.length < 3 }}
+    {{? it.ships.length < 4 }}
         <a href="#" id="newShipLink">Create New Ship</a>
     {{?}}
 </div>
