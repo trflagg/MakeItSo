@@ -150,7 +150,12 @@ module.exports = screen = Backbone.View.extend({
                     if (tagArray.length > 1) {
                         currentLine += tagArray[1];
                         $newDiv.html(currentLine);
-                        return addNextChar(currentLine, tagArray[2]);
+                        if (tagArray[2]) {
+                            return addNextChar(currentLine, tagArray[2]);
+                        }
+                        else {
+                            return resolve($outputDiv);
+                        }
                     }
                     else {
                         // grab first letter

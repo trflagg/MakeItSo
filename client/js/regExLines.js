@@ -28,13 +28,11 @@
 
       // NPC dialog
       // --NPCsName:: Dialog
-      // Can't end a line with an html tag because the logic that skips char-by-char
-      // printing barfs an undefined if html tag is at the end of the line.  Should fix this.
 
   } , {
           regEx: /^--(.*:):(.*)$/
           , transformLine: function(currentLine, args) {
-              return "<span class='npc'>" + args[1] + "</span><span class='dialog'>" + args[2] + "</span>  ";
+              return "<span class='npc'>" + args[1] + "</span><span class='dialog'>" + args[2] + "</span>";
           }
       }
       , {
@@ -43,8 +41,15 @@
           // lazy to fix it now, so just use the regExLines to replace them back as periods.
           regEx: /(.*)\[dot\](.*)/
           , transformLine: function(currentLine, args) {
-              return args[1] + '.' + args[2]
+              return args[1] + '.' + args[2];
           }
       }
+      , {
+          // printouts should begin with ___
+          regEx: /___(.*)/
+          , transformLine: function(currentLine, args) {
+              return "<span class='printout'>" + args[1] + "</span>";
+          }
+        }
 
   ];
