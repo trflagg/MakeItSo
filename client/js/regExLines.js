@@ -44,12 +44,5 @@
               return args[1] + '.' + args[2];
           }
       }
-      , {
-          // printouts should begin with ___
-          regEx: /___(.*)/
-          , transformLine: function(currentLine, args) {
-              return "<span class='printout'>" + args[1] + "</span>";
-          }
-        }
 
   ];

@@ -68,6 +68,16 @@ $header_height: 100px;
     }
   }
 
+
+  .printout {
+    background: #004;
+    margin-top: 40px;
+    p.outputText {
+      font-family: monospace;
+      margin-top: 0px;
+    }
+  }
+
   p.outputText {
       max-width: 1000px;
       margin: auto;
@@ -84,12 +94,6 @@ $header_height: 100px;
 
       .new_message {
         background: #400;
-      }
-
-      .printout {
-        background: #004;
-        font-family: monospace;
-        margin-top: 0px;
       }
   }
 
