@@ -41,8 +41,15 @@
           // lazy to fix it now, so just use the regExLines to replace them back as periods.
           regEx: /(.*)\[dot\](.*)/
           , transformLine: function(currentLine, args) {
-              return args[1] + '.' + args[2]
+              return args[1] + '.' + args[2];
           }
       }
+      , {
+          // printouts should begin with ___
+          regEx: /___(.*)/
+          , transformLine: function(currentLine, args) {
+              return "<span class='printout'>" + args[1] + "</span>";
+          }
+        }
 
   ];
