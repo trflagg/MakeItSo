@@ -21,58 +21,58 @@ module.exports = function(db) {
         this.shipName = null;
         this.profile_id = null;
 
-        this.setNewMessageText('** New command added: %s **');
+        this.setNewMessageText(this.newMessageText());
         // controls and crew members are child messageHolders
         var crew = new MessageHolder();
         var securityHolder = new MessageHolder();
-        securityHolder.setNewMessageText('** New crew command added to crew->security: %s **');
+        securityHolder.setNewMessageText(this.newMessageText());
         securityHolder.supportLevels();
         crew.addChild('security', securityHolder);
         var medicalHolder = new MessageHolder();
-        medicalHolder.setNewMessageText('** New crew command added to crew->medical: %s **');
+        medicalHolder.setNewMessageText(this.newMessageText());
         medicalHolder.supportLevels();
         crew.addChild('medical', medicalHolder);
         var empatHolder = new MessageHolder();
-        empatHolder.setNewMessageText('** New crew command added to crew->empat: %s **');
+        empatHolder.setNewMessageText(this.newMessageText());
         empatHolder.supportLevels();
         crew.addChild('empat', empatHolder);
         var engineeringHolder = new MessageHolder();
-        engineeringHolder.setNewMessageText('** New crew command added to crew->engineering: %s **');
+        engineeringHolder.setNewMessageText(this.newMessageText());
         engineeringHolder.supportLevels();
         crew.addChild('engineering', engineeringHolder);
         var culturalHolder = new MessageHolder();
-        culturalHolder.setNewMessageText('** New crew command added to crew->cultural: %s **');
+        culturalHolder.setNewMessageText(this.newMessageText());
         culturalHolder.supportLevels();
         crew.addChild('cultural', culturalHolder);
         var infoHolder = new MessageHolder();
-        infoHolder.setNewMessageText('** New crew command added to crew->info: %s **');
+        infoHolder.setNewMessageText(this.newMessageText());
         infoHolder.supportLevels();
         crew.addChild('info', infoHolder);
         this.addChild('crew', crew);
 
         var shipControls = new MessageHolder();
         var weaponHolder = new MessageHolder();
-        weaponHolder.setNewMessageText('** New command added to ship_controls->weapons: %s **');
+        weaponHolder.setNewMessageText(this.newMessageText());
         weaponHolder.supportLevels();
         shipControls.addChild('weapons', weaponHolder);
         var shieldHolder = new MessageHolder();
-        shieldHolder.setNewMessageText('** New command added to ship_controls->shields: %s **');
+        shieldHolder.setNewMessageText(this.newMessageText());
         shieldHolder.supportLevels();
         shipControls.addChild('shields', shieldHolder);
         var sensorHolder = new MessageHolder();
-        sensorHolder.setNewMessageText('** New command added to ship_controls->sensors: %s **');
+        sensorHolder.setNewMessageText(this.newMessageText());
         sensorHolder.supportLevels();
         shipControls.addChild('sensors', sensorHolder);
         var databankHolder = new MessageHolder();
-        databankHolder.setNewMessageText('** New command added to ship_controls->databank: %s **');
+        databankHolder.setNewMessageText(this.newMessageText());
         databankHolder.supportLevels();
         shipControls.addChild('databank', databankHolder);
         var processorHolder = new MessageHolder();
-        processorHolder.setNewMessageText('** New command added to ship_controls->processor: %s **');
+        processorHolder.setNewMessageText(this.newMessageText());
         processorHolder.supportLevels();
         shipControls.addChild('processor', processorHolder);
         var enginesHolder = new MessageHolder();
-        enginesHolder.setNewMessageText('** New command added to ship_controls->engines: %s **');
+        enginesHolder.setNewMessageText(this.newMessageText());
         enginesHolder.supportLevels();
         shipControls.addChild('engines', enginesHolder);
         this.addChild('ship_controls', shipControls);
@@ -82,6 +82,14 @@ module.exports = function(db) {
         dmHolder.setRecordUnread(true);
         this.addChild('direct_messages', dmHolder);
     };
+
+    Ship.prototype.newMessageText = function(childName) {
+        var line = "<span class='new_message'>New command added";
+        if (childName) {
+            line += " to " + childName;
+        }
+        return line + ": %s </span>";
+    }
 
     Ship.prototype.saveToDoc = function(doc) {
         Ship.super_.prototype.saveToDoc.call(this, doc);
