@@ -66,16 +66,11 @@ module.exports = screen = Backbone.View.extend({
             return line.length > 0;
         }).forEach(function(line) {
             p = p.then(function($nextOutput) {
-                var scroll = false;
-                if (gameScreen.isScrolledToBottom($('.output'))) {
-                    scroll = true;
-                }
 
                 var nextPromise =  gameScreen.funcForLine(line)($nextOutput);
 
-                if(scroll) {
-                    gameScreen.scrollToBottom($('.output'));
-                }
+                gameScreen.scrollToBottom($('.output'));
+
                 return nextPromise;
             });
         }, this);
@@ -115,8 +110,6 @@ module.exports = screen = Backbone.View.extend({
 
         // not a regEx, so make a promise to print it
         if (print) {
-            // need to check if we're at the bottom before we print
-            var atBottom = this.isScrolledToBottom($output);
 
             // match against regExLines which may modify our output line
             _.each(regExLines, function(regEx) {
