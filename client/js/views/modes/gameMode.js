@@ -55,7 +55,6 @@ var dot = require('dot')
 
             // check screen first
             if (ship.get('screen') != this.screen.name) {
-                console.log('hasChanged screen');
                 this.renderScreen();
             }
 
