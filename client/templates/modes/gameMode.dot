@@ -2,7 +2,7 @@
   <div id="header">
     <div id="subheader">
       <h1>{{=it.ship.get('shipName')}}</h1>
-      <h2>Prologue - Andromedae cluster</h2>
+      <h2>Prologue - Teegarden / Struven Warp Interchange Station</h2>
     </div>
       <div id="buttons">
     </div>
