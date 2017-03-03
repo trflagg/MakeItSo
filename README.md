@@ -7,7 +7,7 @@ Uses Node, Koa, &amp; MongoDB.
 
 This is a work in progress!
 
-You can play it here: http://hi-scor.es:3000/ THIS IS AN INCOMPLETE WORK IN PROGRESS!
+You can play it here: http://makeitso.hi-scor.es THIS IS AN INCOMPLETE WORK IN PROGRESS!
 
 --------------------------------
 
