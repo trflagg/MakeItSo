@@ -55,4 +55,32 @@ module.exports = regExList = [
             resolve($outDiv);
         }, this));
     }
-}];
+}
+
+// startPrintout
+, {
+    functionName: 'startPrintout'
+    , placeholder: '{% START_PRINTOUT %}'
+    , regEx: /^{% START_PRINTOUT %}/
+    , promiseForLine: function(line, $output, args) {
+        return new Promise(_.bind(function(resolve, reject) {
+            var $innerDiv = $("<div></div>").addClass("printout");
+            $output.append($innerDiv);
+            resolve($innerDiv);
+        }, this));
+    }
+}
+
+// endPrintout
+, {
+    functionName: 'endPrintout'
+    , placeholder: '{% END_PRINTOUT %}'
+    , regEx: /^{% END_PRINTOUT %}/
+    , promiseForLine: function(line, $output, args) {
+        return new Promise(_.bind(function(resolve, reject) {
+            var $outDiv = $output.parent();
+            resolve($outDiv);
+        }, this));
+    }
+}
+];

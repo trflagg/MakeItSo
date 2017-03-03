@@ -17,8 +17,8 @@ var dot = require('dot')
     }
 
     , render: function() {
-      $(this.el).html(this.template({
-      }));
+        $(this.el).hide().html(this.template({
+        })).fadeIn('slow');
       return this;
     }
 

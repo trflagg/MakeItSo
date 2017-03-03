@@ -66,16 +66,11 @@ module.exports = screen = Backbone.View.extend({
             return line.length > 0;
         }).forEach(function(line) {
             p = p.then(function($nextOutput) {
-                var scroll = false;
-                if (gameScreen.isScrolledToBottom($('.output'))) {
-                    scroll = true;
-                }
 
                 var nextPromise =  gameScreen.funcForLine(line)($nextOutput);
 
-                if(scroll) {
-                    gameScreen.scrollToBottom($('.output'));
-                }
+                gameScreen.scrollToBottom($('.output'));
+
                 return nextPromise;
             });
         }, this);
@@ -115,8 +110,6 @@ module.exports = screen = Backbone.View.extend({
 
         // not a regEx, so make a promise to print it
         if (print) {
-            // need to check if we're at the bottom before we print
-            var atBottom = this.isScrolledToBottom($output);
 
             // match against regExLines which may modify our output line
             _.each(regExLines, function(regEx) {
@@ -137,6 +130,7 @@ module.exports = screen = Backbone.View.extend({
     , printLine: function(line, $outputDiv) {
         return new Promise(_.bind(function(resolve, reject) {
             var charTime = 30;
+            var breakCount = 20;
 
             $newDiv = $("<p></p>").addClass("outputText");
             $outputDiv.append($newDiv);
@@ -144,13 +138,20 @@ module.exports = screen = Backbone.View.extend({
             if (this.revealLines) {
                 // function to add a single character from the front of the line
                 // to the $newDiv. If it's an html tag, add that all at once
-                addNextChar = function(currentLine, lineRemaining) {
+                var gameScreen = this;
+                addNextChar = function(currentLine, lineRemaining, charCount) {
                     // check for html tag
                     var tagArray = lineRemaining.split(/^(<.*?>)/);
                     if (tagArray.length > 1) {
                         currentLine += tagArray[1];
                         $newDiv.html(currentLine);
-                        return addNextChar(currentLine, tagArray[2]);
+                        if (tagArray[2]) {
+                            // html tags don't really count as a char for scrolling purposes, so don't bother incrementing
+                            return addNextChar(currentLine, tagArray[2], charCount);
+                        }
+                        else {
+                            return resolve($outputDiv);
+                        }
                     }
                     else {
                         // grab first letter
@@ -159,15 +160,22 @@ module.exports = screen = Backbone.View.extend({
                         $newDiv.html(currentLine);
                     }
 
+                    // scroll to bottom every breakCount characters
+                    if (charCount % breakCount == 0) {
+                        // HUGE TODO
+                        // I'm really going to have to fix this when there are other outputs to be printing to
+                        gameScreen.scrollToBottom($('.output'));
+                    }
+
                     // do we keep going?
                     if (lineRemaining.length > 0) {
-                        setTimeout(addNextChar, charTime, currentLine, lineRemaining);
+                        setTimeout(addNextChar, charTime, currentLine, lineRemaining, charCount + 1);
                     }
                     else {
                         resolve($outputDiv);
                     }
                 }
-                addNextChar("", line);
+                addNextChar("", line, 0);
             } else {
                 $newDiv.html(line);
                 resolve($outputDiv);

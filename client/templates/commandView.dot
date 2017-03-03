@@ -1,4 +1,4 @@
-<div class="commandTextDiv">
+<div class="commandTextDiv {{? it.level_too_low }} level_too_low {{?}}">
     <p id="{{= it.cid }}-item" class="commandItem">
       {{= it.text }}
     </p>

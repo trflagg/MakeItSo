@@ -48,6 +48,7 @@ module.exports = function(app, db) {
             ship.shipName = this.request.body['shipName'];
             ship.setGlobal('name', this.params.profile.name);
             ship.setGlobal('gender', this.params.profile.sex);
+            ship.setGlobal('ship_name', ship.shipName);
             yield ship.startGame();
 
             yield db.save('Ship', ship);
