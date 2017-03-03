@@ -40,7 +40,7 @@ stop-docker:
 	docker-machine stop default
 
 update-default-fixtures:
-	node --harmony node_modules/argie/messageLoader ../../environment-default.js
+	node --harmony node_modules/argie/messageLoader ../../db-environment-default.js
 
 update-compose-fixtures:
 	docker run  --rm --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo -v $(shell pwd):/usr/src/app trflagg/makeitso:latest \
