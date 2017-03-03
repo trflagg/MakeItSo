@@ -67,4 +67,8 @@ fs.readdirSync('./controllers').forEach(function (file) {
 
 
 // Start!
-if (!module.parent) app.listen(3000);
+var port = 3000
+if (process.env.NODE_ENV === "production") {
+    port = 80;
+}
+if (!module.parent) app.listen(port);

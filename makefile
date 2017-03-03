@@ -30,7 +30,7 @@ run:
 	docker-compose up
 
 run-prod:
-	docker run -e "MONGO_URL=$MONGO_URL" -p 3000:3000 mis
+	docker run -e "MONGO_URL=$($MONGO_URL)" -p 80:80  mis
 
 start-docker:
 	docker-machine start default
