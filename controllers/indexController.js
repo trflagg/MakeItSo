@@ -16,7 +16,9 @@ module.exports = function(app, db) {
      */
     app.get('/', index);
     function *index() {
-        this.body = yield render('index.html');
+        this.body = yield render('index.html',
+                                 { production: process.env.NODE_ENV === "production"
+                                 });
 
     }
 
