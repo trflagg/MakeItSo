@@ -29,6 +29,10 @@ RUN mkdir -p client/build
 COPY ./client/images client/build/images
 
 #
+# Copy fonts
+COPY ./client/fonts client/build/fonts
+
+#
 # Build sass
 RUN mkdir  -p client/build/css
 RUN sass -t compressed client/sass/main.scss client/build/css/main.css
