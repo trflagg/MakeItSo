@@ -122,7 +122,7 @@ module.exports = function(db) {
     };
 
     Ship.prototype.startGame = function*() {
-        var message = yield db.load('Message', {name: 'INIT'});
+        var message = yield db.load('Message', {name: 'INIT_INIT'});
         var result = yield message.run(this)
         // show result of message
         this.lastResult = result;
