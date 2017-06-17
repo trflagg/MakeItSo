@@ -55,10 +55,10 @@ webpack-dev:
 	./node_modules/.bin/webpack --env=dev
 
 webpack-build:
-	./node_modules/.bin/webpack --env=prod
+	./node_modules/.bin/webpack --env=prod 
 
 webpack-prod:
-	./node_modeuls/.bin/webpack --env=prod
+	./node_modules/.bin/webpack --env=prod -p
 
 webpack:
 	./node_modules/.bin/webpack --env=common

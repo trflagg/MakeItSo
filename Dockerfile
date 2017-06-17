@@ -38,8 +38,8 @@ RUN sass -t compressed client/sass/main.scss client/build/css/main.css
 
 #
 # Build js
-RUN mkdir client/build/js
-RUN webpack
+RUN mkdir -p client/build/js
+RUN webpack --env=prod -p
 
 #
 # Set ENVs
