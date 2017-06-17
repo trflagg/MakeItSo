@@ -50,3 +50,6 @@ update-compose-fixtures:
 # BUT I can't get it to work right now, so 'make watchify' will have to do
 watchify:
 	watchify -t [ ./node_modules/stringify --extensions [ '.dot' ] ] -d ./client/js/main.js -o ./client/build/js/main.min.js
+
+webpack:
+	./node_modules/.bin/webpack
