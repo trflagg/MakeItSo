@@ -6,6 +6,8 @@
  */
 
 var Mode = require('./mode')
+, GameMode = require('../../react/components/gameMode')
+, ReactDOM = require('react-dom')
     , TitleScreen = require('../screens/titleScreen')
     , CrawlScreen = require('../screens/crawlScreen')
     , SimpleScreen = require('../screens/simpleScreen')
