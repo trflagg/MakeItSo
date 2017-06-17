@@ -5,8 +5,7 @@
  *
  */
 
-var dot = require('dot')
-, Screen = require('./screen')
+var Screen = require('./screen')
     , template = require('../../../templates/screens/askSexScreen.dot');
 
     module.exports = askSexScreen = Screen.extend({
@@ -24,7 +23,7 @@ var dot = require('dot')
         , initialize: function() {
             Screen.prototype.initialize.apply(this);
 
-            this.template = dot.template(template);
+            this.template = template;
             this.render();
         }
 

@@ -1,7 +1,6 @@
 
 var Backbone = require('backbone')
 , _ = require('underscore')
-, dot = require('dot')
 , GameScreen = require('./gameScreen')
 , template = require('../../../templates/screens/directMessageScreen.dot')
 
@@ -15,7 +14,7 @@ module.exports = directMessageScreen = GameScreen.extend({
 
     , initialize: function() {
         GameScreen.prototype.initialize.apply(this);
-        this.template = dot.template(template);
+        this.template = template;
         this.render();
     }
 

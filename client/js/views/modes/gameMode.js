@@ -5,9 +5,7 @@
  *
  */
 
-
-var dot = require('dot')
-, Mode = require('./mode')
+var Mode = require('./mode')
     , TitleScreen = require('../screens/titleScreen')
     , CrawlScreen = require('../screens/crawlScreen')
     , SimpleScreen = require('../screens/simpleScreen')
@@ -20,7 +18,7 @@ var dot = require('dot')
 
         init: function() {
             this.listenTo(this.model.get('ship'), 'parse_done', this.shipChanged);
-            this.template = dot.template(template);
+            this.template = template;
         }
 
         , render: function() {

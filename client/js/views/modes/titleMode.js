@@ -7,7 +7,6 @@
 
     var Mode = require('./mode')
     , blast = require('blast-text')
-    , dot = require('dot')
     , template = require('../../../templates/modes/titleMode.dot');
 
     module.exports = titleMode = Mode.extend({
@@ -25,7 +24,7 @@
         , init: function() {
             var bufferTime = 0.40;
             var messageDelay = 2000;
-            this.template = dot.template(template);
+            this.template = template;
 
             titleMode = this;
             setInterval(titleMode.showContinueMessage.bind(titleMode), messageDelay);
