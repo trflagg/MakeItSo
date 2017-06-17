@@ -2,5 +2,8 @@ const Merge = require('webpack-merge');
 const CommonConfig = require('./webpack.common.js');
 
 module.exports = Merge(CommonConfig, {
-  entry: './client/js/main.js'
+  watch: true,
+  watchOptions: {
+    poll: 1000,
+  }
 });

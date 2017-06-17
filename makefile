@@ -51,5 +51,14 @@ update-compose-fixtures:
 watchify:
 	watchify -t [ ./node_modules/stringify --extensions [ '.dot' ] ] -d ./client/js/main.js -o ./client/build/js/main.min.js
 
+webpack-dev:
+	./node_modules/.bin/webpack --env=dev
+
+webpack-build:
+	./node_modules/.bin/webpack --env=prod
+
+webpack-prod:
+	./node_modeuls/.bin/webpack --env=prod
+
 webpack:
 	./node_modules/.bin/webpack --env=common

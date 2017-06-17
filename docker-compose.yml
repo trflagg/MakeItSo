@@ -21,4 +21,4 @@ webpack:
   build: "https://github.com/trflagg/docker-webpack.git"
   volumes:
     - '.:/src'
-  command: --config webpack.docker-compose.js
+  command: --env=dev 
