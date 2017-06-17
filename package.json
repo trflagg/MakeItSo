@@ -60,6 +60,7 @@
     "supertest": "^0.13.0",
     "thunkify": "^2.1.2",
     "version": "^0.1.2",
-    "webpack": "^2.6.1"
+    "webpack": "^2.6.1",
+    "webpack-merge": "^4.1.0"
   }
 }

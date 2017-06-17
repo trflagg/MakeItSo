@@ -52,4 +52,4 @@ watchify:
 	watchify -t [ ./node_modules/stringify --extensions [ '.dot' ] ] -d ./client/js/main.js -o ./client/build/js/main.min.js
 
 webpack:
-	./node_modules/.bin/webpack
+	./node_modules/.bin/webpack --env=common
