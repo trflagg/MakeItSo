@@ -1,8 +1,8 @@
 import React from 'react';
 
-export default class Something extends React.Component {
+export default class GameMode extends React.Component {
   render() {
-    return <h1>Hello World</h1>;
+    return <h1>asdfa Taylor</h1>;
   }
 }
 

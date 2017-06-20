@@ -54,11 +54,13 @@
     "file-loader": "^0.11.2",
     "js-yaml": "^3.4.6",
     "mocha": "~2.3.4",
+    "react-hot-loader": "^3.0.0-beta.7",
     "should": "^4.0.4",
     "supertest": "^0.13.0",
     "thunkify": "^2.1.2",
     "version": "^0.1.2",
     "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.4.5",
     "webpack-merge": "^4.1.0"
   }
 }
