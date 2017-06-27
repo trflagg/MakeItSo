@@ -17,7 +17,8 @@ module.exports = {
         test: /.js$/,
         include: [
           path.resolve(__dirname, 'client/js/react'),
-          path.resolve(__dirname, 'client/js/views/modes/gameMode.js')
+          path.resolve(__dirname, 'client/js/gameModeEntry.js'),
+          path.resolve(__dirname, 'client/js/views/modes/gameMode.js'),
         ],
         use: [
           {

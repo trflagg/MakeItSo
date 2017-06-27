@@ -116,4 +116,15 @@ module.exports = function(app, db) {
             this.body += ' ship: '+ships[i]._id;
         }
     }
+
+    app.get('/game-mode', gameMode);
+    function *gameMode() {
+        var profile_id = this.cookies.get('profile');
+        var ships = yield db.loadMultiple('Ship'
+                                , {profile_id: new ObjectID(profile_id)});
+        this.body = yield render('gameMode.html', {
+          scriptPath: "http://192.168.99.100:8080/gameMode.min.js"
+        });
+    }
 }
+
