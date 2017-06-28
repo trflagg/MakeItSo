@@ -122,8 +122,13 @@ module.exports = function(app, db) {
         var profile_id = this.cookies.get('profile');
         var ships = yield db.loadMultiple('Ship'
                                 , {profile_id: new ObjectID(profile_id)});
+        var shipData = null;
+        if (ships[0]) {
+          shipData = JSON.stringify(ships[0]);
+        }
         this.body = yield render('gameMode.html', {
-          scriptPath: "http://192.168.99.100:8080/gameMode.min.js"
+          shipData: shipData,
+          scriptPath: "http://192.168.99.100:8080/gameMode.min.js",
         });
     }
 }

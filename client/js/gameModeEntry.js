@@ -12,4 +12,4 @@ if (module.hot) {
         });
 }
 
-ReactDOM.render(<GameMode />, document.getElementById('contents'));
+ReactDOM.render(<GameMode ship={shipData}/>, document.getElementById('contents'));
