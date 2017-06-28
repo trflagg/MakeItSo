@@ -6,9 +6,7 @@ export default class GameMode extends React.Component {
     return (
       <div id="gameMode">
         <Header
-          shipName = {this.props.ship.shipName}
-          chapter = {"Prologue"}
-          location = {this.props.ship.location}
+          {...this.props}
         />
       </div>
     );

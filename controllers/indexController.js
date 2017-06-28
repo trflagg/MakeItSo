@@ -120,6 +120,11 @@ module.exports = function(app, db) {
     app.get('/game-mode', gameMode);
     function *gameMode() {
         var profile_id = this.cookies.get('profile');
+        if (!profile_id) {
+          this.body = 'profile_id not found';
+          return;
+        }
+        var profile = yield db.load('Profile', {_id: new ObjectID(profile_id)});
         var ships = yield db.loadMultiple('Ship'
                                 , {profile_id: new ObjectID(profile_id)});
         var shipData = null;
@@ -128,6 +133,7 @@ module.exports = function(app, db) {
         }
         this.body = yield render('gameMode.html', {
           shipData: shipData,
+          profile: JSON.stringify(profile),
           scriptPath: "http://192.168.99.100:8080/gameMode.min.js",
         });
     }

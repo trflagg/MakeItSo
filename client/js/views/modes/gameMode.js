@@ -28,6 +28,7 @@ module.exports = Mode.extend({
     , render: function() {
       ReactDOM.render(<GameMode
             ship={this.model.get('ship').toJSON()}
+            profile={this.model.get('profile').toJSON()}
           />,
           document.getElementById('contents')
         );
