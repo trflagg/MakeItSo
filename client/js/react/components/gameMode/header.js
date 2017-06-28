@@ -8,8 +8,8 @@ export default class Header extends React.Component {
       <div id="header">
         <div id="subheader">
           <h1>Cpt. {profile.name} of the {ship.shipName}</h1>
-          <h2>{ship.location}</h2>
-          <h2>{ ship.chapter }</h2>
+          <h2>{ ship.location || "Andromedae/Cygni Warp Transfer"}</h2><br/>
+          <h2>{ ship.chapter || "Prologue" }</h2>
         </div>
       </div>
     );

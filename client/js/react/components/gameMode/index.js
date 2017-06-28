@@ -5,9 +5,7 @@ export default class GameMode extends React.Component {
   render() {
     return (
       <div id="gameMode">
-        <Header
-          {...this.props}
-        />
+        <Header {...this.props}/>
       </div>
     );
   }
