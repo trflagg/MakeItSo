@@ -1,8 +1,10 @@
 import React from 'react';
 
-const GameScreen = ({profile, ship}) => (
-  <div id="gameScreen">
-    <div className="output" />
+const GameScreen = ({lastResult}) => (
+  <div className="output" >
+    <p>
+      { lastResult }
+    </p>
   </div>
 );
 
