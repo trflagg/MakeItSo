@@ -1,11 +1,12 @@
 import React from 'react';
-import Header from './header';
 import SimpleScreen from './simpleScreen';
+import BridgeScreen from './bridgeScreen';
 
 export default class GameMode extends React.Component {
   render() {
     const screenSelector = {
-      SIMPLE: SimpleScreen
+      SIMPLE: SimpleScreen,
+      BRIDGE: BridgeScreen,
     };
     const Screen = screenSelector[this.props.ship.screen];
 
