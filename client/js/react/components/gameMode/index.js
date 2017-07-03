@@ -8,7 +8,7 @@ export default class GameMode extends React.Component {
       SIMPLE: SimpleScreen,
       BRIDGE: BridgeScreen,
     };
-    const Screen = screenSelector[this.props.ship.screen];
+    const Screen = screenSelector[this.props.ship.get('screen')];
 
     return (
       <div id="gameMode">

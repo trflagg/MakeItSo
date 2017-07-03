@@ -10,9 +10,9 @@ const SimpleScreen = (props) => (
     <div className="gameScreen screen">
       <div id="simpleScreen">
         <GameScreen
-          lastResult = {props.ship.lastResult}
+          lastResult = {props.ship.get('lastResult')}
         />
-        <div id="commands">
+         <div id="commands">
           <div id="rootCommands">
             <CommandHolder
               commandHolder = {props.ship}

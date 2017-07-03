@@ -4,24 +4,23 @@ import Command from './command';
 
 const CommandHolder = ({commandHolder}) => (
   <div>
-    { commandHolder.childMessageCount > 0 &&
-      commandHolder.text  &&
+    { commandHolder.get('childMessageCount') > 0 &&
+      commandHolder.get('text')  &&
       <div className="commandTextDiv">
         <p className="commandItem">
-          { commandHolder.text }
+          { commandHolder.get('text') }
           <span className="glyphicon glyphicon-play" />
         </p>
         <p className="commandItemLevel">
-          Level { commandHolder.level }
+          Level { commandHolder.get('level') }
         </p>
       </div>
     }
     <ul className="command-list">
-      {Object.keys(commandHolder._messages).map((text) => (
-        <li key={commandHolder._messages[text].message}>
+      {commandHolder.get('children').models.map((child) => (
+        <li key={child.id}>
           <Command
-            text={text}
-            messageData={commandHolder._messages[text]}
+            text={child.get('text')}
           />
         </li>
       ))}
