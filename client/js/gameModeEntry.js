@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 
+import GameModel from './models/shipModel';
 import GameMode from './react/components/gameMode';
 import { AppContainer } from 'react-hot-loader';
 
@@ -12,4 +13,12 @@ if (module.hot) {
         });
 }
 
-ReactDOM.render(<GameMode ship={shipData} profile={profile}/>, document.getElementById('contents'));
+$.ajax({
+  url: '/default-ship',
+  mode: 'GET',
+}).done(function(data) {
+  var ship = new shipModel;
+  ship.parse(data);
+  ReactDOM.render(<GameMode ship={ship} profile={profile}/>, document.getElementById('contents'));
+});
+
