@@ -18,7 +18,7 @@ class CommandHolder extends React.Component {
   }
 
   render() {
-    const { commandHolder } = this.props;
+    const { commandHolder, onCommandClick } = this.props;
     return (
       <div>
         { commandHolder.get('childMessageCount') > 0 &&
@@ -40,9 +40,11 @@ class CommandHolder extends React.Component {
                 { child.get("children") ?
                   <CommandHolder
                     commandHolder={child}
+                    onCommandClick={onCommandClick}
                   /> :
                   <Command
-                    text={child.get('text')}
+                    command={child}
+                    onClick={ onCommandClick }
                   />
                 }
               </li>

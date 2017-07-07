@@ -17,14 +17,17 @@ const BridgeScreen = (props) => (
             <CommandHolder
               id="rootCommands"
               commandHolder = {props.ship}
+              onCommandClick= {props.onCommandClick}
             />
             <CommandHolder
               id="shipCommands"
               commandHolder = {props.ship.get('shipControls')}
+              onCommandClick= {props.onCommandClick}
             />
             <CommandHolder
               id="crewCommands"
               commandHolder = {props.ship.get('crew')}
+              onCommandClick= {props.onCommandClick}
             />
           </div>
         </div>

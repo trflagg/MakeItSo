@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Command = ({ text }) => (
-  <div className="commandTextDiv">
+const Command = ({ command, onClick }) => (
+  <div className="commandTextDiv" onClick={() => {onClick(command)}}>
     <p className="commandItem">
-      {text}
+      {command.get('text')}
     </p>
   </div>
 );

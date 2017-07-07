@@ -3,6 +3,11 @@ import SimpleScreen from './simpleScreen';
 import BridgeScreen from './bridgeScreen';
 
 export default class GameMode extends React.Component {
+
+  handleCommandClick(command) {
+    console.dir(command);
+  }
+
   render() {
     const screenSelector = {
       SIMPLE: SimpleScreen,
@@ -12,7 +17,7 @@ export default class GameMode extends React.Component {
 
     return (
       <div id="gameMode">
-        <Screen {...this.props} />
+        <Screen {...this.props} onCommandClick={this.handleCommandClick.bind(this)}/>
       </div>
     );
   }
