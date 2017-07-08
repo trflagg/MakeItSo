@@ -41,6 +41,10 @@ module.exports =  shipModel = CommandHolderModel.extend({
         this.set('lastResult', response.lastResult);
         this.set('location', response.location);
 
+        if (response.profile_id) {
+          this.set('profile_id', response.profile_id);
+        }
+
         var rootCommands = [];
         var commands = response.commands;
         for (var i=0, ll=commands.length; i<ll; i++) {

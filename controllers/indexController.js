@@ -154,6 +154,7 @@ module.exports = function(app, db) {
         }
         ship = ships[0];
         this.body = ship.toClient();
+        this.body.profile_id = profile_id;
   }
 }
 
