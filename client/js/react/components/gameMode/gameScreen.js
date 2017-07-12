@@ -14,6 +14,10 @@ class GameScreen  extends React.Component {
     this.outputLastResult(this.props.lastResult);
   }
 
+  componentDidUpdate() {
+    this.outputLastResult(this.props.lastResult);
+  }
+
   outputLastResult(lastResult) {
     let lines = '';
     let $outputdiv = $('div.output > div');
@@ -121,7 +125,6 @@ class GameScreen  extends React.Component {
           }
           else {
             // grab first letter
-            console.log(lineRemaining[0]);
             currentLine += lineRemaining[0];
             lineRemaining = lineRemaining.slice(1);
             $newDiv.html(currentLine);

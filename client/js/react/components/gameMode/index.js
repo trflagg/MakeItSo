@@ -5,7 +5,6 @@ import BridgeScreen from './bridgeScreen';
 export default class GameMode extends React.Component {
 
   handleCommandClick(command) {
-    console.dir(command);
     this.props.ship.runCommand(command.full_path());
   }
 

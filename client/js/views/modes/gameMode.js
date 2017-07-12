@@ -27,8 +27,8 @@ module.exports = Mode.extend({
 
     , render: function() {
       ReactDOM.render(<GameMode
-            ship={this.model.get('ship').toJSON()}
-            profile={this.model.get('profile').toJSON()}
+            ship={this.model.get('ship')}
+            profile={this.model.get('profile')}
           />,
           document.getElementById('contents')
         );
@@ -37,7 +37,7 @@ module.exports = Mode.extend({
     }
 
     , shipChanged: function() {
-       this.renderReactComponent(GameMode);
+       this.render(GameMode);
     }
 
     //, renderReactComponent: function(Component) {

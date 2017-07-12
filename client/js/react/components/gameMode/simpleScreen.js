@@ -16,6 +16,7 @@ const SimpleScreen = (props) => (
           <div id="rootCommands">
             <CommandHolder
               commandHolder = {props.ship}
+              onCommandClick={props.onCommandClick}
             />
           </div>
         </div>
