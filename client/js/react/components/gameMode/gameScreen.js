@@ -10,6 +10,13 @@ class GameScreen  extends React.Component {
     this.revealLines = true;
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.lastResult === this.props.lastResult) {
+      return false;
+    }
+    return true;
+  }
+
   componentDidMount() {
     this.outputLastResult(this.props.lastResult);
   }

@@ -18,41 +18,46 @@ class CommandHolder extends React.Component {
   }
 
   render() {
-    const { commandHolder, onCommandClick } = this.props;
+    const { commandHolder, onCommandClick, show } = this.props;
     return (
       <div>
-        { commandHolder.get('childMessageCount') > 0 &&
-          commandHolder.get('text')  &&
-          <div className="commandTextDiv" onClick={this.handleHolderClick.bind(this)}>
-            <p className="commandItem">
-              { commandHolder.get('text') }
-              <span className="glyphicon glyphicon-play" />
-            </p>
-            <p className="commandItemLevel">
-              Level { commandHolder.get('level') }
-            </p>
-          </div>
-        }
-        { this.state.showChildren &&
-          <ul className="command-list">
-            {commandHolder.get('children').models.map((child) => (
-              <li key={child.get('id')}>
-                { child.get("children") ?
-                  <CommandHolder
-                    commandHolder={child}
-                    onCommandClick={onCommandClick}
-                  /> :
-                  <Command
-                    command={child}
-                    onClick={ onCommandClick }
-                  />
-                }
-              </li>
-            ))}
-          </ul>
-        }
-     </div>
-    );
+      { show &&
+        <div>
+          { commandHolder.get('childMessageCount') > 0 &&
+            commandHolder.get('text')  &&
+            <div className="commandTextDiv" onClick={this.handleHolderClick.bind(this)}>
+              <p className="commandItem">
+                { commandHolder.get('text') }
+                <span className="glyphicon glyphicon-play" />
+              </p>
+              <p className="commandItemLevel">
+                Level { commandHolder.get('level') }
+              </p>
+            </div>
+          }
+          { this.state.showChildren &&
+            <ul className="command-list">
+              {commandHolder.get('children').models.map((child) => (
+                <li key={child.get('id')}>
+                  { child.get("children") ?
+                    <CommandHolder
+                      commandHolder={child}
+                      onCommandClick={onCommandClick}
+                      show={true}
+                    /> :
+                    <Command
+                      command={child}
+                      onClick={ onCommandClick }
+                    />
+                  }
+                </li>
+              ))}
+            </ul>
+          }
+       </div>
+      }
+      </div>
+    )
   }
 }
 
