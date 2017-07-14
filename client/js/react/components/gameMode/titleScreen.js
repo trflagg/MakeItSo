@@ -12,7 +12,7 @@ const TitleScreen = ({ ship }) => (
         __html: ship.get('lastResult')
       }} />
 
-      <a onClick={function() {
+      <a className="continue" onClick={function() {
         ship.runCommand('Continue');
       }}>
         Continue
