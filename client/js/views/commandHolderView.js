@@ -1,6 +1,5 @@
     var Backbone = require('backbone')
 , _ = require('underscore')
-    , dot = require('dot')
     , commandView = require('./commandView')
     , template = require('../../templates/commandHolderView.dot')
 
@@ -15,7 +14,7 @@
         },
 
         initialize: function() {
-            this.setTemplate(dot.template(template));
+            this.setTemplate(template);
 
             if (this.model) {
                 this.listenTo(this.model, 'change', this.render);

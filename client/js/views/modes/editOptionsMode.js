@@ -5,8 +5,7 @@
  *
  */
 
-var dot = require('dot')
-, Mode = require('./mode')
+var Mode = require('./mode')
 , EnterNameScreen = require('../screens/enterNameScreen')
 , AskHandinessScreen = require('../screens/askHandinessScreen')
 , AskSexScreen = require('../screens/askSexScreen')
@@ -30,7 +29,7 @@ module.exports = editOptionsMode = Mode.extend({
         */
     , init: function() {
         this.screens = [];
-        this.template = dot.template(template);
+        this.template = template;
         this.endFunction = null;
     }
 

@@ -7,7 +7,6 @@
 
     var Mode = require('./mode')
     , $ = require('jquery')
-    , dot = require('dot')
     , ShipModel = require('../../models/shipModel')
     , template = require('../../../templates/modes/selectShipMode.dot')
 
@@ -24,7 +23,7 @@
             * @return {None}
             */
         , init: function() {
-            this.template = dot.template(template);
+            this.template = template;
         }
 
         , render: function() {

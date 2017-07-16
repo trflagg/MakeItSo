@@ -1,6 +1,5 @@
 
-var dot = require('dot')
-, GameScreen = require('./gameScreen')
+var GameScreen = require('./gameScreen')
     , CommandHolderView = require('../commandHolderView')
     , template = require('../../../templates/screens/bridgeScreen.dot');
   module.exports = bridgeScreen = GameScreen.extend({
@@ -10,7 +9,7 @@ var dot = require('dot')
     , initialize: function() {
       GameScreen.prototype.initialize.apply(this);
 
-        this.template = dot.template(template);
+        this.template = template;
 
       this.render();
 

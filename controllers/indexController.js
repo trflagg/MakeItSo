@@ -16,8 +16,14 @@ module.exports = function(app, db) {
      */
     app.get('/', index);
     function *index() {
+        var scriptPath = 'client/js/build/main.min.js';
+        if (process.env.NODE_ENV !== "production") {
+          // webpack-dev-server inside docker-compose
+          scriptPath = "http://192.168.99.100:8080/main.min.js";
+        }
         this.body = yield render('index.html',
-                                 { production: process.env.NODE_ENV === "production"
+                                 { production: process.env.NODE_ENV === "production",
+                                   scriptPath: scriptPath
                                  });
 
     }
@@ -110,4 +116,45 @@ module.exports = function(app, db) {
             this.body += ' ship: '+ships[i]._id;
         }
     }
+
+    app.get('/game-mode', gameMode);
+    function *gameMode() {
+        var profile_id = this.cookies.get('profile');
+        if (!profile_id) {
+          this.body = 'profile_id not found';
+          return;
+        }
+        var profile = yield db.load('Profile', {_id: new ObjectID(profile_id)});
+        var ships = yield db.loadMultiple('Ship'
+                                , {profile_id: new ObjectID(profile_id)});
+        var shipData = null;
+        if (ships[0]) {
+          shipData = JSON.stringify(ships[0]);
+        }
+        this.body = yield render('gameMode.html', {
+          shipData: shipData,
+          profile: JSON.stringify(profile),
+          scriptPath: "http://192.168.99.100:8080/gameMode.min.js",
+        });
+    }
+
+  app.get('/default-ship', defaultShip);
+  function *defaultShip() {
+        var profile_id = this.cookies.get('profile');
+        if (!profile_id) {
+          this.body = 'profile_id not found';
+          return;
+        }
+        var profile = yield db.load('Profile', {_id: new ObjectID(profile_id)});
+        var ships = yield db.loadMultiple('Ship'
+                                , {profile_id: new ObjectID(profile_id)});
+
+        if (!ships[0]) {
+          this.body = 'default ship not found';
+        }
+        ship = ships[0];
+        this.body = ship.toClient();
+        this.body.profile_id = profile_id;
+  }
 }
+

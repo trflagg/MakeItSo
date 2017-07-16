@@ -1,6 +1,5 @@
     var Backbone = require('backbone')
     , _ = require('underscore')
-    , dot = require('dot')
     , template = require('../../templates/directMessagesButton.dot')
 
     module.exports = directMessagesButton = Backbone.View.extend({
@@ -8,7 +7,7 @@
         "click": 'clicked'
       }
       , initialize: function() {
-          this.template = dot.template(template);
+          this.template = template;
 
           if (this.model) {
               this.listenTo(this.model, 'change', this.render);

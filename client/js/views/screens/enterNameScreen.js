@@ -4,8 +4,7 @@
  * Enter your name.
  *
  */
-var dot = require('dot')
-, Screen = require('./screen')
+var Screen = require('./screen')
     , template = require('../../../templates/screens/enterNameScreen.dot');
 
     module.exports = enterNameScreen = Screen.extend({
@@ -22,7 +21,7 @@ var dot = require('dot')
         , initialize: function() {
             Screen.prototype.initialize.apply(this);
 
-            this.template = dot.template(template);
+            this.template = template;
             this.render();
         }
 
