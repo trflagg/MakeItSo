@@ -5,6 +5,7 @@ import DMScreen from './dmScreen';
 import './header.scss';
 
 export default class Header extends React.Component {
+
   render() {
     const {profile,
           ship,
@@ -36,8 +37,8 @@ export default class Header extends React.Component {
           { showDMScreen &&
             <DMScreen
               key="dm"
-              {...this.props}
-              onCloseClick={onDMToggle}
+              ship={ship}
+              dms={ship.get('directMessages')}
             />
           }
       </div>
