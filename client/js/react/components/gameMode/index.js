@@ -12,6 +12,7 @@ export default class GameMode extends React.Component {
     this.state = {
       showDMScreen: false,
       screenHeight: this.calculateScreenHeight(),
+      outputHistory: '',
     };
 
     this.handleCommandClick = this.handleCommandClick.bind(this);
@@ -21,6 +22,12 @@ export default class GameMode extends React.Component {
       this.setState({
         screenHeight: this.calculateScreenHeight(),
       });
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      outputHistory: this.state.outputHistory + '\n' + nextProps.ship.get('lastResult')
     });
   }
 
@@ -60,6 +67,7 @@ export default class GameMode extends React.Component {
           onDMToggle={this.dmToggle}
           showDMScreen={this.state.showDMScreen}
           screenHeight={this.state.screenHeight}
+          outputHistory={this.state.outputHistory}
         />
       </div>
     );
