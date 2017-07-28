@@ -1,7 +1,5 @@
 import React from 'react';
 
-import DMScreen from './dmScreen';
-
 import './header.scss';
 
 export default class Header extends React.Component {
@@ -34,13 +32,6 @@ export default class Header extends React.Component {
             }
           </div>
         </div>
-          { showDMScreen &&
-            <DMScreen
-              key="dm"
-              ship={ship}
-              dms={ship.get('directMessages')}
-            />
-          }
       </div>
     );
   }

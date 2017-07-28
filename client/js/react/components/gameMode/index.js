@@ -1,5 +1,6 @@
 import React from 'react';
 
+import DMScreen from './dmScreen';
 import Header from './header';
 import SimpleScreen from './simpleScreen';
 import BridgeScreen from './bridgeScreen';
@@ -30,6 +31,7 @@ export default class GameMode extends React.Component {
     this.setState({
       outputHistory: this.state.outputHistory + '\n' + nextProps.ship.get('lastResult')
     });
+
   }
 
   calculateScreenHeight() {
@@ -85,14 +87,19 @@ export default class GameMode extends React.Component {
         }
         <div>
           <div className="gameScreen screen">
-            { !this.state.showDMScreen &&
-              <ScreenComponent
+          { this.state.showDMScreen &&
+            <DMScreen
+              key="dm"
+              ship={this.props.ship}
+              dms={this.props.ship.get('directMessages')}
+            />
+          }
+             <ScreenComponent
                 {...this.props}
                 onCommandClick={this.handleCommandClick}
                 screenHeight={this.state.screenHeight}
                 outputHistory={this.state.outputHistory}
               />
-            }
           </div>
         </div>
       </div>
