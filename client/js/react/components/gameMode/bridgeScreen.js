@@ -32,13 +32,6 @@ class BridgeScreen extends React.Component {
     const { ship, onCommandClick, showDMScreen } = this.props;
 
     return (
-      <div>
-        <Header
-          {...this.props}
-          dm_button={true}
-        />
-        <div className="gameScreen screen">
-          { !showDMScreen &&
             <div id="bridgeScreen" className="container-fluid">
               <div id="mainBody" className="right">
                 <GameScreen
@@ -68,9 +61,6 @@ class BridgeScreen extends React.Component {
                 </div>
               </div>
             </div>
-          }
-        </div>
-      </div>
     );
   }
 }

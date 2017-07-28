@@ -33,26 +33,25 @@ class SimpleScreen extends React.Component {
 
     return (
       <div>
-        <Header {...this.props} />
-          <div className="gameScreen screen">
-            { !props.showDMScreen &&
-              <div id="simpleScreen">
-                <GameScreen
-                  lastResult={props.ship.get('lastResult')}
-                  outputBegin={this.handleOutputBegin}
-                  outputDone={this.handleOutputDone}
-                />
-                 <div id="commands">
-                  <div id="rootCommands">
-                    <CommandHolder
-                      commandHolder = {props.ship}
-                      onCommandClick={props.onCommandClick}
-                      show={this.state.showCommands}
-                    />
-                  </div>
+        <div className="gameScreen screen">
+          { !this.props.showDMScreen &&
+            <div id="simpleScreen">
+              <GameScreen
+                lastResult={this.props.ship.get('lastResult')}
+                outputBegin={this.handleOutputBegin}
+                outputDone={this.handleOutputDone}
+              />
+               <div id="commands">
+                <div id="rootCommands">
+                  <CommandHolder
+                    commandHolder = {this.props.ship}
+                    onCommandClick={this.props.onCommandClick}
+                    show={this.state.showCommands}
+                  />
                 </div>
               </div>
-            }
+            </div>
+          }
         </div>
       </div>
     );

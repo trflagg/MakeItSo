@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Header from './header';
 import SimpleScreen from './simpleScreen';
 import BridgeScreen from './bridgeScreen';
 import CrawlScreen from './crawlScreen';
@@ -52,23 +53,48 @@ export default class GameMode extends React.Component {
 
   render() {
     const screenSelector = {
-      SIMPLE: SimpleScreen,
-      BRIDGE: BridgeScreen,
-      CRAWL: CrawlScreen,
-      TITLE: TitleScreen,
+      SIMPLE: {
+        component: SimpleScreen,
+        showHeader: true,
+      },
+      BRIDGE: {
+        component: BridgeScreen,
+        showHeader: true,
+      },
+      CRAWL: {
+        component: CrawlScreen,
+        showHeader: false,
+      },
+      TITLE: {
+        component: TitleScreen,
+        showHeader: false,
+      },
     };
-    const Screen = screenSelector[this.props.ship.get('screen')];
+    const screen = screenSelector[this.props.ship.get('screen')];
+    const ScreenComponent = screen.component;
 
     return (
       <div id="gameMode">
-        <Screen
-          {...this.props}
-          onCommandClick={this.handleCommandClick}
-          onDMToggle={this.dmToggle}
-          showDMScreen={this.state.showDMScreen}
-          screenHeight={this.state.screenHeight}
-          outputHistory={this.state.outputHistory}
-        />
+        { screen.showHeader &&
+          <Header
+            {...this.props}
+            showDMScreen={this.state.showDMScreen}
+            dm_button={true}
+            onDMToggle={this.dmToggle}
+          />
+        }
+        <div>
+          <div className="gameScreen screen">
+            { !this.state.showDMScreen &&
+              <ScreenComponent
+                {...this.props}
+                onCommandClick={this.handleCommandClick}
+                screenHeight={this.state.screenHeight}
+                outputHistory={this.state.outputHistory}
+              />
+            }
+          </div>
+        </div>
       </div>
     );
   }
