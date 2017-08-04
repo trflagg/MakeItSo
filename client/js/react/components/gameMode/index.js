@@ -15,6 +15,10 @@ export default class GameMode extends React.Component {
       showDMScreen: false,
       screenHeight: this.calculateScreenHeight(),
       outputHistory: '',
+      dmLastResult: '',
+      screenLastResult: '',
+      processingCommand: false,
+      commandSource: null,
     };
 
     this.handleCommandClick = this.handleCommandClick.bind(this);
@@ -29,9 +33,8 @@ export default class GameMode extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      outputHistory: this.state.outputHistory + '\n' + nextProps.ship.get('lastResult')
+      outputHistory: this.state.outputHistory + '\n' + nextProps.ship.get('lastResult'),
     });
-
   }
 
   calculateScreenHeight() {
@@ -87,19 +90,19 @@ export default class GameMode extends React.Component {
         }
         <div>
           <div className="gameScreen screen">
-          { this.state.showDMScreen &&
-            <DMScreen
-              key="dm"
-              ship={this.props.ship}
-              dms={this.props.ship.get('directMessages')}
-            />
-          }
-             <ScreenComponent
-                {...this.props}
-                onCommandClick={this.handleCommandClick}
-                screenHeight={this.state.screenHeight}
-                outputHistory={this.state.outputHistory}
+            { this.state.showDMScreen &&
+              <DMScreen
+                key="dm"
+                ship={this.props.ship}
+                dms={this.props.ship.get('directMessages')}
               />
+            }
+            <ScreenComponent
+              {...this.props}
+              onCommandClick={this.handleCommandClick}
+              screenHeight={this.state.screenHeight}
+              outputHistory={this.state.outputHistory}
+            />
           </div>
         </div>
       </div>

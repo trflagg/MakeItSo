@@ -1,5 +1,6 @@
 import React from 'react';
 
+import DM from './dmContent';
 import DMTable from './dmTable';
 
 class DMScreen extends React.Component {
@@ -14,19 +15,23 @@ class DMScreen extends React.Component {
   }
 
   handleRowClick(dm) {
-    console.dir(dm);
+    this.setState({
+      dm: dm
+    });
     this.props.ship.runCommand(dm.full_path());
   }
 
-
   render() {
-    const { dms } = this.props;
+    const { dms, ship } = this.props;
 
     return (
       <div>
         <div id="dmScreen">
           { this.state.dm ?
-            <div /> :
+            <DM
+              dm={this.state.dm}
+              content={ship.get('lastDM')}
+            /> :
             <DMTable
               dms={dms}
               onRowClick={this.handleRowClick}
