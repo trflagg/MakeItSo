@@ -1,0 +1,30 @@
+
+#dmTable {
+
+  table {
+    width: 80%;
+    text-align: center;
+  }
+
+  tr.unread {
+  }
+
+  tr:hover {
+    background: #555 !important;
+    color: #FFF;
+  }
+
+  tr:nth-child(even) {
+    background: #333;
+  }
+
+  td:first-child {
+    text-align: center;
+  }
+
+  td {
+    padding: 0px;
+    text-align: left;
+    min-width: 0px;
+  }
+}

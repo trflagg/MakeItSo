@@ -1,0 +1,28 @@
+
+#dmContent {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 20px;
+
+  p.content {
+    flex-grow: 1;
+  }
+
+  .contentHeader {
+    display: flex;
+
+    h2 {
+      flex-grow: 1;
+      margin-left: 0px;
+      margin-top: 25px;
+    }
+
+    #dmClose {
+      border: 1px solid white;
+      cursor: pointer;
+      text-align: right;
+      padding: 10px;
+    }
+  }
+}
