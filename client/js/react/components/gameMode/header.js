@@ -27,7 +27,7 @@ export default class Header extends React.Component {
                 id="dm_button"
                 onClick={onDMToggle}
               >
-              { !showDMScreen ? 'Direct Messages' : 'Back' }
+              { !showDMScreen ? 'Messages' : 'Back' }
               </p>
             }
           </div>

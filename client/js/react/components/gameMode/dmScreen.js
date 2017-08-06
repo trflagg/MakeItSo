@@ -14,6 +14,7 @@ class DMScreen extends React.Component {
     };
 
     this.handleRowClick = this.handleRowClick.bind(this);
+    this.handleDMClose = this.handleDMClose.bind(this);
   }
 
   handleRowClick(dm) {
@@ -21,6 +22,12 @@ class DMScreen extends React.Component {
       dm: dm
     });
     this.props.ship.runCommand(dm.full_path());
+  }
+
+  handleDMClose() {
+    this.setState({
+      dm: null,
+    });
   }
 
   render() {
@@ -31,8 +38,9 @@ class DMScreen extends React.Component {
         <div id="dmScreen">
           { this.state.dm ?
             <DM
-              dm={this.state.dm}
+              subject={this.state.dm.get('text')}
               content={ship.get('lastDM')}
+              onClose={this.handleDMClose}
             /> :
             <DMTable
               dms={dms}
