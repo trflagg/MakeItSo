@@ -3,6 +3,8 @@ import React from 'react';
 import DM from './dmContent';
 import DMTable from './dmTable';
 
+import './dmScreen.scss';
+
 class DMScreen extends React.Component {
   constructor(props) {
     super(props);

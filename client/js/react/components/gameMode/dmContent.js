@@ -1,11 +1,14 @@
 import React from 'react';
 
 const DM = ({ dm, content }) => (
-  <div>
+  <div style={{display: 'flex', flexDirection: 'column'}}>
     <h1>{ dm.get('text') }</h1>
-    <div>
+    <p style={{minHeight: '300px', flexBasis: 1}}>
       { content }
-    </div>
+    </p>
+    <p id="dmClose" className="commandItem">
+      Close
+    </p>
   </div>
 );
 
