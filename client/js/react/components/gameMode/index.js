@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'underscore';
 
 import DMScreen from './dmScreen';
 import Header from './header';
@@ -35,6 +36,13 @@ export default class GameMode extends React.Component {
     this.setState({
       outputHistory: this.state.outputHistory + '\n' + nextProps.ship.get('lastResult'),
     });
+  }
+
+  get newDMs() {
+    console.dir(this.props.ship.get('directMessages'));
+    return this.props.ship.get('directMessages').get('children').detect((message) => (
+      message.get('unread')
+    ));
   }
 
   calculateScreenHeight() {
@@ -83,7 +91,8 @@ export default class GameMode extends React.Component {
         { screen.showHeader &&
           <Header
             {...this.props}
-            showDMScreen={this.state.showDMScreen}
+            viewingDMs={this.state.showDMScreen}
+            newDMs={this.newDMs}
             dm_button={true}
             onDMToggle={this.dmToggle}
           />

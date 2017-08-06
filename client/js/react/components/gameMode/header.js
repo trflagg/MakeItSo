@@ -8,7 +8,8 @@ export default class Header extends React.Component {
     const {profile,
           ship,
           dm_button,
-          showDMScreen,
+          viewingDMs,
+          newDMs,
           onDMToggle,
     } = this.props;
 
@@ -23,11 +24,11 @@ export default class Header extends React.Component {
           <div className="controls">
             { dm_button &&
               <p
-                className="commandItem"
+                className={newDMs && !viewingDMs ? 'commandItem new' : 'commandItem'}
                 id="dm_button"
                 onClick={onDMToggle}
               >
-              { !showDMScreen ? 'Messages' : 'Back' }
+              { !viewingDMs ? 'Messages' : 'Back' }
               </p>
             }
           </div>

@@ -10,6 +10,7 @@ const DMTable = ({ dms, onRowClick }) => (
         <tbody>
           { dms.get('children').map((dm) => (
             <tr
+              className={dm.get('unread') ? 'unread' : ''}
               key={dm.get('text')}
               onClick={() => { onRowClick(dm); } }
             >
