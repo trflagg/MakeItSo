@@ -10,9 +10,11 @@ const DM = ({ subject, content, onClose }) => (
         Close
       </p>
     </div>
-    <p className="content">
-      { content }
-    </p>
+    <div className="content"
+      dangerouslySetInnerHTML={{
+        __html: content
+      }}
+    />
   </div>
 );
 

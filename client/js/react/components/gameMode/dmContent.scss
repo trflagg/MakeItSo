@@ -1,12 +1,14 @@
 
 #dmContent {
-  display: flex;
   flex-direction: column;
   height: 100%;
   padding: 20px;
 
-  p.content {
+  .content {
     flex-grow: 1;
+    font-size: 20px;
+    color: #999;
+    font-family: monospace;
   }
 
   .contentHeader {

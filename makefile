@@ -14,6 +14,9 @@ docker-start:
 docker-stop:
 	docker-machine stop default
 
+hex-hash:
+	date | md5 -r | cut -c -10
+
 # This is a destructive tool for cleaning up after updating throws an error.
 # A better solution is to make the compose-update not get stuck on error
 kill-update-fixtures:
