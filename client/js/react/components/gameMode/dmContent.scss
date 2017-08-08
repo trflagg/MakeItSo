@@ -18,6 +18,8 @@
       flex-grow: 1;
       margin-left: 0px;
       margin-top: 25px;
+      font-family: monospace;
+      font-weight: lighter;
     }
 
     #dmClose {
@@ -25,6 +27,7 @@
       cursor: pointer;
       text-align: right;
       padding: 10px;
+      letter-spacing: 0.8px;
     }
   }
 }
