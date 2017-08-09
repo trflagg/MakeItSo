@@ -28,11 +28,16 @@ class CommandHolder extends React.Component {
             <div className="commandTextDiv" onClick={this.handleHolderClick.bind(this)}>
               <p className="commandItem">
                 { commandHolder.get('text') }
-                <span className="glyphicon glyphicon-play" />
+                <span className={this.state.showChildren ?
+                    "glyphicon glyphicon-play rotated" :
+                    "glyphicon glyphicon-play"
+                  } />
               </p>
-              <p className="commandItemLevel">
-                Level { commandHolder.get('level') }
-              </p>
+              { commandHolder.get('level') &&
+                <p className="commandItemLevel">
+                  Level { commandHolder.get('level') }
+                </p>
+              }
             </div>
           }
           { this.state.showChildren &&

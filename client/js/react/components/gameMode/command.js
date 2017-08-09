@@ -5,6 +5,11 @@ const Command = ({ command, onClick }) => (
     <p className="commandItem">
       {command.get('text')}
     </p>
+    { command.get('level') &&
+      <p className="commandItemLevel">
+        Level { command.get('level') } Required
+      </p>
+    }
   </div>
 );
 

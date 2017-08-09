@@ -44,7 +44,6 @@ $header_height: 100px;
     .glyphicon {
       font-size: 0.7em;
       padding-left: 7px;
-      transition: transform 1s linear;
 
       &.rotated {
         transform: translateY(-5px) rotateZ(90deg);
