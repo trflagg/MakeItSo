@@ -49,6 +49,9 @@ update-compose-fixtures:
 	docker run  --rm --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo -v $(shell pwd):/usr/src/app trflagg/makeitso:latest \
 				node --harmony node_modules/argie/messageLoader ../../db-environment-compose.js
 
+update-local-fixtures:
+	 docker run  --rm --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo -v ${PWD}:/usr/src/app mis:latest node --harmony node_modules/argie/messageLoader ../../db-environment-compose.js
+
 webpack-dev:
 	./node_modules/.bin/webpack --env=dev
 
