@@ -1,6 +1,5 @@
 
-var dot = require('dot')
-, Screen = require('./screen')
+var Screen = require('./screen')
 , template = require('../../../templates/screens/startingLevelsScreen.dot')
 
 module.exports = startingLevelsScreen = Screen.extend({
@@ -11,7 +10,7 @@ module.exports = startingLevelsScreen = Screen.extend({
 
   , initialize: function() {
     Screen.prototype.initialize.apply(this);
-    this.template = dot.template(template);
+    this.template = template;
 
     this.personalities = [
       {

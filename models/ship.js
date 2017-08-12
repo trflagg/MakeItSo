@@ -20,6 +20,7 @@ module.exports = function(db) {
         this.screen = null;
         this.shipName = null;
         this.profile_id = null;
+        this.lastDM = null;
 
         this.setNewMessageText(this.newMessageText());
         // controls and crew members are child messageHolders
@@ -96,6 +97,7 @@ module.exports = function(db) {
 
         doc.shipName = this.shipName;
         doc.lastResult = this.lastResult;
+        doc.lastDM = this.lastDM;
         doc.screen = this.screen;
         doc.profile_id = this.profile_id;
 
@@ -107,6 +109,7 @@ module.exports = function(db) {
 
         if(doc.shipName) this.shipName = doc.shipName;
         if(doc.lastResult) this.lastResult = doc.lastResult;
+        if(doc.lastDM) this.lastDM = doc.lastDM;
         if(doc.screen) this.screen = doc.screen;
         if(doc.profile_id) this.profile_id = doc.profile_id
     };
@@ -122,7 +125,7 @@ module.exports = function(db) {
     };
 
     Ship.prototype.startGame = function*() {
-        var message = yield db.load('Message', {name: 'INIT'});
+        var message = yield db.load('Message', {name: 'INIT_INIT'});
         var result = yield message.run(this)
         // show result of message
         this.lastResult = result;
@@ -131,7 +134,12 @@ module.exports = function(db) {
     Ship.prototype.runCommand = function* (command, child) {
         var result = yield Avatar.prototype.runMessage.call(this, command, child);
 
-        this.lastResult = result;
+        //dm's stored in lastDM
+        if (child === 'direct_messages') {
+          this.lastDM = result;
+        } else {
+          this.lastResult = result;
+        }
 
         return result;
     };
@@ -142,9 +150,11 @@ module.exports = function(db) {
         client_ship.id = this._id;
         client_ship.shipName = this.shipName;
         client_ship.lastResult = this.lastResult;
+        client_ship.lastDM = this.lastDM;
         client_ship.screen = this.screen;
         client_ship.commands = this.getCommandTextList();
         client_ship.location = this.getLocation();
+        client_ship.lastUpdate = new Date();
 
         return client_ship;
     };

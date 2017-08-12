@@ -1,0 +1,33 @@
+
+#dmContent {
+  flex-direction: column;
+  height: 100%;
+  padding: 20px;
+
+  .content {
+    flex-grow: 1;
+    font-size: 20px;
+    color: #999;
+    font-family: monospace;
+  }
+
+  .contentHeader {
+    display: flex;
+
+    h2 {
+      flex-grow: 1;
+      margin-left: 0px;
+      margin-top: 25px;
+      font-family: monospace;
+      font-weight: lighter;
+    }
+
+    #dmClose {
+      border: 1px solid white;
+      cursor: pointer;
+      text-align: right;
+      padding: 10px;
+      letter-spacing: 0.8px;
+    }
+  }
+}

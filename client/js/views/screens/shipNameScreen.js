@@ -21,7 +21,7 @@ var dot = require('dot')
         , initialize: function() {
             Screen.prototype.initialize.apply(this);
 
-            this.template = dot.template(template);
+            this.template = template;
             this.render();
         }
 

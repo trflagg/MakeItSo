@@ -1,0 +1,21 @@
+.controls {
+  #dm_button {
+    border: 1px solid #FFF;
+
+    &.new {
+      animation: 1s linear 0s infinite alternate pulse_red;
+    }
+  }
+}
+
+@keyframes pulse_red {
+  0% {
+    border-color: #FFF;
+    color: #999;
+  }
+  100% {
+    border-color: #FF4136;
+    color: #FF4136;
+  }
+}
+

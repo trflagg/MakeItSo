@@ -1,7 +1,6 @@
 
 
-var dot = require('dot')
-, GameScreen = require('./gameScreen')
+ GameScreen = require('./gameScreen')
     , template = require('../../../templates/screens/titleScreen.dot');
 
   module.exports = titleScreen = GameScreen.extend({
@@ -12,7 +11,7 @@ var dot = require('dot')
       , initialize: function() {
       GameScreen.prototype.initialize.apply(this);
 
-        this.template = dot.template(template);
+        this.template = template;
       this.render();
     }
 

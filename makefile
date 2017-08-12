@@ -14,6 +14,9 @@ docker-start:
 docker-stop:
 	docker-machine stop default
 
+hex-hash:
+	date | md5 -r | cut -c -10
+
 # This is a destructive tool for cleaning up after updating throws an error.
 # A better solution is to make the compose-update not get stuck on error
 kill-update-fixtures:
@@ -46,7 +49,17 @@ update-compose-fixtures:
 	docker run  --rm --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo -v $(shell pwd):/usr/src/app trflagg/makeitso:latest \
 				node --harmony node_modules/argie/messageLoader ../../db-environment-compose.js
 
-# this shouldn't be necessary because I should have watchify run w/ docker-compose
-# BUT I can't get it to work right now, so 'make watchify' will have to do
-watchify:
-	watchify -t [ ./node_modules/stringify --extensions [ '.dot' ] ] -d ./client/js/main.js -o ./client/build/js/main.min.js
+update-local-fixtures:
+	 docker run  --rm --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo -v ${PWD}:/usr/src/app mis:latest node --harmony node_modules/argie/messageLoader ../../db-environment-compose.js
+
+webpack-dev:
+	./node_modules/.bin/webpack --env=dev
+
+webpack-build:
+	./node_modules/.bin/webpack --env=prod 
+
+webpack-prod:
+	./node_modules/.bin/webpack --env=prod -p
+
+webpack:
+	./node_modules/.bin/webpack --env=common

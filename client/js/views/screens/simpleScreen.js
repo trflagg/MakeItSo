@@ -1,7 +1,6 @@
 
 
-var dot = require('dot')
-, GameScreen = require('./gameScreen')
+var GameScreen = require('./gameScreen')
 , CommandHolderView = require('../commandHolderView')
 , template = require('../../../templates/screens/simpleScreen.dot');
 
@@ -13,7 +12,7 @@ module.exports = simpleScreen = GameScreen.extend({
     , initialize: function() {
         GameScreen.prototype.initialize.apply(this);
 
-        this.template = dot.template(template);
+        this.template = template;
 
         this.render();
 

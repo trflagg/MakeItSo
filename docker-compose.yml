@@ -17,10 +17,10 @@ sass:
   volumes:
     - '.:/src'
   command:  --watch /src/client/sass:/src/client/build/css
-browserify:
-  build: "https://github.com/trflagg/browserify-docker.git"
+webpack:
+  build: "https://github.com/trflagg/docker-webpack-dev-server.git"
+  ports:
+    - "8080:8080"
   volumes:
     - '.:/src'
-  environment:
-    NODE_PATH: '/src/node_modules/'
-  command: -t [ /src/node_modules/stringify --extensions [ '.dot' ] ] -d /src/client/js/main.js -o /src/client/build/js/main.min.js
+  command: --host 0.0.0.0 --env=dev  

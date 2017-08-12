@@ -6,12 +6,12 @@ WORKDIR /usr/src/app
 #
 # Install stuff
 RUN npm install nodemon -g
-RUN npm install -g browserify
-RUN npm install -g uglify-js
+RUN npm install webpack -g
 
 # for SASS
 RUN apt-get install -y openssl
 RUN apt-get install -y ruby
+RUN apt-get install -y ruby-dev
 RUN gem install sass
 
 
@@ -39,8 +39,8 @@ RUN sass -t compressed client/sass/main.scss client/build/css/main.css
 
 #
 # Build js
-RUN mkdir client/build/js
-RUN browserify -t [ ./node_modules/stringify --extensions [ '.dot' ] ] -d client/js/main.js | uglifyjs -c > client/build/js/main.min.js
+RUN mkdir -p client/build/js
+RUN webpack --env=prod -p
 
 #
 # Set ENVs
