@@ -19,9 +19,15 @@ class DMScreen extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      content: nextProps.ship.get('lastDM'),
-    });
+    if (nextProps.ship && nextProps.ship.get('lastDM')) {
+      const content = nextProps.ship.get('lastDM')
+                        .split('\n')
+                        .join('<br/>');
+      console.log(content);
+      this.setState({
+        content: content,
+      });
+    }
   }
 
   handleRowClick(dm) {
