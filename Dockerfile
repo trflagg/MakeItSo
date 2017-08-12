@@ -11,6 +11,7 @@ RUN npm install webpack -g
 # for SASS
 RUN apt-get install -y openssl
 RUN apt-get install -y ruby
+RUN apt-get install -y ruby-dev
 RUN gem install sass
 
 
