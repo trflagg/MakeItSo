@@ -154,6 +154,7 @@ module.exports = function(db) {
         client_ship.screen = this.screen;
         client_ship.commands = this.getCommandTextList();
         client_ship.location = this.getLocation();
+        client_ship.lastUpdate = new Date();
 
         return client_ship;
     };

@@ -11,7 +11,7 @@ class GameScreen  extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.lastResult === this.props.lastResult) {
+    if (nextProps.lastUpdate === this.props.lastUpdate) {
       return false;
     }
     return true;
