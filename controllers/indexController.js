@@ -69,7 +69,11 @@ module.exports = function(app, db) {
                     // it contains db id and it would be best to shield that
                     // from user as much as possible
                     if (e.name === 'NotFoundError') {
-                        throw new Error('Cookie profile_id not found in db.');
+                        this.cookies.set('profile', null);
+                        this.body = {
+                          mode: 'title'
+                        };
+                        //throw new Error('Cookie profile_id not found in db.');
                     }
                     else {
                         throw e;
