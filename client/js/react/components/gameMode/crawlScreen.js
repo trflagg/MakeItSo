@@ -37,6 +37,7 @@ class CrawlScreen extends React.Component {
           <div id="simpleScreen">
             <GameScreen
               lastResult = {ship.get('lastResult')}
+              lastUpdate = {ship.get('lastUpdate')}
               outputBegin={this.handleOutputBegin}
               outputDone={this.handleOutputDone}
             />
