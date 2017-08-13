@@ -17,6 +17,7 @@ module.exports = function(db) {
         Ship.super_.prototype.initialize.call(this);
 
         this.lastResult = null;
+        this.lastChildRun = null;
         this.screen = null;
         this.shipName = null;
         this.profile_id = null;
@@ -97,6 +98,7 @@ module.exports = function(db) {
 
         doc.shipName = this.shipName;
         doc.lastResult = this.lastResult;
+        doc.lastChildRun = this.lastChildRun;
         doc.lastDM = this.lastDM;
         doc.screen = this.screen;
         doc.profile_id = this.profile_id;
@@ -109,6 +111,7 @@ module.exports = function(db) {
 
         if(doc.shipName) this.shipName = doc.shipName;
         if(doc.lastResult) this.lastResult = doc.lastResult;
+        if(doc.lastChildRun) this.lastChildRun = doc.lastChildRun;
         if(doc.lastDM) this.lastDM = doc.lastDM;
         if(doc.screen) this.screen = doc.screen;
         if(doc.profile_id) this.profile_id = doc.profile_id
@@ -132,6 +135,7 @@ module.exports = function(db) {
     };
 
     Ship.prototype.runCommand = function* (command, child) {
+        this.lastChildRun = child;
         var result = yield Avatar.prototype.runMessage.call(this, command, child);
 
         //dm's stored in lastDM
@@ -150,6 +154,7 @@ module.exports = function(db) {
         client_ship.id = this._id;
         client_ship.shipName = this.shipName;
         client_ship.lastResult = this.lastResult;
+        client_ship.lastChildRun = this.lastChildRun;
         client_ship.lastDM = this.lastDM;
         client_ship.screen = this.screen;
         client_ship.commands = this.getCommandTextList();
