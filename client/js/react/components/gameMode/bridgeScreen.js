@@ -37,6 +37,7 @@ class BridgeScreen extends React.Component {
                 <GameScreen
                   lastResult = {ship.get('lastResult')}
                   lastUpdate = {ship.get('lastUpdate')}
+                  lastChildRun = {ship.get('lastChildRun')}
                   outputBegin={this.handleOutputBegin}
                   outputDone={this.handleOutputDone}
                 />
