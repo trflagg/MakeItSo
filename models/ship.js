@@ -18,6 +18,7 @@ module.exports = function(db) {
 
         this.lastResult = null;
         this.lastChildRun = null;
+        this.showHeader = true;
         this.screen = null;
         this.shipName = null;
         this.profile_id = null;
@@ -100,6 +101,7 @@ module.exports = function(db) {
         doc.lastResult = this.lastResult;
         doc.lastChildRun = this.lastChildRun;
         doc.lastDM = this.lastDM;
+        doc.showHeader = this.showHeader;
         doc.screen = this.screen;
         doc.profile_id = this.profile_id;
 
@@ -113,6 +115,7 @@ module.exports = function(db) {
         if(doc.lastResult) this.lastResult = doc.lastResult;
         if(doc.lastChildRun) this.lastChildRun = doc.lastChildRun;
         if(doc.lastDM) this.lastDM = doc.lastDM;
+        if(doc.showHeader) this.showHeader = doc.showHeader;
         if(doc.screen) this.screen = doc.screen;
         if(doc.profile_id) this.profile_id = doc.profile_id
     };
@@ -157,6 +160,7 @@ module.exports = function(db) {
         client_ship.lastChildRun = this.lastChildRun;
         client_ship.lastDM = this.lastDM;
         client_ship.screen = this.screen;
+        client_ship.showHeader = this.showHeader;
         client_ship.commands = this.getCommandTextList();
         client_ship.location = this.getLocation();
         client_ship.lastUpdate = new Date();
@@ -196,6 +200,20 @@ module.exports = function(db) {
         , functionBody: function(screenName) {
             this._avatar.screen = screenName;
         }
+    });
+
+    systemWrapper.prototype.registerFunction({
+      functionName: 'hideHeader'
+      , functionBody: function() {
+          this._avatar.showHeader = false;
+      }
+    });
+
+    systemWrapper.prototype.registerFunction({
+      functionName: 'showHeader'
+      , functionBody: function() {
+          this._avatar.showHeader = true;
+      }
     });
 
     // add to the avatar wrapper

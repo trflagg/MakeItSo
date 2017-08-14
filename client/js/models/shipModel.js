@@ -43,6 +43,8 @@ module.exports =  shipModel = CommandHolderModel.extend({
         this.set('lastUpdate', response.lastUpdate);
         this.set('lastDM', response.lastDM);
         this.set('location', response.location);
+        this.set('showHeader', response.showHeader);
+        this.set('screen', response.screen);
 
         if (response.profile_id) {
           this.set('profile_id', response.profile_id);
@@ -72,7 +74,6 @@ module.exports =  shipModel = CommandHolderModel.extend({
             }
         }
         this.setChildren(rootCommands);
-        this.set('screen', response.screen);
         this.trigger('parse_done');
     }
 

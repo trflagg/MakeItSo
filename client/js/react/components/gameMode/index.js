@@ -89,6 +89,7 @@ export default class GameMode extends React.Component {
     return (
       <div id="gameMode">
         { screen.showHeader &&
+          this.props.ship.get('showHeader') &&
           <Header
             {...this.props}
             viewingDMs={this.state.showDMScreen}
