@@ -58,10 +58,12 @@ module.exports =  shipModel = CommandHolderModel.extend({
 
                 case 'crew':
                     this.get("crew").set("childMessageCount", command.childMessageCount);
+                    this.get("crew").set("visible", command.visible);
                     this.get("crew").setChildren(command.children);
                     break;
                 case 'ship_controls':
                     this.get("shipControls").set("childMessageCount", command.childMessageCount);
+                    this.get("shipControls").set("visible", command.visible);
                     this.get("shipControls").setChildren(command.children);
                     break;
                 case 'direct_messages':

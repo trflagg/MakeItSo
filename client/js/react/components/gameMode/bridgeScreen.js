@@ -52,13 +52,13 @@ class BridgeScreen extends React.Component {
                     id="shipCommands"
                     commandHolder = {ship.get('shipControls')}
                     onCommandClick= {onCommandClick}
-                    show={this.state.showCommands}
+                    show={this.state.showCommands && ship.get('shipControls').get('visible')}
                   />
                   <CommandHolder
                     id="crewCommands"
                     commandHolder = {ship.get('crew')}
                     onCommandClick= {onCommandClick}
-                    show={this.state.showCommands}
+                    show={this.state.showCommands && ship.get('crew').get('visible')}
                   />
                 </div>
               </div>
