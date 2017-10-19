@@ -194,6 +194,34 @@ module.exports = function(db) {
         return result;
     }
 
+    Ship.prototype.getImportantGlobals = function() {
+      return {
+        name: this.getGlobal('name'),
+        crew: {
+          security: this.getGlobal('security'),
+          medical: this.getGlobal('medical'),
+          info: this.getGlobal('info'),
+          empat: this.getGlobal('empat'),
+          engineering: this.getGlobal('engineering'),
+          cultural: this.getGlobal('cultural'),
+        },
+        gender: this.getGlobal('gender'),
+        ship_name: this.getGlobal('ship_name'),
+      }
+    }
+
+    Ship.prototype.setImportantGlobals = function(globals) {
+      this.setGlobal('name', globals.name);
+      this.setGlobal('gender', globals.gender);
+      this.setGlobal('ship_name', globals.ship_name);
+      this.setGlobal('security', globals.crew.security);
+      this.setGlobal('medical', globals.crew.medical);
+      this.setGlobal('info', globals.crew.info);
+      this.setGlobal('empat', globals.crew.empat);
+      this.setGlobal('engineering', globals.crew.engineering);
+      this.setGlobal('cultural', globals.crew.cultural);
+    }
+
     // add to the system wrapper
     systemWrapper.prototype.registerFunction({
         functionName: 'setScreen'

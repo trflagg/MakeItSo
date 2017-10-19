@@ -113,9 +113,12 @@ module.exports = function(app, db) {
         var ships = yield db.loadMultiple('Ship'
                                 , {profile_id: new ObjectID(profile_id)});
         this.body = 'profile_id:'+profile_id;
+        var importantGlobals;
 
         for (var i=0, ll=ships.length; i<ll; i++) {
+            importantGlobals = ships[i].getImportantGlobals();
             ships[i].lastResult = yield ships[i].reset(messageName);
+            ships[i].setImportantGlobals(importantGlobals);
             yield db.save('Ship', ships[i]);
             this.body += ' ship: '+ships[i]._id;
         }
