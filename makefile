@@ -14,6 +14,9 @@ docker-start:
 docker-stop:
 	docker-machine stop default
 
+graph-png:
+	dot -Tpng fixtures/messages.gv > fixtures/messages.png
+
 hex-hash:
 	date | md5 -r | cut -c -10
 
@@ -48,6 +51,7 @@ update-default-fixtures:
 update-compose-fixtures:
 	docker run  --rm --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo -v $(shell pwd):/usr/src/app trflagg/makeitso:latest \
 				node --harmony node_modules/argie/messageLoader ../../db-environment-compose.js
+	make graph-png
 
 update-local-fixtures:
 	 docker run  --rm --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo -v ${PWD}:/usr/src/app mis:latest node --harmony node_modules/argie/messageLoader ../../db-environment-compose.js
