@@ -193,8 +193,6 @@ module.exports = function(app, db) {
         yield ship.runCommand(command, child);
         yield db.save('Ship', ship);
 
-        console.log('before decision');
-        console.log(Decision);
         var decision = db.create('Decision');
         yield decision.fromShipCommandAndChild(ship, command, child);
         this.body = ship.toClient();
