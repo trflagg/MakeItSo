@@ -74,10 +74,10 @@ module.exports = function(db) {
         processorHolder.setNewMessageText(this.newMessageText('ship controls -> processor'));
         processorHolder.supportLevels();
         shipControls.addChild('processor', processorHolder);
-        var enginesHolder = new MessageHolder();
-        enginesHolder.setNewMessageText(this.newMessageText('ship controls -> engines'));
-        enginesHolder.supportLevels();
-        shipControls.addChild('engines', enginesHolder);
+        var miscHolder = new MessageHolder();
+        miscHolder.setNewMessageText(this.newMessageText());
+        miscHolder.supportLevels();
+        shipControls.addChild('misc', miscHolder);
         this.addChild('ship_controls', shipControls);
 
         var dmHolder = new MessageHolder();

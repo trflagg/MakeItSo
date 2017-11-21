@@ -138,9 +138,7 @@ module.exports = function(app, db) {
             ship.increaseLevel('crew.medical');
             ship.increaseLevel('ship_controls.databank');
             ship.increaseLevel('crew.empat');
-            // todo: figure out what to do with 'upgrades'
-            // engines??
-            //ship.increaseLevel('upgrades');
+            ship.increaseLevel('ship_controls.misc');
             ship.increaseLevel('crew.cultural');
             break;
           case 'ESFP':
@@ -148,7 +146,7 @@ module.exports = function(app, db) {
             ship.increaseLevel('crew.security');
             ship.increaseLevel('ship_controls.sensors');
             ship.increaseLevel('crew.info');
-            // ship.increaseLevel('upgrades');
+            ship.increaseLevel('ship_constrols.misc');
             ship.increaseLevel('crew.cultural');
             break;
         }
