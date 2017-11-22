@@ -5,13 +5,13 @@
         <meta charset="utf-8" />
         <title>Make it So! by hi-scor.es</title>
         <link href="css/google-fonts.css", rel="stylesheet", type="text/css">
-        <link rel="stylesheet" type="text/css" href="build/css/main.css">
+        <link rel="stylesheet" type="text/css" href="{{ basePath }}/build/css/main.css">
     </head>
     <body>
       <div id="contents">
       </div>
     </body>
-    <script type="text/javascript" src="js/lib/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="{{ buildPath }}/js/lib/jquery-3.1.0.min.js"></script>
     <script type="text/javascript">
 shipData = {{ shipData|safe }}
 profile = {{ profile|safe }}
