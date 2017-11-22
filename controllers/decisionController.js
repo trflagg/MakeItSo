@@ -1,4 +1,5 @@
-var checkAdmin = require('../middleware/check-admin');
+var render = require('../render')
+    , checkAdmin = require('../middleware/check-admin');
 
 module.exports = function(app, db) {
 
