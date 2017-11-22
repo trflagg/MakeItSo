@@ -27,7 +27,7 @@ kill-update-fixtures:
 	docker rm -f mis_fixtures
 
 mongo-compose:
-	docker run -it --link makeitso_mongo_1:mongo --rm mongo sh -c 'exec mongo "$$MONGO_PORT_27017_TCP_ADDR:$$MONGO_PORT_27017_TCP_PORT"'
+	docker run -it --link makeitso_mongo_1:mongo --rm mongo:3.2 sh -c 'exec mongo "$$MONGO_PORT_27017_TCP_ADDR:$$MONGO_PORT_27017_TCP_PORT"'
 
 mongo:
 	mongo $(MONGO_HOST_DEV) -u $(MONGO_USERNAME) -p $(MONGO_PASSWORD)
