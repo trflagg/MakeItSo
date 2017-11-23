@@ -1,4 +1,5 @@
 var render = require('../render')
+    , ObjectID = require('mongodb').ObjectID
     , checkAdmin = require('../middleware/check-admin');
 
 module.exports = function(app, db) {
@@ -21,18 +22,21 @@ module.exports = function(app, db) {
                              });
   };
 
-  app.get('/admin/decisions/all_ships'
+  app.get('/admin/decisions/all-ships'
           , checkAdmin()
           , allShips);
   function *allShips() {
+    var ships = yield db.loadMultiple('Ship', {}, {shipName: 1, _id: 1});
+    this.body = { ships: ships };
   }
 
 
-  app.get('/admin/decisions/all'
+  app.get('/admin/decisions/:ship_id/all'
           , checkAdmin()
           , allDecisions);
   function *allDecisions() {
-    var decisions = yield db.loadMultiple('Decision', {});
+    var ship_id = this.params.ship_id;
+    var decisions = yield db.loadMultiple('Decision', {ship_id: new ObjectID(ship_id)});
 
     this.body = {decisions: decisions};
   }
