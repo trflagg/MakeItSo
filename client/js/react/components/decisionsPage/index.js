@@ -4,6 +4,8 @@ import { AppContainer } from 'react-hot-loader';
 
 import Page from './page';
 
+import './decisions.scss';
+
 module.exports = {
   loadPage: function() {
     // hot reloading

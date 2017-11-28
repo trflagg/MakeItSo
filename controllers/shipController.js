@@ -190,11 +190,12 @@ module.exports = function(app, db) {
         var command = commands.pop();
         var child = commands.join('.');
         var ship = yield db.load('Ship', {_id: new ObjectID(this.params.id)});
+        var message = ship.message(command, child);
         yield ship.runCommand(command, child);
         yield db.save('Ship', ship);
 
         var decision = db.create('Decision');
-        yield decision.fromShipCommandAndChild(ship, command, child);
+        yield decision.fromShipCommandAndChild(ship, message, command, child);
         this.body = ship.toClient();
     }
 }

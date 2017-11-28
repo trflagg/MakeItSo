@@ -12,24 +12,14 @@ module.exports = function(db) {
   Decision.prototype.initialize = function() {
     Decision.super_.prototype.initialize.call(this);
 
-    this.ship_id = "";
-    this.command = "";
-    this.child = "";
-    this.child = null;
-    this.lastResult = "";
-    this.globals = null;
-    this.bNums = null;
   }
 
   Decision.prototype.saveToDoc = function(doc) {
     Decision.super_.prototype.saveToDoc.call(this, doc);
 
-    doc.ship_id = this.ship_id;
+    doc.ship = this.ship;
+    doc.message = this.message;
     doc.command = this.command;
-    doc.child = this.child;
-    doc.lastResult = this.lastResult;
-    doc.globals = this._globals;
-    doc.bNums = this._bNums;
     doc.created = this.created;
 
     return doc;
@@ -38,25 +28,22 @@ module.exports = function(db) {
   Decision.prototype.loadFromDoc = function(doc) {
     Decision.super_.prototype.loadFromDoc.call(this, doc);
 
-    this.ship_id = doc.ship_id;
+    this.ship = doc.ship;
+    this.message = doc.message;
     this.command = doc.command;
-    this.child = doc.child;
-    this.lastResult = doc.lastResult;
-    this.globals = doc._globals;
-    this.bNums = doc._bNums;
     this.created = doc.created;
 
   }
 
-  Decision.prototype.fromShipCommandAndChild = function*(ship, command, child) {
-    this.ship_id = ship._id;
+  Decision.prototype.fromShipCommandAndChild = function*(ship, message, command, child) {
+    this.ship = ship.toClient();
+    this.ship.globals = ship._globals;
+    this.message = message.message;
     this.command = command;
-    this.child = child;
-    this.lastResult = ship.lastResult;
-    this.globals = ship._globals;
-    this.bNums = ship._bNums;
+    if (child) {
+      this.command = child + "." + command;
+    }
     this.created = Date.now();
-
 
     yield db.save('Decision', this);
   }

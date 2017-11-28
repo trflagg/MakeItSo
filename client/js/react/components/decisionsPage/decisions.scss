@@ -1,0 +1,36 @@
+
+body {
+  overflow: scroll;
+}
+
+.decisionList {
+  .decision {
+    margin-bottom: 40px;
+    clear: both;
+
+    h2 {
+      font-size: 1.7em;
+      cursor: pointer;
+    }
+
+    .last-result {
+      font-size: 16px;
+      max-width: 50em;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .global-list {
+      max-height: 15em;
+      overflow: scroll;
+      float: left;
+    }
+
+    .message-list {
+      font-size: 16px;
+      float: left;
+    }
+  }
+}
+

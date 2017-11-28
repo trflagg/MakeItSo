@@ -1,15 +1,19 @@
 import React from 'react';
 
 import ShipSelector from './shipSelector';
+import DecisionList from './decisionList';
 
 export default class Page extends React.Component {
 
   constructor(props) {
     super(props);
 
+    //var cached_ship = window.localStorage.getItem('selectedShip');
+
     this.state = {
+      decisions: [],
       ships: [],
-      selectedShip: {},
+      selectedShip: '',
     };
 
     this.onSelectShip = this.onSelectShip.bind(this);
@@ -24,6 +28,10 @@ export default class Page extends React.Component {
         ships: data.ships,
       });
     });
+
+    if (this.state.selectedShip) {
+      this.loadShip(this.state.selectedShip);
+    }
   }
 
   onSelectShip(event) {
@@ -31,11 +39,20 @@ export default class Page extends React.Component {
     this.setState({
       selectedShip: ship_id,
     });
+
+    window.localStorage.setItem('selectedShip', ship_id);
+
+    this.loadShip(ship_id);
+  }
+
+  loadShip(ship_id) {
     $.ajax({
       url: `${ship_id}/all`,
       mode: 'GET',
     }).done(data => {
-      console.dir(data);
+      this.setState({
+        decisions: data.decisions,
+      });
     });
   }
 
@@ -46,6 +63,9 @@ export default class Page extends React.Component {
           ships = {this.state.ships}
           selectedShip = {this.state.selectedShip}
           onSelectShip = {this.onSelectShip}
+        />
+        <DecisionList
+          decisions = {this.state.decisions}
         />
       </div>
     );

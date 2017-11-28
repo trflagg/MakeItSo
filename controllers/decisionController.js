@@ -1,6 +1,7 @@
 var render = require('../render')
     , ObjectID = require('mongodb').ObjectID
-    , checkAdmin = require('../middleware/check-admin');
+    , checkAdmin = require('../middleware/check-admin')
+    , _ = require('underscore');
 
 module.exports = function(app, db) {
 
@@ -36,7 +37,12 @@ module.exports = function(app, db) {
           , allDecisions);
   function *allDecisions() {
     var ship_id = this.params.ship_id;
-    var decisions = yield db.loadMultiple('Decision', {ship_id: new ObjectID(ship_id)});
+    console.log(ship_id);
+    var decisions = yield db.loadMultiple('Decision', {'ship.id': new ObjectID(ship_id)});
+    console.log(ship_id);
+    console.log(decisions);
+
+    decisions = _.sortBy(decisions, 'created');
 
     this.body = {decisions: decisions};
   }
