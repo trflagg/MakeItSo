@@ -13,18 +13,19 @@ export default class DecisionDetails extends React.Component {
     const ship = new ShipModel();
     ship.parse(this.props.decision.ship);
     const globals = this.props.decision.globals;
+    const content = ship.get('lastResult')
+                        .split('\n')
+                        .filter(line => line.length > 0)
+                        .join('<br/>');
 
     return (
       <div className='decision'>
-        <div className="last-result">
-          {ship.get('lastResult')}
-        </div>
         <div className="global-list">
           {Object.keys(globals).map(name => (
             <p key={name}>
               {name + ": " + globals[name]}
             </p>
-          ))}
+          )).reverse()}
         </div>
 
         <div className="message-list">
@@ -41,6 +42,11 @@ export default class DecisionDetails extends React.Component {
             onMessageClicked = {this.props.onMessageClicked}
           />
         </div>
+        <div className="last-result"
+          dangerouslySetInnerHTML={{
+            __html: content
+          }}
+        />
       </div>
     );
   }
