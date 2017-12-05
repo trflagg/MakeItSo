@@ -9,6 +9,7 @@ export default class DecisionDetails extends React.Component {
   render() {
     const ship = new ShipModel();
     ship.parse(this.props.decision.ship);
+    const globals = this.props.decision.globals;
 
     return (
       <div>
@@ -16,9 +17,9 @@ export default class DecisionDetails extends React.Component {
           {ship.get('lastResult')}
         </div>
         <div className="global-list">
-          {Object.keys(ship.get('globals')).map(name => (
+          {Object.keys(globals).map(name => (
             <p key={name}>
-              {name + ": " + ship.get('globals')[name]}
+              {name + ": " + globals[name]}
             </p>
           ))}
         </div>

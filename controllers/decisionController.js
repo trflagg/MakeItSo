@@ -37,12 +37,14 @@ module.exports = function(app, db) {
           , allDecisions);
   function *allDecisions() {
     var ship_id = this.params.ship_id;
-    console.log(ship_id);
-    var decisions = yield db.loadMultiple('Decision', {'ship.id': new ObjectID(ship_id)});
-    console.log(ship_id);
-    console.log(decisions);
+    var decisions = yield db.loadMultiple('Decision', {'ship._id': new ObjectID(ship_id)});
 
-    decisions = _.sortBy(decisions, 'created');
+    decisions = _.sortBy(decisions, 'created').map(function(decision) {
+      var result = decision;
+      result.globals = decision.ship._globals;
+      result.ship = decision.ship.toClient();
+      return result;
+    });
 
     this.body = {decisions: decisions};
   }

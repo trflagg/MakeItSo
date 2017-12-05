@@ -17,7 +17,9 @@ module.exports = function(db) {
   Decision.prototype.saveToDoc = function(doc) {
     Decision.super_.prototype.saveToDoc.call(this, doc);
 
-    doc.ship = this.ship;
+    doc.ship = {};
+    doc.ship._id = this.ship._id;
+    this.ship.saveToDoc(doc.ship);
     doc.message = this.message;
     doc.command = this.command;
     doc.created = this.created;
@@ -28,7 +30,7 @@ module.exports = function(db) {
   Decision.prototype.loadFromDoc = function(doc) {
     Decision.super_.prototype.loadFromDoc.call(this, doc);
 
-    this.ship = doc.ship;
+    this.ship = new Ship(doc.ship);
     this.message = doc.message;
     this.command = doc.command;
     this.created = doc.created;
@@ -36,8 +38,8 @@ module.exports = function(db) {
   }
 
   Decision.prototype.fromShipCommandAndChild = function*(ship, message, command, child) {
-    this.ship = ship.toClient();
-    this.ship.globals = ship._globals;
+    var shipCopy = {};
+    this.ship = ship;
     this.message = message.message;
     this.command = command;
     if (child) {
