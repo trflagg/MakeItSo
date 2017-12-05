@@ -116,10 +116,13 @@ module.exports = function(app, db) {
         var importantGlobals;
 
         for (var i=0, ll=ships.length; i<ll; i++) {
+            yield db.remove('Decision', {'ship._id': new ObjectID(ships[i]._id.toString())});
             importantGlobals = ships[i].getImportantGlobals();
             ships[i].lastResult = yield ships[i].reset(messageName);
             ships[i].setImportantGlobals(importantGlobals);
             yield db.save('Ship', ships[i]);
+            var newDecision = db.create('Decision');
+            yield newDecision.fromShipCommandAndChild(ships[i], messageName, 'reset');
             this.body += ' ship: '+ships[i]._id;
         }
     }

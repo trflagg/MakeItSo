@@ -40,7 +40,11 @@ module.exports = function(db) {
   Decision.prototype.fromShipCommandAndChild = function*(ship, message, command, child) {
     var shipCopy = {};
     this.ship = ship;
-    this.message = message.message;
+    if (message.message) {
+      this.message = message.message;
+    } else {
+      this.message = message;
+    }
     this.command = command;
     if (child) {
       this.command = child + "." + command;
