@@ -3,34 +3,51 @@ body {
   overflow: scroll;
 }
 
+.page-container {
+  display: flex;
+  flex-direction: column;
+
+  .decision-container {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
 .decisionList {
-  .decision {
-    margin-bottom: 40px;
-    clear: both;
+  margin-right: 20px;
 
-    h2 {
-      font-size: 1.7em;
-      cursor: pointer;
-    }
+  h2 {
+    font-size: 1.7em;
+    cursor: pointer;
+  }
 
-    .last-result {
-      font-size: 16px;
-      max-width: 50em;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
+}
 
-    .global-list {
-      max-height: 15em;
-      overflow: scroll;
-      float: left;
-    }
+.decision {
+  .last-result {
+    font-size: 16px;
+    max-width: 50em;
+  }
 
-    .message-list {
-      font-size: 16px;
-      float: left;
-    }
+  .cut-off {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .global-list {
+    //max-height: 15em;
+    overflow: scroll;
+    float: left;
+  }
+
+  .message-list {
+    font-size: 16px;
+    float: left;
+  }
+
+  .decision-message {
+    cursor: pointer;
   }
 }
 

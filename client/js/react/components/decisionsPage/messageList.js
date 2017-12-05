@@ -15,25 +15,30 @@ class MessageList extends React.Component {
       if (messages.models) {
         // these come from the root commands accessed by ship.get('children')
         return messages.models.map(message => {
-          console.dir(message);
-          console.log(message.full_path());
-          return (<Message message={message} key={message.get('text')}/>);
+          return this.buildMessage(message);
         });
       } else if (messages.has('text')) {
         // ugh, I know it's messages and not message.
         // these come from the commandHolders
-        console.dir(messages);
-        console.log(messages.full_path());
-        return (<Message message={messages} key={messages.get('text')}/>);
+        return this.buildMessage(messages);
       }
     }
+  }
+
+  buildMessage(message) {
+    return <Message
+      message={message}
+      key={message.get('text')}
+      onClick={this.props.onMessageClicked}
+    />
   }
 
   render() {
     const messages = this.props.messages;
 
     return (
-      <ul className="messages-list">
+      <ul
+        className="messages-list">
         {_.flatten(this.buildMessageList(messages))}
       </ul>
     );

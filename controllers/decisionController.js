@@ -49,4 +49,32 @@ module.exports = function(app, db) {
     this.body = {decisions: decisions};
   }
 
+  app.post('/admin/decision/:decision_id/:command+'
+          , checkAdmin()
+          , runDecisionCommand);
+  function *runDecisionCommand() {
+    var decision_id = this.params.decision_id
+    var decision = yield db.load('Decision', {'_id': new ObjectID(decision_id)});
+    if (decision) {
+      var ship = decision.ship;
+      var commands = this.params.command.split('/');
+      var command = commands.pop();
+      var child = commands.join('.');
+      var message = ship.message(command, child);
+      if (!message) {
+        throw new Error('no message found');
+      }
+      yield ship.runCommand(command, child);
+      yield db.save('Ship', ship);
+      var decision = db.create('Decision');
+      yield decision.fromShipCommandAndChild(ship, message, command, child);
+      var result = decision
+      result.globals = decision.ship._globals;
+      result.ship = decision.ship.toClient();
+      this.body = result;
+    } else {
+      throw new Error('No decision found');
+    }
+  }
+
 };
