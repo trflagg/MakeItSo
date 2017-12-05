@@ -16,6 +16,7 @@ var Backbone = require('backbone')
 , SelectShipMode = require('../views/modes/selectShipMode')
 , GameMode = require('../views/modes/gameMode')
 , TitleMode = require('../views/modes/titleMode')
+, DecisionsPage = require('../react/components/decisionsPage')
 
 module.exports =  appView = Backbone.View.extend({
 
@@ -45,8 +46,14 @@ module.exports =  appView = Backbone.View.extend({
         */
     , start: function() {
 
-        // start the app by having the model get the starting mode
-        this.model.setStartMode();
+        // what should we load?
+        if (window.location.href.indexOf('/decisions') !== -1) {
+          DecisionsPage.loadPage();
+        } else {
+          // start the app by having the model get the starting mode
+          this.model.setStartMode();
+        }
+
     }
 
     /**

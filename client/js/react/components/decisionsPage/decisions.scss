@@ -1,0 +1,53 @@
+
+body {
+  overflow: scroll;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+
+  .decision-container {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.decisionList {
+  margin-right: 20px;
+
+  h2 {
+    font-size: 1.7em;
+    cursor: pointer;
+  }
+
+}
+
+.decision {
+  .last-result {
+    font-size: 16px;
+    max-width: 50em;
+  }
+
+  .cut-off {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .global-list {
+    //max-height: 15em;
+    overflow: scroll;
+    float: left;
+  }
+
+  .message-list {
+    font-size: 16px;
+    float: left;
+  }
+
+  .decision-message {
+    cursor: pointer;
+  }
+}
+

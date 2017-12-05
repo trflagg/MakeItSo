@@ -148,6 +148,8 @@ module.exports = function(db) {
           this.lastResult = result;
         }
 
+        Decision.prototype.fromShipCommandAndChild(this, command, child);
+
         return result;
     };
 

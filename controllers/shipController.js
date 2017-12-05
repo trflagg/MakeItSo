@@ -8,7 +8,8 @@ var render = require('../render')
     , bodyParser = require('koa-body')
     , requireParams = require('../middleware/require-params')
     , idMatchesSession = require('../middleware/id-matches-session')
-    , ObjectID = require('mongodb').ObjectID;
+    , ObjectID = require('mongodb').ObjectID
+    , Decision = require('../models/decision');
 
 module.exports = function(app, db) {
     /**
@@ -186,11 +187,15 @@ module.exports = function(app, db) {
     function *runCommand() {
         console.log(this.params.command);
         var commands = this.params.command.split('/');
+        var command = commands.pop();
+        var child = commands.join('.');
         var ship = yield db.load('Ship', {_id: new ObjectID(this.params.id)});
-  console.log(commands);
-        yield ship.runCommand(commands.pop(), commands.join('.'));
+        var message = ship.message(command, child);
+        yield ship.runCommand(command, child);
         yield db.save('Ship', ship);
 
+        var decision = db.create('Decision');
+        yield decision.fromShipCommandAndChild(ship, message, command, child);
         this.body = ship.toClient();
     }
 }
