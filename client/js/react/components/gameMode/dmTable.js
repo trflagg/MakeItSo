@@ -1,4 +1,6 @@
 import React from 'react';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import faEnvelope from '@fortawesome/fontawesome-free-solid/faEnvelope'
 
 import './dmTable.scss';
 
@@ -16,7 +18,7 @@ const DMTable = ({ dms, onRowClick }) => (
             >
               <td>
                 {dm.get('unread') &&
-                  '!'
+                  <FontAwesomeIcon icon={faEnvelope} />
                 }
               </td>
 

@@ -1,4 +1,6 @@
 import React from 'react';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import faEnvelope from '@fortawesome/fontawesome-free-solid/faEnvelope'
 
 import './header.scss';
 
@@ -28,7 +30,8 @@ export default class Header extends React.Component {
                 id="dm_button"
                 onClick={onDMToggle}
               >
-              { !viewingDMs ? 'Messages' : 'Back' }
+                { newDMs && !viewingDMs && <FontAwesomeIcon icon={faEnvelope} />}
+                { !viewingDMs ? 'Messages' : 'Back' }
               </p>
             }
           </div>
