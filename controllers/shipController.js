@@ -151,7 +151,7 @@ module.exports = function(app, db) {
             ship.increaseLevel('crew.security');
             ship.increaseLevel('ship_controls.sensors');
             ship.increaseLevel('crew.info');
-            ship.increaseLevel('ship_constrols.misc');
+            ship.increaseLevel('ship_controls.misc');
             ship.increaseLevel('crew.cultural');
             break;
         }
