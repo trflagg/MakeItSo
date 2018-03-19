@@ -119,6 +119,7 @@ module.exports = function(app, db) {
 
         switch (this.request.body.type_selected) {
           case 'ISTJ':
+            ship.setGlobal('style', 'inspector');
             ship.increaseLevel('ship_controls.shields');
             ship.increaseLevel('crew.medical');
             ship.increaseLevel('ship_controls.sensors');
@@ -127,6 +128,7 @@ module.exports = function(app, db) {
             ship.increaseLevel('crew.engineering');
             break;
           case 'ENTJ':
+            ship.setGlobal('style', 'fieldmarshall');
             ship.increaseLevel('ship_controls.weapons');
             ship.increaseLevel('crew.security');
             ship.increaseLevel('ship_controls.databank');
@@ -135,6 +137,7 @@ module.exports = function(app, db) {
             ship.increaseLevel('crew.engineering');
             break;
           case 'INFP':
+            ship.setGlobal('style', 'mediator');
             ship.increaseLevel('ship_controls.shields');
             ship.increaseLevel('crew.medical');
             ship.increaseLevel('ship_controls.databank');
@@ -143,6 +146,7 @@ module.exports = function(app, db) {
             ship.increaseLevel('crew.cultural');
             break;
           case 'ESFP':
+            ship.setGlobal('style', 'performer');
             ship.increaseLevel('ship_controls.weapons');
             ship.increaseLevel('crew.security');
             ship.increaseLevel('ship_controls.sensors');
