@@ -39,9 +39,16 @@ module.exports =  shipModel = CommandHolderModel.extend({
         this.set('shipName', response.shipName);
         this.set('output', response.output);
         this.set('lastResult', response.lastResult);
+        this.set('lastChildRun', response.lastChildRun);
         this.set('lastUpdate', response.lastUpdate);
         this.set('lastDM', response.lastDM);
         this.set('location', response.location);
+        this.set('showHeader', response.showHeader);
+        this.set('screen', response.screen);
+
+        if (response.globals) {
+          this.set('globals', response.globals);
+        }
 
         if (response.profile_id) {
           this.set('profile_id', response.profile_id);
@@ -55,10 +62,12 @@ module.exports =  shipModel = CommandHolderModel.extend({
 
                 case 'crew':
                     this.get("crew").set("childMessageCount", command.childMessageCount);
+                    this.get("crew").set("visible", command.visible);
                     this.get("crew").setChildren(command.children);
                     break;
                 case 'ship_controls':
                     this.get("shipControls").set("childMessageCount", command.childMessageCount);
+                    this.get("shipControls").set("visible", command.visible);
                     this.get("shipControls").setChildren(command.children);
                     break;
                 case 'direct_messages':
@@ -71,7 +80,6 @@ module.exports =  shipModel = CommandHolderModel.extend({
             }
         }
         this.setChildren(rootCommands);
-        this.set('screen', response.screen);
         this.trigger('parse_done');
     }
 

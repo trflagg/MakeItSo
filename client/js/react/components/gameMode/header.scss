@@ -3,19 +3,23 @@
     border: 1px solid #FFF;
 
     &.new {
-      animation: 1s linear 0s infinite alternate pulse_red;
+      animation: 1s linear 0s infinite alternate pulse_white;
+    }
+
+    svg {
+      margin-right: 10px;
     }
   }
 }
 
-@keyframes pulse_red {
+@keyframes pulse_white {
   0% {
-    border-color: #FFF;
-    color: #999;
+    border-color: #666;
+    color: #666;
   }
   100% {
-    border-color: #FF4136;
-    color: #FF4136;
+    border-color: #FFF;
+    color: #FFF;
   }
 }
 

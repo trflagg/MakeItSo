@@ -9,7 +9,8 @@ var Screen = require('./screen')
 
     module.exports =  shipNameScreen = Screen.extend({
         events: {
-            'keydown .crewInput': 'keyDown'
+            'keydown .crewInput': 'keyDown',
+            'click #startGameButton': 'submit',
         }
 
         /**
@@ -63,9 +64,6 @@ var Screen = require('./screen')
          */
         , keyDown: function(event) {
 
-            if (event.keyCode === 13) {
-                this.submit();
-            }
         }
 
         /**

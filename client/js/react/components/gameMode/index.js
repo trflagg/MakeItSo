@@ -89,6 +89,7 @@ export default class GameMode extends React.Component {
     return (
       <div id="gameMode">
         { screen.showHeader &&
+          this.props.ship.get('showHeader') &&
           <Header
             {...this.props}
             viewingDMs={this.state.showDMScreen}
@@ -106,12 +107,14 @@ export default class GameMode extends React.Component {
                 dms={this.props.ship.get('directMessages')}
               />
             }
-            <ScreenComponent
-              {...this.props}
-              onCommandClick={this.handleCommandClick}
-              screenHeight={this.state.screenHeight}
-              outputHistory={this.state.outputHistory}
-            />
+            { !this.state.showDMScreen &&
+                <ScreenComponent
+                  {...this.props}
+                  onCommandClick={this.handleCommandClick}
+                  screenHeight={this.state.screenHeight}
+                  outputHistory={this.state.outputHistory}
+                />
+            }
           </div>
         </div>
       </div>

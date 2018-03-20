@@ -14,6 +14,9 @@ docker-start:
 docker-stop:
 	docker-machine stop default
 
+graph-png:
+	dot -Tpng fixtures/messages.gv > fixtures/messages.png
+
 hex-hash:
 	date | md5 -r | cut -c -10
 
@@ -24,7 +27,7 @@ kill-update-fixtures:
 	docker rm -f mis_fixtures
 
 mongo-compose:
-	docker run -it --link makeitso_mongo_1:mongo --rm mongo sh -c 'exec mongo "$$MONGO_PORT_27017_TCP_ADDR:$$MONGO_PORT_27017_TCP_PORT"'
+	docker run -it --link makeitso_mongo_1:mongo --rm mongo:3.2 sh -c 'exec mongo "$$MONGO_PORT_27017_TCP_ADDR:$$MONGO_PORT_27017_TCP_PORT"'
 
 mongo:
 	mongo $(MONGO_HOST_DEV) -u $(MONGO_USERNAME) -p $(MONGO_PASSWORD)
@@ -48,6 +51,7 @@ update-default-fixtures:
 update-compose-fixtures:
 	docker run  --rm --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo -v $(shell pwd):/usr/src/app trflagg/makeitso:latest \
 				node --harmony node_modules/argie/messageLoader ../../db-environment-compose.js
+	make graph-png
 
 update-local-fixtures:
 	 docker run  --rm --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo -v ${PWD}:/usr/src/app mis:latest node --harmony node_modules/argie/messageLoader ../../db-environment-compose.js

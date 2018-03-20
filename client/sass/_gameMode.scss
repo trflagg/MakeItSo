@@ -156,16 +156,37 @@ $header_height: 100px;
       font-size: 90px;
       text-align: center;
       letter-spacing: -6px;
+      opacity: 0;
+      -webkit-transition: opacity 1s ease-in;
+      -moz-transition: opacity 1s ease-in;
+      -ms-transition: opacity 1s ease-in;
+      -o-transition: opacity 1s ease-in;
+      transition: opacity 1s ease-in;
+
+      &.titleFadeIn {
+        opacity: 1;
+      }
+
     }
 
     p {
       margin-top: 0px;
       white-space: pre;
-      text-align: center;
       line-height: 22px;
       font-size: 20px;
       letter-spacing: 3px;
       align-self: center;
+      opacity: 0;
+      -webkit-transition: opacity 1s ease-in;
+      -moz-transition: opacity 1s ease-in;
+      -ms-transition: opacity 1s ease-in;
+      -o-transition: opacity 1s ease-in;
+      transition: opacity 1s ease-in;
+
+      &.titleFadeIn {
+        opacity: 1;
+      }
+
     }
 
     a.continue {
@@ -175,6 +196,17 @@ $header_height: 100px;
       letter-spacing: 8px;
       margin-top: 90px;
       cursor: pointer;
+      opacity: 0;
+      -webkit-transition: opacity 1s ease-in;
+      -moz-transition: opacity 1s ease-in;
+      -ms-transition: opacity 1s ease-in;
+      -o-transition: opacity 1s ease-in;
+      transition: opacity 1s ease-in;
+
+      &.titleFadeIn {
+        opacity: 1;
+      }
+
 
       &:hover {
         color: inherit;

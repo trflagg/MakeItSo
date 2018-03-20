@@ -17,6 +17,8 @@ module.exports = function(db) {
         Ship.super_.prototype.initialize.call(this);
 
         this.lastResult = null;
+        this.lastChildRun = null;
+        this.showHeader = true;
         this.screen = null;
         this.shipName = null;
         this.profile_id = null;
@@ -49,6 +51,10 @@ module.exports = function(db) {
         infoHolder.setNewMessageText(this.newMessageText('crew -> info'));
         infoHolder.supportLevels();
         crew.addChild('info', infoHolder);
+        var janitorHolder = new MessageHolder();
+        janitorHolder.setNewMessageText(this.newMessageText('crew -> janitor'));
+        janitorHolder.supportLevels();
+        crew.addChild('janitor', janitorHolder);
         this.addChild('crew', crew);
 
         var shipControls = new MessageHolder();
@@ -72,14 +78,14 @@ module.exports = function(db) {
         processorHolder.setNewMessageText(this.newMessageText('ship controls -> processor'));
         processorHolder.supportLevels();
         shipControls.addChild('processor', processorHolder);
-        var enginesHolder = new MessageHolder();
-        enginesHolder.setNewMessageText(this.newMessageText('ship controls -> engines'));
-        enginesHolder.supportLevels();
-        shipControls.addChild('engines', enginesHolder);
+        var miscHolder = new MessageHolder();
+        miscHolder.setNewMessageText(this.newMessageText('ship controls -> misc'));
+        miscHolder.supportLevels();
+        shipControls.addChild('misc', miscHolder);
         this.addChild('ship_controls', shipControls);
 
         var dmHolder = new MessageHolder();
-        dmHolder.setNewMessageText('** New Direct Message Received: %s **');
+        dmHolder.setNewMessageText(this.newMessageText('You have received a new message'));
         dmHolder.setRecordUnread(true);
         this.addChild('direct_messages', dmHolder);
     };
@@ -97,7 +103,9 @@ module.exports = function(db) {
 
         doc.shipName = this.shipName;
         doc.lastResult = this.lastResult;
+        doc.lastChildRun = this.lastChildRun;
         doc.lastDM = this.lastDM;
+        doc.showHeader = this.showHeader;
         doc.screen = this.screen;
         doc.profile_id = this.profile_id;
 
@@ -109,7 +117,9 @@ module.exports = function(db) {
 
         if(doc.shipName) this.shipName = doc.shipName;
         if(doc.lastResult) this.lastResult = doc.lastResult;
+        if(doc.lastChildRun) this.lastChildRun = doc.lastChildRun;
         if(doc.lastDM) this.lastDM = doc.lastDM;
+        if(doc.showHeader) this.showHeader = doc.showHeader;
         if(doc.screen) this.screen = doc.screen;
         if(doc.profile_id) this.profile_id = doc.profile_id
     };
@@ -132,6 +142,7 @@ module.exports = function(db) {
     };
 
     Ship.prototype.runCommand = function* (command, child) {
+        this.lastChildRun = child;
         var result = yield Avatar.prototype.runMessage.call(this, command, child);
 
         //dm's stored in lastDM
@@ -140,6 +151,8 @@ module.exports = function(db) {
         } else {
           this.lastResult = result;
         }
+
+        Decision.prototype.fromShipCommandAndChild(this, command, child);
 
         return result;
     };
@@ -150,8 +163,10 @@ module.exports = function(db) {
         client_ship.id = this._id;
         client_ship.shipName = this.shipName;
         client_ship.lastResult = this.lastResult;
+        client_ship.lastChildRun = this.lastChildRun;
         client_ship.lastDM = this.lastDM;
         client_ship.screen = this.screen;
+        client_ship.showHeader = this.showHeader;
         client_ship.commands = this.getCommandTextList();
         client_ship.location = this.getLocation();
         client_ship.lastUpdate = new Date();
@@ -181,8 +196,41 @@ module.exports = function(db) {
             case 'cultural':
                 result = 'Cultural Ofc. '+name;
                 break;
+            case 'janitor':
+              result = 'Sanitation Eng. '+name;
+              break;
         }
         return result;
+    }
+
+    Ship.prototype.getImportantGlobals = function() {
+      return {
+        name: this.getGlobal('name'),
+        crew: {
+          security: this.getGlobal('security'),
+          medical: this.getGlobal('medical'),
+          info: this.getGlobal('info'),
+          empat: this.getGlobal('empat'),
+          engineering: this.getGlobal('engineering'),
+          cultural: this.getGlobal('cultural'),
+          janitor: this.getGlobal('janitor'),
+        },
+        gender: this.getGlobal('gender'),
+        ship_name: this.getGlobal('ship_name'),
+      }
+    }
+
+    Ship.prototype.setImportantGlobals = function(globals) {
+      this.setGlobal('name', globals.name);
+      this.setGlobal('gender', globals.gender);
+      this.setGlobal('ship_name', globals.ship_name);
+      this.setGlobal('security', globals.crew.security);
+      this.setGlobal('medical', globals.crew.medical);
+      this.setGlobal('info', globals.crew.info);
+      this.setGlobal('empat', globals.crew.empat);
+      this.setGlobal('engineering', globals.crew.engineering);
+      this.setGlobal('cultural', globals.crew.cultural);
+      this.setGlobal('janitor', globals.crew.janitor);
     }
 
     // add to the system wrapper
@@ -191,6 +239,20 @@ module.exports = function(db) {
         , functionBody: function(screenName) {
             this._avatar.screen = screenName;
         }
+    });
+
+    systemWrapper.prototype.registerFunction({
+      functionName: 'hideHeader'
+      , functionBody: function() {
+          this._avatar.showHeader = false;
+      }
+    });
+
+    systemWrapper.prototype.registerFunction({
+      functionName: 'showHeader'
+      , functionBody: function() {
+          this._avatar.showHeader = true;
+      }
     });
 
     // add to the avatar wrapper

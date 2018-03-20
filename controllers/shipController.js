@@ -8,7 +8,8 @@ var render = require('../render')
     , bodyParser = require('koa-body')
     , requireParams = require('../middleware/require-params')
     , idMatchesSession = require('../middleware/id-matches-session')
-    , ObjectID = require('mongodb').ObjectID;
+    , ObjectID = require('mongodb').ObjectID
+    , Decision = require('../models/decision');
 
 module.exports = function(app, db) {
     /**
@@ -91,6 +92,7 @@ module.exports = function(app, db) {
                 , empat: 'Troi'
                 , engineering: 'LaForge'
                 , cultural: 'Picard'
+                , janitor: 'Thurgood'
             }
 
             if (crewChildren[i].name === "") {
@@ -118,6 +120,7 @@ module.exports = function(app, db) {
 
         switch (this.request.body.type_selected) {
           case 'ISTJ':
+            ship.setGlobal('style', 'inspector');
             ship.increaseLevel('ship_controls.shields');
             ship.increaseLevel('crew.medical');
             ship.increaseLevel('ship_controls.sensors');
@@ -126,6 +129,7 @@ module.exports = function(app, db) {
             ship.increaseLevel('crew.engineering');
             break;
           case 'ENTJ':
+            ship.setGlobal('style', 'fieldmarshall');
             ship.increaseLevel('ship_controls.weapons');
             ship.increaseLevel('crew.security');
             ship.increaseLevel('ship_controls.databank');
@@ -134,21 +138,21 @@ module.exports = function(app, db) {
             ship.increaseLevel('crew.engineering');
             break;
           case 'INFP':
+            ship.setGlobal('style', 'mediator');
             ship.increaseLevel('ship_controls.shields');
             ship.increaseLevel('crew.medical');
             ship.increaseLevel('ship_controls.databank');
             ship.increaseLevel('crew.empat');
-            // todo: figure out what to do with 'upgrades'
-            // engines??
-            //ship.increaseLevel('upgrades');
+            ship.increaseLevel('ship_controls.misc');
             ship.increaseLevel('crew.cultural');
             break;
           case 'ESFP':
+            ship.setGlobal('style', 'performer');
             ship.increaseLevel('ship_controls.weapons');
             ship.increaseLevel('crew.security');
             ship.increaseLevel('ship_controls.sensors');
             ship.increaseLevel('crew.info');
-            // ship.increaseLevel('upgrades');
+            ship.increaseLevel('ship_controls.misc');
             ship.increaseLevel('crew.cultural');
             break;
         }
@@ -188,11 +192,15 @@ module.exports = function(app, db) {
     function *runCommand() {
         console.log(this.params.command);
         var commands = this.params.command.split('/');
+        var command = commands.pop();
+        var child = commands.join('.');
         var ship = yield db.load('Ship', {_id: new ObjectID(this.params.id)});
-  console.log(commands);
-        yield ship.runCommand(commands.pop(), commands.join('.'));
+        var message = ship.message(command, child);
+        yield ship.runCommand(command, child);
         yield db.save('Ship', ship);
 
+        var decision = db.create('Decision');
+        yield decision.fromShipCommandAndChild(ship, message, command, child);
         this.body = ship.toClient();
     }
 }

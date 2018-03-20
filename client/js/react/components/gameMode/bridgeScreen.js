@@ -37,6 +37,7 @@ class BridgeScreen extends React.Component {
                 <GameScreen
                   lastResult = {ship.get('lastResult')}
                   lastUpdate = {ship.get('lastUpdate')}
+                  lastChildRun = {ship.get('lastChildRun')}
                   outputBegin={this.handleOutputBegin}
                   outputDone={this.handleOutputDone}
                 />
@@ -51,13 +52,13 @@ class BridgeScreen extends React.Component {
                     id="shipCommands"
                     commandHolder = {ship.get('shipControls')}
                     onCommandClick= {onCommandClick}
-                    show={this.state.showCommands}
+                    show={this.state.showCommands && ship.get('shipControls').get('visible')}
                   />
                   <CommandHolder
                     id="crewCommands"
                     commandHolder = {ship.get('crew')}
                     onCommandClick= {onCommandClick}
-                    show={this.state.showCommands}
+                    show={this.state.showCommands && ship.get('crew').get('visible')}
                   />
                 </div>
               </div>
