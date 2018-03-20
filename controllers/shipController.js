@@ -92,6 +92,7 @@ module.exports = function(app, db) {
                 , empat: 'Troi'
                 , engineering: 'LaForge'
                 , cultural: 'Picard'
+                , janitor: 'Thurgood'
             }
 
             if (crewChildren[i].name === "") {
