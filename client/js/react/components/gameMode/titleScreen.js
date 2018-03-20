@@ -15,7 +15,7 @@ class TitleScreen extends React.Component {
     }, 1500);
     setTimeout(() => {
       document.querySelector('a').classList.add('titleFadeIn');
-    }, 2500);
+    }, 5500);
   }
 
   render() {

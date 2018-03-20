@@ -196,6 +196,17 @@ $header_height: 100px;
       letter-spacing: 8px;
       margin-top: 90px;
       cursor: pointer;
+      opacity: 0;
+      -webkit-transition: opacity 1s ease-in;
+      -moz-transition: opacity 1s ease-in;
+      -ms-transition: opacity 1s ease-in;
+      -o-transition: opacity 1s ease-in;
+      transition: opacity 1s ease-in;
+
+      &.titleFadeIn {
+        opacity: 1;
+      }
+
 
       &:hover {
         color: inherit;
