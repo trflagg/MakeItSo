@@ -51,6 +51,10 @@ module.exports = function(db) {
         infoHolder.setNewMessageText(this.newMessageText('crew -> info'));
         infoHolder.supportLevels();
         crew.addChild('info', infoHolder);
+        var janitorHolder = new MessageHolder();
+        janitorHolder.setNewMessageText(this.newMessageText('crew -> janitor'));
+        janitorHolder.supportLevels();
+        crew.addChild('janitor', janitorHolder);
         this.addChild('crew', crew);
 
         var shipControls = new MessageHolder();
@@ -81,7 +85,7 @@ module.exports = function(db) {
         this.addChild('ship_controls', shipControls);
 
         var dmHolder = new MessageHolder();
-        dmHolder.setNewMessageText('direct message');
+        dmHolder.setNewMessageText(this.newMessageText('You have received a new message'));
         dmHolder.setRecordUnread(true);
         this.addChild('direct_messages', dmHolder);
     };
@@ -192,6 +196,9 @@ module.exports = function(db) {
             case 'cultural':
                 result = 'Cultural Ofc. '+name;
                 break;
+            case 'janitor':
+              result = 'Sanitation Eng. '+name;
+              break;
         }
         return result;
     }
@@ -206,6 +213,7 @@ module.exports = function(db) {
           empat: this.getGlobal('empat'),
           engineering: this.getGlobal('engineering'),
           cultural: this.getGlobal('cultural'),
+          janitor: this.getGlobal('janitor'),
         },
         gender: this.getGlobal('gender'),
         ship_name: this.getGlobal('ship_name'),
@@ -222,6 +230,7 @@ module.exports = function(db) {
       this.setGlobal('empat', globals.crew.empat);
       this.setGlobal('engineering', globals.crew.engineering);
       this.setGlobal('cultural', globals.crew.cultural);
+      this.setGlobal('janitor', globals.crew.janitor);
     }
 
     // add to the system wrapper
