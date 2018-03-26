@@ -1,4 +1,4 @@
-FROM node:4.2.3
+FROM node:9.9.0
 RUN apt-get update
 
 WORKDIR /usr/src/app
