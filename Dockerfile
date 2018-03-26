@@ -7,6 +7,7 @@ WORKDIR /usr/src/app
 # Install stuff
 RUN npm install nodemon -g
 RUN npm install webpack -g
+RUN npm install webpack-cli -g
 
 # for SASS
 RUN apt-get install -y openssl
