@@ -1,6 +1,6 @@
 {
   "name": "MakeItSo",
-  "version": "0.8.2",
+  "version": "0.8.4",
   "description": "OpenSource engine for the game I'm working on. Uses Node, MongoDB, & Koa.",
   "main": "index.js",
   "scripts": {
@@ -34,7 +34,7 @@
     "koa-router": "~4.3.2",
     "koa-session": "~3.3.1",
     "koa-static": "~1.5.2",
-    "mongodb": "~2.1.0",
+    "mongodb": "3.0.5",
     "promise": "^7.1.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
@@ -63,7 +63,7 @@
     "supertest": "^0.13.0",
     "thunkify": "^2.1.2",
     "version": "^0.1.2",
-    "webpack": "^2.7.0",
+    "webpack": "3.11.0",
     "webpack-dev-server": "^2.4.5",
     "webpack-merge": "^4.1.0"
   }

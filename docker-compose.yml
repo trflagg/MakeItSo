@@ -1,5 +1,5 @@
 mis:
-  build: "https://github.com/trflagg/MakeItSo.git#develop"
+  build: '.' 
   ports:
     - "3000:3000"
   volumes:
@@ -11,7 +11,7 @@ mis:
     DB_ENV: compose
   command: nodemon -L --harmony app.js
 mongo:
-  image: "mongo:3.2"
+  image: "mongo:3.4.7"
 sass:
   build: "https://github.com/trflagg/sass-docker.git"
   volumes:

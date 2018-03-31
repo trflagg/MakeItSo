@@ -6,7 +6,6 @@ WORKDIR /usr/src/app
 #
 # Install stuff
 RUN npm install nodemon -g
-RUN npm install webpack -g
 RUN npm install webpack-cli -g
 
 # for SASS
@@ -41,6 +40,8 @@ RUN sass -t compressed client/sass/main.scss client/build/css/main.css
 #
 # Build js
 RUN mkdir -p client/build/js
+RUN npm install webpack@3.11 -g
+RUN npm rebuild node-sass --force
 RUN webpack --env=prod -p
 
 #
