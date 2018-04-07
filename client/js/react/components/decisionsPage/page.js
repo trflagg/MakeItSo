@@ -26,7 +26,7 @@ export default class Page extends React.Component {
 
   componentWillMount() {
     $.ajax({
-      url: 'all-ships',
+      url: '/admin/decisions/all-ships',
     }).done(data => {
       this.setState({
         ships: data.ships,
@@ -51,7 +51,7 @@ export default class Page extends React.Component {
 
   loadShip(ship_id) {
     $.ajax({
-      url: `${ship_id}/all`,
+      url: `/admin/decisions/${ship_id}/all`,
     }).done(data => {
       this.setState({
         decisions: data.decisions,
