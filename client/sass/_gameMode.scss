@@ -1,5 +1,16 @@
 $header_height: 100px;
 
+@keyframes pulse_red {
+  0% {
+    border-color: #F99;
+    color: #F99;
+  }
+  100% {
+    border-color: red;
+    color: red;
+  }
+}
+
 #gameMode {
   display: flex;
   flex-direction: column;
@@ -7,6 +18,33 @@ $header_height: 100px;
   padding: 10px;
   max-width: 1140px;
   min-height: 100vh;
+
+  #bridgeScreen.red-alert {
+    border: 3px solid red;
+    animation: 1s linear 0s infinite alternate pulse_red;
+  }
+
+  .red-alert {
+    #header {
+      color: red;
+      animation: 1s linear 0s infinite alternate pulse_red;
+    }
+
+    div.commandTextDiv {
+      border: 1px solid red;
+      color: red;
+      animation: none;
+    }
+
+    p#dm_button.commandItem {
+      border-color: red;
+      animation: 1s linear 0s infinite alternate pulse_red;
+    }
+
+    p.commandItem {
+      color: red;
+    }
+  }
 
   #header {
     display: flex;
@@ -33,6 +71,7 @@ $header_height: 100px;
 
   div.commandTextDiv {
     border: 1px solid white;
+
   }
 
   p.commandItem {

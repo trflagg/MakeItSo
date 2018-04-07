@@ -11,10 +11,11 @@ export default class Header extends React.Component {
           viewingDMs,
           newDMs,
           onDMToggle,
+          redAlert,
     } = this.props;
 
     return (
-      <div>
+      <div className={redAlert ? "red-alert" : ""}>
         <div id="header">
           <div id="subheader">
             <h1>Cpt. {profile.get('name')} of the {ship.get('shipName')}</h1>

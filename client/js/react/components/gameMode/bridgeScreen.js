@@ -29,10 +29,10 @@ class BridgeScreen extends React.Component {
   }
 
   render() {
-    const { ship, onCommandClick, showDMScreen } = this.props;
+    const { ship, onCommandClick, showDMScreen, redAlert } = this.props;
 
     return (
-            <div id="bridgeScreen" className="container-fluid">
+            <div id="bridgeScreen" className={"container-fluid " + (redAlert ? "red-alert" : "" )}>
               <div id="mainBody" className="right">
                 <GameScreen
                   lastResult = {ship.get('lastResult')}

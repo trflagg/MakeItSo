@@ -235,6 +235,24 @@ module.exports = function(db) {
 
     // add to the system wrapper
     systemWrapper.prototype.registerFunction({
+      functionName: 'enterRedAlert',
+      functionBody: function() {
+        this._avatar.screen = 'REDALERT';
+        return "ENTERING RED ALERT\n" +
+          "Note: Events may happen in real time during red alert." +
+          "Not acting quickly enough may affect the outcome."
+      }
+    });
+
+    systemWrapper.prototype.registerFunction({
+      functionName: 'exitRedAlert',
+      functionBody: function() {
+        this._avatar.screen = 'BRIDGE';
+        return "EXITING RED ALERT";
+      }
+    });
+
+    systemWrapper.prototype.registerFunction({
         functionName: 'setScreen'
         , functionBody: function(screenName) {
             this._avatar.screen = screenName;
