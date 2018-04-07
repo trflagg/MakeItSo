@@ -49,8 +49,8 @@ update-default-fixtures:
 	node --harmony node_modules/argie/messageLoader ../../db-environment-default.js
 
 update-compose-fixtures:
-	docker run  --rm --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo -v $(shell pwd):/usr/src/app trflagg/makeitso:latest \
-				node --harmony node_modules/argie/messageLoader ../../db-environment-compose.js
+	docker run  --rm --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo -v $(shell pwd):/usr/src/app node:9.9.0 \
+				node --harmony /usr/src/app/node_modules/argie/messageLoader ../../db-environment-compose.js
 	make graph-png
 
 update-local-fixtures:
