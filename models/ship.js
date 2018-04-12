@@ -217,6 +217,7 @@ module.exports = function(db) {
         },
         gender: this.getGlobal('gender'),
         ship_name: this.getGlobal('ship_name'),
+        style: this.getGlobal('style'),
       }
     }
 
@@ -231,6 +232,7 @@ module.exports = function(db) {
       this.setGlobal('engineering', globals.crew.engineering);
       this.setGlobal('cultural', globals.crew.cultural);
       this.setGlobal('janitor', globals.crew.janitor);
+      this.setGlobal('style', globals.style);
     }
 
     // add to the system wrapper
