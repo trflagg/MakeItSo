@@ -29,7 +29,7 @@
             </tr>
             <tr>
                 <td> <label for="janitor">Janitor</label></td>
-                <td> <input class='crewInput highlightLabel' id="cultural", type="text", size=30 placeholder="Thurgood""></td>
+                <td> <input class='crewInput highlightLabel' id="janitor", type="text", size=30 placeholder="Thurgood""></td>
             </tr>
         </table>
         <button id="startGameButton">Start Game</button>

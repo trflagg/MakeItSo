@@ -80,7 +80,8 @@ var Screen = require('./screen')
                 , info = $("#info").val()
                 , empat = $("#empat").val()
                 , engineering = $("#engineering").val()
-                , cultural = $("#cultural").val();
+                , cultural = $("#cultural").val()
+                , janitor = $("#janitor").val();
 
             this.reset();
             this.model.get('ship').get('crew').getChildById('security')
@@ -94,6 +95,8 @@ var Screen = require('./screen')
             this.model.get('ship').get('crew').getChildById('engineering')
                                   .set('name', engineering);
             this.model.get('ship').get('crew').getChildById('cultural')
+                                  .set('name', cultural);
+            this.model.get('ship').get('crew').getChildById('janitor')
                                   .set('name', cultural);
 
             this.model.get('ship').save({
