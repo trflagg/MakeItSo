@@ -85,7 +85,7 @@ module.exports = function(db) {
         this.addChild('ship_controls', shipControls);
 
         var dmHolder = new MessageHolder();
-        dmHolder.setNewMessageText(this.newMessageText('You have received a new message'));
+        dmHolder.setNewMessageText("<span class='new_message'>New message received: %s </span>");
         dmHolder.setRecordUnread(true);
         this.addChild('direct_messages', dmHolder);
     };
