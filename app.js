@@ -6,7 +6,7 @@
 
 var fs = require('fs')
 
-    , Db = require('argieDB/co-db')
+    , Db = require('argieDB/db')
 
     , regExs = require('./helpers/regExs')
 

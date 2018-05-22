@@ -21,8 +21,8 @@ module.exports = function(app, db) {
     app.get('/ships/:profile_id'
             , idMatchesSession(db)
             , getShipList);
-    function *getShipList() {
-        var ships = yield db.loadMultiple('Ship'
+    async function getShipList() {
+        var ships = await db.loadMultiple('Ship'
                     , {profile_id: this.params.profile._id}
                     , {shipName: 1, _id: 1});
         this.body = {
@@ -42,7 +42,7 @@ module.exports = function(app, db) {
                                 , 'shipName'])
                 , idMatchesSession(db)
                 , newShip);
-    function *newShip() {
+    async function newShip() {
         try {
             var ship = db.create('Ship');
             ship.profile_id = this.params.profile._id;
@@ -50,9 +50,9 @@ module.exports = function(app, db) {
             ship.setGlobal('name', this.params.profile.name);
             ship.setGlobal('gender', this.params.profile.sex);
             ship.setGlobal('ship_name', ship.shipName);
-            yield ship.startGame();
+            await ship.startGame();
 
-            yield db.save('Ship', ship);
+            await db.save('Ship', ship);
             this.cookies.get('ship');
             this.cookies.set('ship', ship._id);
             this.session.ship = ship._id;
@@ -75,8 +75,8 @@ module.exports = function(app, db) {
                 load: false
             })
             , editShip);
-    function *editShip() {
-        var ship = yield db.load('Ship', {_id: new ObjectID(this.params.id)});
+    async function editShip() {
+        var ship = await db.load('Ship', {_id: new ObjectID(this.params.id)});
 
         // set names
         var crewChildren = this.request.body.crew.children;
@@ -104,7 +104,7 @@ module.exports = function(app, db) {
             ship.child('crew').child(crew_id).setName(crewChildren[i].name);
         }
 
-        yield db.save('Ship', ship);
+        await db.save('Ship', ship);
 
         this.body = ship.toClient();
 
@@ -114,9 +114,9 @@ module.exports = function(app, db) {
             , bodyParser()
             , idMatchesSession(db, {load: false})
             , setStartingLevels);
-    function *setStartingLevels() {
+    async function setStartingLevels() {
       try {
-        var ship = yield db.load('Ship', {_id: new ObjectID(this.params.id)});
+        var ship = await db.load('Ship', {_id: new ObjectID(this.params.id)});
 
         switch (this.request.body.type_selected) {
           case 'ISTJ':
@@ -156,7 +156,7 @@ module.exports = function(app, db) {
             ship.increaseLevel('crew.cultural');
             break;
         }
-        yield db.save('Ship', ship);
+        await db.save('Ship', ship);
 
         this.body = ship.toClient();
       } catch(e) {
@@ -175,8 +175,8 @@ module.exports = function(app, db) {
                 load: false
             })
             , getShip);
-    function *getShip() {
-        var ship = yield db.load('Ship', {_id: new ObjectID(this.params.id)});
+    async function getShip() {
+        var ship = await db.load('Ship', {_id: new ObjectID(this.params.id)});
 
         this.body = ship.toClient();
     }
@@ -189,18 +189,18 @@ module.exports = function(app, db) {
     app.post('/ship/:profile_id/:id/:command+'
             , idMatchesSession(db, {load: false})
             , runCommand);
-    function *runCommand() {
+    async function runCommand() {
         console.log(this.params.command);
         var commands = this.params.command.split('/');
         var command = commands.pop();
         var child = commands.join('.');
-        var ship = yield db.load('Ship', {_id: new ObjectID(this.params.id)});
+        var ship = await db.load('Ship', {_id: new ObjectID(this.params.id)});
         var message = ship.message(command, child);
-        yield ship.runCommand(command, child);
-        yield db.save('Ship', ship);
+        await ship.runCommand(command, child);
+        await db.save('Ship', ship);
 
         var decision = db.create('Decision');
-        yield decision.fromShipCommandAndChild(ship, message, command, child);
+        await decision.fromShipCommandAndChild(ship, message, command, child);
         this.body = ship.toClient();
     }
 }

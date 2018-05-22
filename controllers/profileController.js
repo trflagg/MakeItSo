@@ -21,7 +21,7 @@ module.exports = function(app, db) {
     app.get('/profile/:profile_id'
             , idMatchesSession(db)
             , getProfile);
-    function *getProfile() {
+    function getProfile() {
         // profile loaded into params by idMatchesSession
         this.body = this.params.profile;
     }
@@ -38,11 +38,11 @@ module.exports = function(app, db) {
              , bodyParser()
              , requireParams(['name'])
              , newProfile);
-    function *newProfile() {
+    async function newProfile() {
         try {
             var profile = db.create('Profile');
             profile.name = this.request.body['name'];
-            yield db.save('Profile', profile);
+            await db.save('Profile', profile);
             this.cookies.get('profile');
             var expires = new Date();
             expires.setFullYear(expires.getFullYear() + 1);
@@ -72,7 +72,7 @@ module.exports = function(app, db) {
             , bodyParser()
             , idMatchesSession(db)
             , editProfile);
-    function *editProfile() {
+    async function editProfile() {
 
         var body = this.request.body
             , profile = this.params.profile;
@@ -87,7 +87,7 @@ module.exports = function(app, db) {
             if (body.sex)
                 profile.sex = body.sex;
 
-            yield db.save('Profile', profile);
+            await db.save('Profile', profile);
 
             this.body = {
                 success: 'true'
