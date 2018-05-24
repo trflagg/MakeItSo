@@ -4,7 +4,8 @@
  * What happens when you first go to the site.
  */
 
-var render = require('../render');
+const child_process = require('child_process');
+
 var ObjectID = require('mongodb').ObjectID;
 
 module.exports = function(app, db) {
@@ -15,15 +16,17 @@ module.exports = function(app, db) {
    * @return {html}
    */
   app.get('/', index);
-  async function index() {
+  async function index(req, res) {
     var scriptPath = 'build/js/main.min.js';
     if (process.env.NODE_ENV !== "production") {
       // webpack-dev-server inside docker-compose
       scriptPath = "http://192.168.99.100:8080/main.min.js";
     }
-    this.body = await render('index.html',
-      { production: process.env.NODE_ENV === "production",
-        scriptPath: scriptPath
+    res.render('index.ejs',
+      {
+        production: process.env.NODE_ENV === "production",
+        scriptPath: scriptPath,
+        basePath: scriptPath,
       });
 
   }
@@ -47,10 +50,10 @@ module.exports = function(app, db) {
    * @return {json}
    */
   app.get('/start', start);
-  async function start() {
+  async function start(req, res) {
 
     try {
-      var profile_id = this.cookies.get('profile');
+      var profile_id = req.signedCookies.profile;
       var mode = null;
       // turn off cookie
       // if (false) {
@@ -58,7 +61,7 @@ module.exports = function(app, db) {
         // has cookie. Load it and set session.
         try {
           var profile = await db.load('Profile', {_id: new ObjectID(profile_id)});
-          this.session.profile = profile_id;
+          req.session.profile = profile_id;
           this.body = {
             mode: 'selectShip'
             , id: profile_id
@@ -69,7 +72,7 @@ module.exports = function(app, db) {
           // it contains db id and it would be best to shield that
           // from user as much as possible
           if (e.name === 'NotFoundError') {
-            this.cookies.set('profile', null);
+            req.signedCookies.set('profile', null);
             this.body = {
               mode: 'title'
             };

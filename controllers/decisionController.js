@@ -1,5 +1,4 @@
-var render = require('../render')
-  , ObjectID = require('mongodb').ObjectID
+var ObjectID = require('mongodb').ObjectID
   , checkAdmin = require('../middleware/check-admin')
   , _ = require('underscore');
 

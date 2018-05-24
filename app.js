@@ -6,18 +6,17 @@
 
 var fs = require('fs')
 
-    , Db = require('argieDB/db')
+  , Db = require('argieDB/db')
 
-    , regExs = require('./helpers/regExs')
+  , regExs = require('./helpers/regExs')
 
-    , logger = require('koa-logger')
-    , router = require('koa-router')
-    , serve = require('koa-static')
-    , session = require('koa-session')
+  , morgan = require('morgan')
+  , express = require('express')
+  , session = require('express-session')
+  , MongoDBStore = require('connect-mongodb-session')(session)
+  , cookieParser = require('cookie-parser');
 
-    , koa = require('koa');
-
-var app = module.exports = koa();
+var app = module.exports = express();
 
 /**
  * Create db connection
@@ -31,7 +30,8 @@ if (process.env.DB_ENV === 'compose') {
 }
 
 // hide the username:password in the URL string
-console.log('db URL: '+environment.db.URL.replace(/:\/\/.*:(.*)@/, 'XXXXXXX'));
+var hiddenDBString = environment.db.URL.replace(/:\/\/.*:(.*)@/, 'XXXXXXX');
+console.log('db URL: '+ hiddenDBString);
 var db = new Db(environment);
 console.log('Connected.');
 
@@ -52,23 +52,47 @@ fs.readdirSync('./models').forEach(function(file) {
 /**
  * Middleware
  */
-app.use(logger());
-app.keys = ['secret session cookie string'];
-app.use(session(app));
-app.use(serve('client'));
-app.use(router(app));
+if (process.env.NODE_ENV === "production") {
+  app.use(morgan('short'));
+} else {
+  app.use(morgan('dev'));
+}
+
+app.use(express.static('client'));
+
+var sessionStore = new MongoDBStore({
+  uri: environment.db.URL,
+  databaseName: 'express_session',
+  collection: 'sessions',
+});
+sessionStore.on('error', function(error) {
+  console.error('error from MongoDBStore');
+  console.error(error);
+});
+app.use(session({
+  secret: hiddenDBString,
+  store: sessionStore,
+  resave: true,
+  saveUninitialized: true,
+}));
+
+app.set('views', './views');
+app.set('view engine', 'ejs');
+
+app.use(cookieParser(hiddenDBString));
 
 /**
  * Load controllers in /controllers
  */
-fs.readdirSync('./controllers').forEach(function (file) {
-    require('./controllers/' + file)(app, db);
-});
+require('./controllers/indexController')(app, db);
+//fs.readdirSync('./controllers').forEach(function (file) {
+  //require('./controllers/' + file)(app, db);
+//});
 
 
 // Start!
 var port = 3000
 if (process.env.NODE_ENV === "production") {
-    port = 80;
+  port = 80;
 }
 if (!module.parent) app.listen(port);

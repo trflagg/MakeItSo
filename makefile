@@ -32,6 +32,9 @@ mongo-compose:
 mongo:
 	mongo $(MONGO_HOST_DEV) -u $(MONGO_USERNAME) -p $(MONGO_PASSWORD)
 
+open:
+	chromium-browser "http://$(shell docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' makeitso_mis_1):3000"
+
 run:
 	docker-compose up
 
