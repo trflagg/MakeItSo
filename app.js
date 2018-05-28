@@ -16,6 +16,8 @@ var fs = require('fs')
   , MongoDBStore = require('connect-mongodb-session')(session)
   , cookieParser = require('cookie-parser');
 
+require('express-async-errors');
+
 var app = module.exports = express();
 
 /**

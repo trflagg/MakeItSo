@@ -109,7 +109,7 @@ module.exports = function(app, db) {
   }
 
   app.get('/reset/:message_name', resetShip);
-  async function *resetShip() {
+  async function resetShip() {
     var messageName = this.params.message_name || '';
     var profile_id = this.cookies.get('profile');
     var ships = await db.loadMultiple('Ship'

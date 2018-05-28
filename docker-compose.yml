@@ -1,26 +1,30 @@
-mis:
-  build: '.' 
-  ports:
-    - "3000:3000"
-  volumes:
-    - '.:/usr/src/app'
-  links:
-    - mongo:mongo
-  environment:
-    NODE_ENV: development
-    DB_ENV: compose
-  command: nodemon -L --harmony app.js
-mongo:
-  image: "mongo:3.4.7"
-sass:
-  build: "https://github.com/trflagg/sass-docker.git"
-  volumes:
-    - '.:/src'
-  command:  --watch /src/client/sass:/src/client/build/css
-webpack:
-  build: "https://github.com/trflagg/docker-webpack-dev-server.git"
-  ports:
-    - "8080:8080"
-  volumes:
-    - '.:/src'
-  command: --host 0.0.0.0 --env=dev  
+version: '3'
+services:
+  mis:
+    depends_on:
+      - mongo
+      - sass
+      - webpack
+    build: '.' 
+    ports:
+      - "3000:3000"
+    volumes:
+      - '.:/usr/src/app'
+    environment:
+      NODE_ENV: development
+      DB_ENV: compose
+    command: nodemon -L --harmony app.js
+  mongo:
+    image: "mongo:3.4.7"
+  sass:
+    build: "https://github.com/trflagg/sass-docker.git"
+    volumes:
+      - '.:/src'
+    command:  --watch /src/client/sass:/src/client/build/css
+  webpack:
+    build: "https://github.com/trflagg/docker-webpack-dev-server.git"
+    ports:
+      - "8080:8080"
+    volumes:
+      - '.:/src'
+    command: --disableHostCheck --env=dev  
