@@ -14,7 +14,11 @@ var fs = require('fs')
   , express = require('express')
   , session = require('express-session')
   , MongoDBStore = require('connect-mongodb-session')(session)
-  , cookieParser = require('cookie-parser');
+  , cookieParser = require('cookie-parser')
+
+  , webpack = require('webpack')
+  , webpackDevMiddleware = require('webpack-dev-middleware')
+  , config = require('./webpack.dev.js');
 
 require('express-async-errors');
 
@@ -82,6 +86,11 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 
 app.use(cookieParser(hiddenDBString));
+
+const compiler = webpack(config);
+app.use(webpackDevMiddleware(compiler, {
+  publicPath: config.output.publicPath,
+}));
 
 /**
  * Load controllers in /controllers

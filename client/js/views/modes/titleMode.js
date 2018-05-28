@@ -5,8 +5,8 @@
  *
  */
 
+    require("expose-loader?$!jquery");
     var Mode = require('./mode')
-    , blast = require('blast-text')
     , template = require('../../../templates/modes/titleMode.dot');
 
     module.exports = titleMode = Mode.extend({
@@ -35,9 +35,9 @@
             // I want to use this.$('#continue...').blast() but blast installs
             // itself on the global $, which apparently is not the same one
             // installed on this.$
-            this.continueChars = $("#continueMessage p")
-                                    .blast({delimiter: "character"})
-                                    .addClass('messageOut');
+            //this.continueChars = $("#continueMessage p")
+                                    //.blast({delimiter: "character"})
+                                    //.addClass('messageOut');
             return this;
         }
 

@@ -17,16 +17,10 @@ module.exports = function(app, db) {
    */
   app.get('/', index);
   async function index(req, res) {
-    var scriptPath = 'build/js/main.min.js';
-    if (process.env.NODE_ENV !== "production") {
-      // webpack-dev-server inside docker-compose
-      scriptPath = "http://192.168.99.100:8080/main.min.js";
-    }
     res.render('index.ejs',
       {
         production: process.env.NODE_ENV === "production",
-        scriptPath: scriptPath,
-        basePath: scriptPath,
+        scriptPath: app.get('scriptPath'),
       });
 
   }
