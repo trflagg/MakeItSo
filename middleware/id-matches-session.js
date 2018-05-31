@@ -17,36 +17,36 @@ module.exports = function(db, options) {
   options.source = options.source || 'params';
   options.load = options.load || true;
 
-  return function *(next) {
-    if (!this.session.profile) {
-      this.throw(400, 'session not found.');
+  return async function (req, res, next) {
+    if (!req.session.profile) {
+      res.status(400).send('session not found.');
     }
 
     switch(options.source) {
       case 'params':
-        var profile_id = this.params.profile_id;
+        var profile_id = req.params.profile_id;
         break;
       case 'body':
-        var profile_id = this.request.body['profile_id'];
+        var profile_id = req.body['profile_id'];
         break;
       default:
-        this.throw(500, 'idMatchesSession(): bad options.source');
+        res.status(500).send('idMatchesSession(): bad options.source');
     }
-    if (this.session.profile != profile_id) {
-      this.throw(400, 'session does not match param.')
+    if (req.session.profile != profile_id) {
+      res.status(400).send('session does not match param.');
     }
 
     // ensure it exists
     if (options.load) {
-      var profile = yield db.load('Profile'
-        , {_id: new ObjectID(this.session.profile)});
+      var profile = await db.load('Profile'
+        , {_id: new ObjectID(req.session.profile)});
 
       console.dir(profile);
 
 
-      this.params.profile = profile;
+      req.params.profile = profile;
     }
 
-    yield* next;
+    next();
   }
 }

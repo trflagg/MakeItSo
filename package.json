@@ -23,6 +23,7 @@
     "argieDB": "git://github.com/trflagg/argieDB.git",
     "backbone": "^1.3.3",
     "blast-text": "^2.0.0",
+    "body-parser": "^1.18.3",
     "bootstrap-sass": "^3.3.7",
     "connect-mongodb-session": "^2.0.2",
     "cookie-parser": "^1.4.3",
@@ -47,6 +48,7 @@
     "style-loader": "^0.18.2",
     "superagent": "~1.5.0",
     "underscore": "^1.8.3",
+    "url-loader": "^1.0.1",
     "webpack": "^4.10.1",
     "webpack-merge": "^4.1.0"
   },

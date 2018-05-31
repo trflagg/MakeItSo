@@ -5,37 +5,29 @@ var ObjectID = require('mongodb').ObjectID
 module.exports = function(app, db) {
 
   app.get('/admin/decisions'
-    , checkAdmin()
+    , checkAdmin
     , getDecisions);
-  async function getDecisions() {
+  async function getDecisions(req, res) {
     // from indexController.start()
-    var basePath = '';
-    var scriptPath = 'build/js/main.min.js';
-    if (process.env.NODE_ENV !== "production") {
-      // webpack-dev-server inside docker-compose
-      scriptPath = "http://192.168.99.100:8080/main.min.js";
-      basePath = "http://192.168.99.199:8080";
-    }
-    this.body = await render('index.html',
-      { production: process.env.NODE_ENV === "production",
-        scriptPath: scriptPath
-      });
+    res.render('index.ejs',{
+      production: process.env.NODE_ENV === "production",
+    });
   };
 
   app.get('/admin/decisions/all-ships'
-    , checkAdmin()
+    , checkAdmin
     , allShips);
-  async function allShips() {
+  async function allShips(req, res) {
     var ships = await db.loadMultiple('Ship', {}, {shipName: 1, _id: 1});
-    this.body = { ships: ships };
+    res.json({ ships: ships });
   }
 
 
   app.get('/admin/decisions/:ship_id/all'
-    , checkAdmin()
+    , checkAdmin
     , allDecisions);
-  async function allDecisions() {
-    var ship_id = this.params.ship_id;
+  async function allDecisions(req, res) {
+    var ship_id = req.params.ship_id;
     var decisions = await db.loadMultiple('Decision', {'ship._id': new ObjectID(ship_id)});
 
     decisions = _.sortBy(decisions, 'created').map(function(decision) {
@@ -45,18 +37,18 @@ module.exports = function(app, db) {
       return result;
     });
 
-    this.body = {decisions: decisions};
+    res.json({decisions: decisions});
   }
 
   app.post('/admin/decision/:decision_id/:command+'
-    , checkAdmin()
+    , checkAdmin
     , runDecisionCommand);
-  async function runDecisionCommand() {
-    var decision_id = this.params.decision_id
+  async function runDecisionCommand(req, res) {
+    var decision_id = req.params.decision_id;
     var decision = await db.load('Decision', {'_id': new ObjectID(decision_id)});
     if (decision) {
       var ship = decision.ship;
-      var commands = this.params.command.split('/');
+      var commands = req.params.command.split('/');
       var command = commands.pop();
       var child = commands.join('.');
       var message = ship.message(command, child);
@@ -70,7 +62,7 @@ module.exports = function(app, db) {
       var result = decision
       result.globals = decision.ship._globals;
       result.ship = decision.ship.toClient();
-      this.body = result;
+      res.json(result);
     } else {
       throw new Error('No decision found');
     }

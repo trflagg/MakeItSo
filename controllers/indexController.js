@@ -4,8 +4,6 @@
  * What happens when you first go to the site.
  */
 
-const child_process = require('child_process');
-
 var ObjectID = require('mongodb').ObjectID;
 
 module.exports = function(app, db) {
@@ -56,10 +54,10 @@ module.exports = function(app, db) {
         try {
           var profile = await db.load('Profile', {_id: new ObjectID(profile_id)});
           req.session.profile = profile_id;
-          this.body = {
+          res.json({
             mode: 'selectShip'
             , id: profile_id
-          };
+          });
         }
         catch(e) {
           // Don't send thrown error message since
@@ -67,9 +65,9 @@ module.exports = function(app, db) {
           // from user as much as possible
           if (e.name === 'NotFoundError') {
             req.signedCookies.set('profile', null);
-            this.body = {
+            res.json({
               mode: 'title'
-            };
+            });
             //throw new Error('Cookie profile_id not found in db.');
           }
           else {
@@ -79,14 +77,14 @@ module.exports = function(app, db) {
       }
       else {
         // no cookie.
-        this.body = {
+        res.json({
           mode: 'title'
-        };
+        });
       }
     } catch(e) {
-      this.body = {
+      res.json({
         error: e.message
-      };
+      });
     }
   }
 
@@ -97,18 +95,18 @@ module.exports = function(app, db) {
    * @return {String}
    */
   app.get('/delete-cookie', deleteCookie);
-  function deleteCookie() {
-    this.cookies.set('profile', null);
-    this.body = "Cookie deleted";
+  function deleteCookie(req, res) {
+    res.cookie('profile', null, { signed: true});
+    res.send("Cookie deleted");
   }
 
   app.get('/reset/:message_name', resetShip);
-  async function resetShip() {
-    var messageName = this.params.message_name || '';
-    var profile_id = this.cookies.get('profile');
+  async function resetShip(req, res) {
+    var messageName = req.params.message_name || '';
+    var profile_id = req.signedCookies.profile;
     var ships = await db.loadMultiple('Ship'
       , {profile_id: new ObjectID(profile_id)});
-    this.body = 'profile_id:'+profile_id;
+    var result = 'profile_id:'+profile_id;
     var importantGlobals;
 
     for (var i=0, ll=ships.length; i<ll; i++) {
@@ -119,16 +117,16 @@ module.exports = function(app, db) {
       await db.save('Ship', ships[i]);
       var newDecision = db.create('Decision');
       await newDecision.fromShipCommandAndChild(ships[i], messageName, 'reset');
-      this.body += ' ship: '+ships[i]._id;
+      result += ' ship: '+ships[i]._id;
     }
+    res.send(result);
   }
 
   app.get('/game-mode', gameMode);
-  async function gameMode() {
-    var profile_id = this.cookies.get('profile');
+  async function gameMode(req, res) {
+    var profile_id = req.signedCookies.profile;
     if (!profile_id) {
-      this.body = 'profile_id not found';
-      return;
+      throw new Error('profile_id not found');
     }
     var profile = await db.load('Profile', {_id: new ObjectID(profile_id)});
     var ships = await db.loadMultiple('Ship'
@@ -137,7 +135,7 @@ module.exports = function(app, db) {
     if (ships[0]) {
       shipData = JSON.stringify(ships[0]);
     }
-    this.body = await render('gameMode.html', {
+    res.render('gameMode.html', {
       shipData: shipData,
       profile: JSON.stringify(profile),
       scriptPath: "http://192.168.99.100:8080/gameMode.min.js",
@@ -145,22 +143,22 @@ module.exports = function(app, db) {
   }
 
   app.get('/default-ship', defaultShip);
-  async function defaultShip() {
-    var profile_id = this.cookies.get('profile');
+  async function defaultShip(req, res) {
+    var profile_id = req.signedCookies.profile;
     if (!profile_id) {
-      this.body = 'profile_id not found';
-      return;
+      throw new Error('profile_id not found');
     }
     var profile = await db.load('Profile', {_id: new ObjectID(profile_id)});
     var ships = await db.loadMultiple('Ship'
       , {profile_id: new ObjectID(profile_id)});
 
     if (!ships[0]) {
-      this.body = 'default ship not found';
+      throw new Error('default ship not found');
     }
     ship = ships[0];
-    this.body = ship.toClient();
-    this.body.profile_id = profile_id;
+    var shipJson = ship.toClient();
+    shipJson.profile_id = profile_id;
+    res.json(shipJson);
   }
 }
 

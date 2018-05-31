@@ -15,6 +15,7 @@ var fs = require('fs')
   , session = require('express-session')
   , MongoDBStore = require('connect-mongodb-session')(session)
   , cookieParser = require('cookie-parser')
+  , bodyParser = require('body-parser')
 
   , webpack = require('webpack')
   , webpackDevMiddleware = require('webpack-dev-middleware')
@@ -87,6 +88,8 @@ app.set('view engine', 'ejs');
 
 app.use(cookieParser(hiddenDBString));
 
+app.use(bodyParser.json());
+
 const compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath,
@@ -95,10 +98,9 @@ app.use(webpackDevMiddleware(compiler, {
 /**
  * Load controllers in /controllers
  */
-require('./controllers/indexController')(app, db);
-//fs.readdirSync('./controllers').forEach(function (file) {
-  //require('./controllers/' + file)(app, db);
-//});
+fs.readdirSync('./controllers').forEach(function (file) {
+  require('./controllers/' + file)(app, db);
+});
 
 
 // Start!

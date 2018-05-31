@@ -12,7 +12,7 @@ module.exports = Merge(CommonConfig, {
   },
   devtool: 'inline-source-map',
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    //new CleanWebpackPlugin(['dist']),
   ],
   output: {
     filename: '[name].bundle.js',
