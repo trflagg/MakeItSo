@@ -43,47 +43,41 @@ module.exports = function(app, db) {
    */
   app.get('/start', start);
   async function start(req, res) {
-
-    try {
-      var profile_id = req.signedCookies.profile;
-      var mode = null;
-      // turn off cookie
-      // if (false) {
-      if (profile_id) {
-        // has cookie. Load it and set session.
-        try {
-          var profile = await db.load('Profile', {_id: new ObjectID(profile_id)});
-          req.session.profile = profile_id;
-          res.json({
-            mode: 'selectShip'
-            , id: profile_id
-          });
-        }
-        catch(e) {
-          // Don't send thrown error message since
-          // it contains db id and it would be best to shield that
-          // from user as much as possible
-          if (e.name === 'NotFoundError') {
-            req.signedCookies.set('profile', null);
-            res.json({
-              mode: 'title'
-            });
-            //throw new Error('Cookie profile_id not found in db.');
-          }
-          else {
-            throw e;
-          }
-        }
-      }
-      else {
-        // no cookie.
+    var profile_id = req.signedCookies.profile;
+    var mode = null;
+    // turn off cookie
+    // if (false) {
+    console.log(profile_id);
+    if (profile_id) {
+      // has cookie. Load it and set session.
+      try {
+        var profile = await db.load('Profile', {_id: new ObjectID(profile_id)});
+        req.session.profile = profile_id;
         res.json({
-          mode: 'title'
+          mode: 'selectShip'
+          , id: profile_id
         });
       }
-    } catch(e) {
+      catch(e) {
+        // Don't send thrown error message since
+        // it contains db id and it would be best to shield that
+        // from user as much as possible
+        if (e.name === 'NotFoundError') {
+          req.signedCookies.set('profile', null);
+          res.json({
+            mode: 'title'
+          });
+          //throw new Error('Cookie profile_id not found in db.');
+        }
+        else {
+          throw e;
+        }
+      }
+    }
+    else {
+      // no cookie.
       res.json({
-        error: e.message
+        mode: 'title'
       });
     }
   }
@@ -96,7 +90,7 @@ module.exports = function(app, db) {
    */
   app.get('/delete-cookie', deleteCookie);
   function deleteCookie(req, res) {
-    res.cookie('profile', null, { signed: true});
+    res.clearCookie('profile');
     res.send("Cookie deleted");
   }
 

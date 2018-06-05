@@ -183,12 +183,14 @@ module.exports = function(app, db) {
    *
    * runs command with given text on ship
    */
-  app.post('/ship/:profile_id/:id/:command+'
+  app.post('/ship/:profile_id/:id/*'
     , idMatchesSession(db, {load: false})
     , runCommand);
   async function runCommand(req, res) {
+    var command = req.params['0'];
     console.log(req.params.command);
-    var commands = req.params.command.split('/');
+    var commands = command.split('/');
+    console.log(commands);
     var command = commands.pop();
     var child = commands.join('.');
     var ship = await db.load('Ship', {_id: new ObjectID(req.params.id)});
