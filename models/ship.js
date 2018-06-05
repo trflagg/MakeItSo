@@ -134,8 +134,9 @@ module.exports = function(db) {
     }
   };
 
-  Ship.prototype.startGame = async function*() {
+  Ship.prototype.startGame = async function() {
     var message = await db.load('Message', {name: 'INIT_INIT'});
+    console.log(`message: ${JSON.stringify(message)}`);
     var result = await message.run(this)
     // show result of message
     this.lastResult = result;
