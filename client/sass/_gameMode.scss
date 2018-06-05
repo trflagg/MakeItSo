@@ -261,7 +261,7 @@ $header_height: 100px;
         flex-direction: column;
         flex-grow: 1;
         margin-top: 15px;
-        overflow: scroll;
+        overflow-y: auto;
     }
 
 
@@ -317,7 +317,7 @@ $header_height: 100px;
       margin-right: 20px;
       margin-left: 20px;
       flex: 3;
-      overflow: scroll;
+      overflow-y: auto;
     }
 
 
@@ -334,7 +334,7 @@ $header_height: 100px;
       margin-top: 10px;
       min-width: 250px;
       flex: 1;
-      overflow: scroll;
+      overflow-y: auto;
 
       ul {
         display: flex;
