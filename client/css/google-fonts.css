@@ -2,17 +2,17 @@
   font-family: 'Audiowide';
   font-style: normal;
   font-weight: 400;
-  src: local('Audiowide'), local('Audiowide-Regular'), url(http://fonts.gstatic.com/s/audiowide/v3/8XtYtNKEyyZh481XVWfVOqCWcynf_cDxXwCLxiixG1c.ttf) format('truetype');
+  src: local('Audiowide'), local('Audiowide-Regular'), url('/fonts/Audiowide/Audiowide-Regular.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Coda';
   font-style: normal;
   font-weight: 400;
-  src: local('Coda'), local('Coda-Regular'), url(http://fonts.gstatic.com/s/coda/v9/KzHY9N-PIagGI86CpWfnZA.ttf) format('truetype');
+  src: local('Coda'), local('Coda-Regular'), url('/fonts/Coda/Coda-Regular.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Orbitron';
   font-style: normal;
   font-weight: 400;
-  src: local('Orbitron-Light'), local('Orbitron-Regular'), url(http://fonts.gstatic.com/s/orbitron/v5/lVErvynhvxLufD6jW6vDo_esZW2xOQ-xsNqO47m55DA.ttf) format('truetype');
+  src: local('Orbitron-Light'), local('Orbitron-Regular'), url('/fonts/Orbitron/Orbitron-Regular.ttf') format('truetype');
 }

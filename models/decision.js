@@ -37,7 +37,7 @@ module.exports = function(db) {
 
   }
 
-  Decision.prototype.fromShipCommandAndChild = function*(ship, message, command, child) {
+  Decision.prototype.fromShipCommandAndChild = async function(ship, message, command, child) {
     var shipCopy = {};
     this.ship = ship;
     if (message.message) {
@@ -51,7 +51,7 @@ module.exports = function(db) {
     }
     this.created = Date.now();
 
-    yield db.save('Decision', this);
+    await db.save('Decision', this);
   }
 
   db.register('Decision', Decision);

@@ -4,7 +4,7 @@
  * Returns co-views function.
  */
 
-var views = require('co-views');
+var views = require('views');
 
 module.exports = views('views', {
     map: {
