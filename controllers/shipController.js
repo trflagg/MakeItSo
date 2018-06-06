@@ -188,10 +188,8 @@ module.exports = function(app, db) {
     , runCommand);
   async function runCommand(req, res) {
     var command = req.params['0'];
-    console.log(req.params.command);
     var commands = command.split('/');
-    console.log(commands);
-    var command = commands.pop();
+    command = commands.pop();
     var child = commands.join('.');
     var ship = await db.load('Ship', {_id: new ObjectID(req.params.id)});
     var message = ship.message(command, child);

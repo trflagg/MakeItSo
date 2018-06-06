@@ -40,7 +40,7 @@ module.exports = function(app, db) {
     res.json({decisions: decisions});
   }
 
-  app.post('/admin/decision/:decision_id/:command+'
+  app.post('/admin/decision/:decision_id/*'
     , checkAdmin
     , runDecisionCommand);
   async function runDecisionCommand(req, res) {
@@ -48,8 +48,9 @@ module.exports = function(app, db) {
     var decision = await db.load('Decision', {'_id': new ObjectID(decision_id)});
     if (decision) {
       var ship = decision.ship;
-      var commands = req.params.command.split('/');
-      var command = commands.pop();
+      var command = req.params['0']
+      var commands = command.split('/');
+      command = commands.pop();
       var child = commands.join('.');
       var message = ship.message(command, child);
       if (!message) {
