@@ -6,7 +6,9 @@ module.exports = {
     rules: [
       {
         test: /.dot$/,
-        use: 'dot-loader',
+        loader: 'dot-loader',
+        options: {
+        },
       },
       {
         test: /.js$/,

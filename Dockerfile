@@ -6,14 +6,8 @@ WORKDIR /usr/src/app
 #
 # Install stuff
 RUN npm install nodemon -g
+RUN npm install webpack@4.10.1 -g
 RUN npm install webpack-cli -g
-
-# for SASS
-RUN apt-get install -y openssl
-RUN apt-get install -y ruby
-RUN apt-get install -y ruby-dev
-RUN gem install sass
-
 
 COPY ./package.json /usr/src/app/package.json
 RUN npm install
@@ -22,26 +16,21 @@ RUN npm install
 # Copy all files into the image
 COPY . /usr/src/app
 
-RUN mkdir -p client/build
+#
+# Make dist directory
+RUN mkdir -p dist
 
 #
-# Copy images to build
-COPY ./client/images client/build/images
+# Copy images to dist
+COPY ./client/images dist/images
 
 #
 # Copy fonts
-COPY ./client/fonts client/build/fonts
-
-#
-# Build sass
-RUN mkdir  -p client/build/css
-RUN sass -t compressed client/sass/main.scss client/build/css/main.css
+COPY ./client/fonts dist/fonts
 
 #
 # Build js
-RUN mkdir -p client/build/js
-RUN npm install webpack@3.11 -g
-RUN npm rebuild node-sass --force
+RUN mkdir -p dist/js
 RUN webpack --env=prod -p
 
 #

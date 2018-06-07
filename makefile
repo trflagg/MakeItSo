@@ -35,11 +35,14 @@ mongo:
 open:
 	chromium-browser "http://$(shell docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' makeitso_mis_1):3000"
 
+open-prod:
+	chromium-browser "http://$(shell docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mis):80"
+
 run:
 	docker-compose up
 
 run-prod:
-	docker run -e "MONGO_URL=$(MONGO_URL)" -p 80:80  mis
+	docker run --rm -e "MONGO_URL=$(MONGO_URL)" -p 80:80 --name mis mis
 
 start-docker:
 	docker-machine start default

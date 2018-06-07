@@ -65,11 +65,18 @@ if (process.env.NODE_ENV === "production") {
   app.use(morgan('dev'));
 }
 
-app.use(express.static('client'));
+if (process.env.NODE_ENV !== "production") {
+  const compiler = webpack(config);
+  app.use(webpackDevMiddleware(compiler, {
+    publicPath: config.output.publicPath,
+  }));
+}
+
+app.use(express.static('dist'));
 
 var sessionStore = new MongoDBStore({
   uri: environment.db.URL,
-  databaseName: 'express_session',
+  databaseName: 'mis',
   collection: 'sessions',
 });
 sessionStore.on('error', function(error) {
@@ -90,11 +97,6 @@ app.use(cookieParser(hiddenDBString));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-
-const compiler = webpack(config);
-app.use(webpackDevMiddleware(compiler, {
-  publicPath: config.output.publicPath,
-}));
 
 /**
  * Load controllers in /controllers

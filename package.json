@@ -25,11 +25,12 @@
     "blast-text": "^2.0.0",
     "body-parser": "^1.18.3",
     "bootstrap-sass": "^3.3.7",
+    "clean-webpack-plugin": "^0.1.19",
     "connect-mongodb-session": "^2.0.2",
     "cookie-parser": "^1.4.3",
     "css-loader": "^0.28.4",
     "dot": "^1.1.2",
-    "dot-loader": "^0.1.1",
+    "dot-loader": "0.1.1",
     "ejs": "^2.6.1",
     "expose-loader": "^0.7.5",
     "express": "^4.16.3",
@@ -50,7 +51,8 @@
     "underscore": "^1.8.3",
     "url-loader": "^1.0.1",
     "webpack": "^4.10.1",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "uglifyjs-webpack-plugin": "^1.0.3"
   },
   "devDependencies": {
     "babel": "^6.23.0",
