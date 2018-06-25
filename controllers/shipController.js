@@ -178,6 +178,22 @@ module.exports = function(app, db) {
     res.json(ship.toClient());
   }
 
+  app.get('/ship/:profile_id/:id/pollForYield/'
+    , idMatchesSession(db, {load: false})
+    , pollForYield);
+  async function pollForYield(req, res) {
+    var currentDatetime = new Date();
+    var ship = await db.load('Ship', {_id: new ObjectID(req.params.id)});
+
+    var result = await ship.runAllYields();
+    if (result !== '') {
+      ship.lastResult = result;
+      await db.save('Ship', ship);
+    }
+
+    res.json(ship.toClient());
+  }
+
   /**
    * POST ship/:profile_id/:id/:command
    *
@@ -200,4 +216,7 @@ module.exports = function(app, db) {
     await decision.fromShipCommandAndChild(ship, message, command, child);
     res.json(ship.toClient());
   }
+
+
+
 }

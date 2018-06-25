@@ -81,6 +81,11 @@ module.exports =  shipModel = CommandHolderModel.extend({
       }
     }
     this.setChildren(rootCommands);
+
+    if (response.nextYield) {
+      setTimeout(this.pollForYield.bind(this), response.nextYield);
+    }
+
     this.trigger('parse_done');
   }
 
@@ -107,6 +112,16 @@ module.exports =  shipModel = CommandHolderModel.extend({
     }).done(function(data) {
       ship.parse(data);
     })
+  }
+
+  , pollForYield: function() {
+    var ship = this;
+    $.ajax({
+      type: 'GET'
+      , url: this.url() + '/pollForYield'
+    }).done(function(data) {
+      ship.parse(data);
+    });
   }
 
 });
