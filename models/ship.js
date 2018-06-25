@@ -171,6 +171,7 @@ module.exports = function(db) {
     client_ship.commands = this.getCommandTextList();
     client_ship.location = this.getLocation();
     client_ship.lastUpdate = new Date();
+    client_ship.timers = this._timers;
 
     return client_ship;
   };

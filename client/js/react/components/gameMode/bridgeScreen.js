@@ -3,6 +3,7 @@ import React from 'react';
 import Header from './header';
 import GameScreen from './gameScreen';
 import CommandHolder from './commandHolder';
+import Timers from './timers';
 
 class BridgeScreen extends React.Component {
   constructor(props) {
@@ -42,6 +43,9 @@ class BridgeScreen extends React.Component {
                   outputDone={this.handleOutputDone}
                 />
                  <div id="commands">
+                  <Timers
+                    timers={ship.get('timers')}
+                  />
                   <CommandHolder
                     id="rootCommands"
                     commandHolder = {ship}

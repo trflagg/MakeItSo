@@ -45,6 +45,7 @@ module.exports =  shipModel = CommandHolderModel.extend({
     this.set('location', response.location);
     this.set('showHeader', response.showHeader);
     this.set('screen', response.screen);
+    this.set('timers', response.timers);
 
     if (response.globals) {
       this.set('globals', response.globals);
