@@ -40,7 +40,6 @@ export default class GameMode extends React.Component {
   }
 
   get newDMs() {
-    console.dir(this.props.ship.get('directMessages'));
     return this.props.ship.get('directMessages').get('children').detect((message) => (
       message.get('unread')
     ));

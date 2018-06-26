@@ -40,10 +40,6 @@ module.exports = function(db, options) {
     if (options.load) {
       var profile = await db.load('Profile'
         , {_id: new ObjectID(req.session.profile)});
-
-      console.dir(profile);
-
-
       req.params.profile = profile;
     }
 
