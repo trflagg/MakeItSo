@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'underscore';
+import _ from 'lodash';
 
 import ShipSelector from './shipSelector';
 import DecisionList from './decisionList';

@@ -1,7 +1,7 @@
 // Each regex functionBody MUST return a Promise
 
 var Promise = require('promise')
-, _ = require('underscore');
+, _ = require('lodash');
 
 module.exports = regExList = [
 // clearScreen

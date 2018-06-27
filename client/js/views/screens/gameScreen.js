@@ -6,7 +6,7 @@
 */
 
 var Backbone = require('backbone')
-, _ = require('underscore')
+, _ = require('lodash')
 , regExLines = require('../../regExLines')
 , regExList = require('../../regExList')
 

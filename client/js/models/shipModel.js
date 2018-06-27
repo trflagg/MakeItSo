@@ -6,7 +6,7 @@
  */
 
 var Backbone = require('backbone')
-  , _ = require('underscore')
+  , _ = require('lodash')
   , CommandHolderModel = require('./argie/commandHolderModel');
 
 module.exports =  shipModel = CommandHolderModel.extend({

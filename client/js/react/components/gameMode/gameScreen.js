@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'underscore';
+import _ from 'lodash';
 
 let regExList = require('../../../regExList');
 let regExLines = require('../../../regExLines');

@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'underscore';
+import _ from 'lodash';
 
 import DMScreen from './dmScreen';
 import Header from './header';
