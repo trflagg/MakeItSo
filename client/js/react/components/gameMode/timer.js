@@ -12,8 +12,8 @@ class Timer extends React.Component {
   componentWillMount() {
     this.interval = setInterval(() => {
       const secondsRemaining = this.state.secondsRemaining - 1;
-      if (secondsRemaining < 0) {
-        this.props.hitZero(this.props.timerId);
+      if (secondsRemaining <= 0) {
+        this.props.onHitZero(this.props.timerId);
       } else {
         this.setState({
           secondsRemaining: this.state.secondsRemaining - 1,

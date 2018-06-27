@@ -11,7 +11,6 @@ class GameScreen  extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log(nextProps.lastChildRun);
     if (nextProps.lastUpdate === this.props.lastUpdate ||
         nextProps.lastChildRun === 'direct_messages') {
       return false;
