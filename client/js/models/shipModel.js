@@ -31,6 +31,7 @@ module.exports =  shipModel = CommandHolderModel.extend({
       id: 'ship_controls'
     })
     , show_children: true
+    , yieldWaitingMutex: false,
   }
 
   , parse: function(response, options) {
@@ -82,7 +83,8 @@ module.exports =  shipModel = CommandHolderModel.extend({
     }
     this.setChildren(rootCommands);
 
-    if (response.nextYield) {
+    if (response.nextYield && !this.get('yieldWaitingMutex')) {
+      this.set('yieldWaitingMutex', true);
       setTimeout(this.pollForYield.bind(this), response.nextYield);
     }
 
@@ -120,6 +122,7 @@ module.exports =  shipModel = CommandHolderModel.extend({
       type: 'GET'
       , url: this.url() + '/pollForYield'
     }).done(function(data) {
+      ship.set('yieldWaitingMutex', false);
       ship.parse(data);
     });
   }
