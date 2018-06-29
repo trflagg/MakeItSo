@@ -8,6 +8,8 @@ class GameScreen  extends React.Component {
   constructor(props) {
     super(props);
     this.revealLines = true;
+    this.isPrintingMutex = false;
+    this.lineStack = [];
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -38,17 +40,32 @@ class GameScreen  extends React.Component {
       lines = lastResult.split('\n');
     }
 
-    this.outputLines(lines, $outputdiv)
-      .then(() => {
-        if (this.props.outputDone) {
-          this.props.outputDone();
-        }
-      });
+    if (this.isPrintingMutex) {
+      console.log('push to stack:');
+      console.log(lines);
+      this.lineStack.push(lines);
+      console.log(this.lineStack);
+    } else {
+      this.isPrintingMutex = true;
+      this.outputLines(lines, $outputdiv)
+        .then(() => {
+          console.log('popping from lineStack:');
+          console.log(this.lineStack);
+          this.lineStack = [];
+          this.isPrintingMutex = false;
+          if (this.props.outputDone) {
+            this.props.outputDone();
+          }
+        });
+    }
   }
 
   outputLines(lines, $output) {
     let p = Promise.resolve($output)
         , gameScreen = this;
+
+    console.log('__________outputtinglines');
+    console.log(lines);
 
     lines.filter(function(line) {
       return line.length > 0;
@@ -76,12 +93,13 @@ class GameScreen  extends React.Component {
     let promiseResult = null
         , print = true;
 
+    let gameScreen = this;
     // first check if it is regexlist
     let regExResultsArray = null;
     _.each(regExList, function(regEx) {
       regExResultsArray = regEx.regEx.exec(line);
       if (regExResultsArray != null) {
-        promiseResult = regEx.promiseForLine.call(this, line, $output, regExResultsArray);
+        promiseResult = regEx.promiseForLine.call(gameScreen, line, $output, regExResultsArray);
         print = false;
       }
     }, this);
@@ -92,7 +110,7 @@ class GameScreen  extends React.Component {
       _.each(regExLines, function(regEx) {
         regExResultsArray = regEx.regEx.exec(line);
         if (regExResultsArray != null) {
-          line = regEx.transformLine.call(this, line, regExResultsArray);
+          line = regEx.transformLine.call(gameScreen, line, regExResultsArray);
         }
       }, this);
 

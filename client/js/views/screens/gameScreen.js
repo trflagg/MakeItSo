@@ -99,11 +99,12 @@ module.exports = screen = Backbone.View.extend({
         var promiseResult = null
         , print = true;
 
+        var gameScreen = this;
         // first check if it is regExList
         _.each(regExList, function(regEx) {
             regExResultsArray = regEx.regEx.exec(line);
             if (regExResultsArray != null) {
-                promiseResult = regEx.promiseForLine.call(this, line, $output, regExResultsArray);
+                promiseResult = regEx.promiseForLine.call(gameScreen, line, $output, regExResultsArray);
                 print = false;
             }
         }, this);
@@ -135,6 +136,7 @@ module.exports = screen = Backbone.View.extend({
             $newDiv = $("<p></p>").addClass("outputText");
             $outputDiv.append($newDiv);
 
+          console.log(this.revealLines);
             if (this.revealLines) {
                 // function to add a single character from the front of the line
                 // to the $newDiv. If it's an html tag, add that all at once
