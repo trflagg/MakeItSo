@@ -127,6 +127,26 @@ $header_height: 100px;
     }
   }
 
+  .tutorial {
+    border: 2px solid #bbb;
+    margin-top: 41px;
+
+    p.outputText {
+      color: #bbb;
+      padding-left: 20px;
+
+      &:first-of-type {
+        margin-top: 15px;
+      }
+
+      &:last-of-type {
+        margin-bottom: 15px;
+      }
+    }
+
+
+  }
+
   p.outputText {
       max-width: 1000px;
       margin: auto;
@@ -145,6 +165,7 @@ $header_height: 100px;
         background: #400;
         padding: 0px 5px;
       }
+
   }
 
   ul.command-list {

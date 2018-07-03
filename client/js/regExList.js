@@ -84,4 +84,29 @@ module.exports = regExList = [
       }, this));
     }
   }
+
+  , {
+    functionName: 'startTutorial'
+    , placeholder: '{% START_TUTORIAL %}'
+    , regEx: /^{% START_TUTORIAL %}/
+    , promiseForLine: function(line, $output, args) {
+      return new Promise(_.bind(function(resolve, reject) {
+        var $innerDiv = $("<div></div>").addClass("tutorial");
+        $output.append($innerDiv);
+        resolve($innerDiv);
+      }, this));
+    }
+  }
+
+  , {
+    functionName: 'endTutorial'
+    , placeholder: '{% END_TUTORIAL %}'
+    , regEx: /^{% END_TUTORIAL %}/
+    , promiseForLine: function(line, $output, args) {
+      return new Promise(_.bind(function(resolve, reject) {
+        var $outDiv = $output.parent();
+        resolve($outDiv);
+      }, this));
+    }
+  }
 ];
