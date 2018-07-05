@@ -91,11 +91,7 @@ module.exports = function(db) {
   };
 
   Ship.prototype.newMessageText = function(childName) {
-    var line = "<span class='new_message'>New command added";
-    if (childName) {
-      line += " to " + childName;
-    }
-    return line + ": %s </span>";
+    return '';
   }
 
   Ship.prototype.saveToDoc = function(doc) {
