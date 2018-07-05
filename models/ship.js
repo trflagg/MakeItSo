@@ -147,7 +147,7 @@ module.exports = function(db) {
     if (child === 'direct_messages') {
       this.lastDM = result;
     } else {
-      this.lastResult = result;
+      this.lastResult = addCommandToResult(command, result);
     }
 
     await Decision.prototype.fromShipCommandAndChild(this, command, child);
@@ -164,6 +164,10 @@ module.exports = function(db) {
       await Decision.prototype.fromShipCommandAndChild(this, nextYield.message, null);
     }
     return result;
+  }
+
+  addCommandToResult = function(command, result) {
+    return `{% START_COMMAND_NAME %}\n${command.toUpperCase()}\n{% END_COMMAND_NAME %}\n${result}`;
   }
 
   Ship.prototype.toClient = function() {

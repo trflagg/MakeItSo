@@ -109,4 +109,31 @@ module.exports = regExList = [
       }, this));
     }
   }
+
+  , {
+    functionName: 'startCommandName'
+    , placeholder: '{% START_COMMAND_NAME %}'
+    , regEx: /^{% START_COMMAND_NAME %}/
+    , promiseForLine: function(line, $output, args) {
+      return new Promise(_.bind(function(resolve, reject) {
+        var $innerDiv = $("<div></div>").addClass("commandName");
+        this.revealLines = false;
+        $output.append($innerDiv);
+        resolve($innerDiv);
+      }, this));
+    }
+  }
+
+  , {
+    functionName: 'endCommandName'
+    , placeholder: '{% END_COMMAND_NAME %}'
+    , regEx: /^{% END_COMMAND_NAME %}/
+    , promiseForLine: function(line, $output, args) {
+      return new Promise(_.bind(function(resolve, reject) {
+        this.revealLines = true;
+        var $outDiv = $output.parent();
+        resolve($outDiv);
+      }, this));
+    }
+  }
 ];

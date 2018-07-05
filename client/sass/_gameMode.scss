@@ -143,8 +143,17 @@ $header_height: 100px;
         margin-bottom: 15px;
       }
     }
+  }
 
+  .commandName {
+    text-align: center;
+    padding-top: 50px;
+    margin-bottom: -18px;
 
+    p.outputText {
+      font-size: 23px;
+      letter-spacing: -0.6;
+    }
   }
 
   p.outputText {
