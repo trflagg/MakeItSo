@@ -1,7 +1,7 @@
 // Each regex functionBody MUST return a Promise
 
 var Promise = require('promise')
-, _ = require('underscore');
+, _ = require('lodash');
 
 module.exports = regExList = [
 // clearScreen
@@ -34,12 +34,13 @@ module.exports = regExList = [
     , placeholder: '{% START_CHAT %}'
     , regEx: /^{% START_CHAT %}/
     , promiseForLine: function(line, $output, args) {
-        return new Promise(_.bind(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
+          console.log(this);
             this.revealLines = false;
             var $innerDiv = $("<div></div>").addClass('chat');
             $output.append($innerDiv);
             resolve($innerDiv);
-        }, this));
+        }.bind(this));
     }
 }
 

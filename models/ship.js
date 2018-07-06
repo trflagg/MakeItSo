@@ -136,7 +136,6 @@ module.exports = function(db) {
 
   Ship.prototype.startGame = async function() {
     var message = await db.load('Message', {name: 'INIT_INIT'});
-    console.log(`message: ${JSON.stringify(message)}`);
     var result = await message.run(this)
     // show result of message
     this.lastResult = result;
@@ -144,7 +143,9 @@ module.exports = function(db) {
 
   Ship.prototype.runCommand = async function (command, child) {
     this.lastChildRun = child;
-    var result = await Avatar.prototype.runMessage.call(this, command, child);
+    var result = await this.runAllYields();
+    result = result + await Avatar.prototype.runMessage.call(this, command, child);
+    result = result + await this.runAllYields();
 
     //dm's stored in lastDM
     if (child === 'direct_messages') {
@@ -157,6 +158,17 @@ module.exports = function(db) {
 
     return result;
   };
+
+  Ship.prototype.runAllYields = async function() {
+    var result = '';
+    while(this.nextYieldOffset(new Date()) < 0) {
+      var nextYield = this.nextYield();
+      this.removeYield(nextYield.message);
+      result = result + await this.runMessageName(nextYield.message);
+      await Decision.prototype.fromShipCommandAndChild(this, nextYield.message, null);
+    }
+    return result;
+  }
 
   Ship.prototype.toClient = function() {
     var client_ship = {};
@@ -171,6 +183,8 @@ module.exports = function(db) {
     client_ship.commands = this.getCommandTextList();
     client_ship.location = this.getLocation();
     client_ship.lastUpdate = new Date();
+    client_ship.timers = this._timers;
+    client_ship.nextYield = this.nextYieldOffset();
 
     return client_ship;
   };

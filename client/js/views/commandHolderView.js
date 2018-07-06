@@ -1,5 +1,5 @@
     var Backbone = require('backbone')
-, _ = require('underscore')
+, _ = require('lodash')
     , commandView = require('./commandView')
     , template = require('../../templates/commandHolderView.dot')
 

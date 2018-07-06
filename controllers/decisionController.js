@@ -1,6 +1,6 @@
 var ObjectID = require('mongodb').ObjectID
   , checkAdmin = require('../middleware/check-admin')
-  , _ = require('underscore');
+  , _ = require('lodash');
 
 module.exports = function(app, db) {
 

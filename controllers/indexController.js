@@ -106,7 +106,12 @@ module.exports = function(app, db) {
     for (var i=0, ll=ships.length; i<ll; i++) {
       await db.remove('Decision', {'ship._id': new ObjectID(ships[i]._id.toString())});
       importantGlobals = ships[i].getImportantGlobals();
-      ships[i].lastResult = await ships[i].reset(messageName);
+      try {
+        ships[i].lastResult = await ships[i].reset(messageName);
+      } catch(e) {
+        ships[i].setImportantGlobals(importantGlobals);
+        throw e;
+      }
       ships[i].setImportantGlobals(importantGlobals);
       await db.save('Ship', ships[i]);
       var newDecision = db.create('Decision');
