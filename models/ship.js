@@ -151,7 +151,7 @@ module.exports = function(db) {
     if (child === 'direct_messages') {
       this.lastDM = result;
     } else {
-      this.lastResult = result;
+      this.lastResult = this.addCommandToResult(command, result);
     }
 
     await Decision.prototype.fromShipCommandAndChild(this, command, child);
@@ -168,6 +168,14 @@ module.exports = function(db) {
       await Decision.prototype.fromShipCommandAndChild(this, nextYield.message, null);
     }
     return result;
+  }
+
+  Ship.prototype.addCommandToResult = function(command, result) {
+    if (this.screen === 'TITLE' || this.screen === 'SIMPLE') {
+      return result;
+    }
+
+    return `{% START_COMMAND_NAME %}\n${command.toUpperCase()}\n{% END_COMMAND_NAME %}\n${result}`;
   }
 
   Ship.prototype.toClient = function() {

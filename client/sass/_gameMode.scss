@@ -127,6 +127,36 @@ $header_height: 100px;
     }
   }
 
+  .tutorial {
+    border: 2px solid #bbb;
+    margin: 40px;
+    padding: 10px;
+
+    p.outputText {
+      color: #bbb;
+      padding-left: 20px;
+
+      &:first-of-type {
+        margin-top: 15px;
+      }
+
+      &:last-of-type {
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+  .commandName {
+    text-align: center;
+    padding-top: 50px;
+    margin-bottom: -18px;
+
+    p.outputText {
+      font-size: 23px;
+      letter-spacing: -0.6;
+    }
+  }
+
   p.outputText {
       max-width: 1000px;
       margin: auto;
@@ -142,9 +172,10 @@ $header_height: 100px;
       }
 
       .new_message {
-        background: #400;
-        padding: 0px 5px;
+        //color: #ccc; //background: #aaa;
+        //padding: 0px 5px;
       }
+
   }
 
   ul.command-list {
