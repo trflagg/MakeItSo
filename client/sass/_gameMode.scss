@@ -129,7 +129,8 @@ $header_height: 100px;
 
   .tutorial {
     border: 2px solid #bbb;
-    margin-top: 41px;
+    margin: 40px;
+    padding: 10px;
 
     p.outputText {
       color: #bbb;
@@ -171,8 +172,8 @@ $header_height: 100px;
       }
 
       .new_message {
-        background: #400;
-        padding: 0px 5px;
+        //color: #ccc; //background: #aaa;
+        //padding: 0px 5px;
       }
 
   }
