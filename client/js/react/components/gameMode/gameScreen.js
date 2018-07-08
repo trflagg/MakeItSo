@@ -124,7 +124,7 @@ class GameScreen  extends React.Component {
 
   printLine(line, $outputDiv) {
     return new Promise(_.bind(function(resolve, reject) {
-      let charTime = 30;
+      let charTime = 40;
       let breakCount = 20;
 
       let $newDiv = $("<p></p>").addClass("outputText");
