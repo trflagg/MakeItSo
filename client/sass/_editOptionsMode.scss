@@ -32,6 +32,26 @@
         font-family: 'Coda', sans-serif;
     }
 
+    .genderButton {
+      width: initial;
+      padding: 5px 20px;
+      font-size: 20px;
+      margin: 0px;
+      height: 100%;
+
+      &:hover {
+        box-shadow: none;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        text-shadow: none;
+      }
+    }
+
+    .selected {
+      color: rgba(82, 168, 236, 0.8);
+      border-color: rgba(82, 168, 236, 0.8);
+    }
+
     #startGameButton {
       margin-top: 60px;
     }
