@@ -1,4 +1,5 @@
 var util = require('util');
+var _ = require('lodash');
 
 module.exports = function(db) {
 
@@ -237,6 +238,14 @@ module.exports = function(db) {
         engineering: this.getGlobal('engineering'),
         cultural: this.getGlobal('cultural'),
         janitor: this.getGlobal('janitor'),
+
+        security_gender: this.getGlobal('security_gender'),
+        medical_gender: this.getGlobal('medical_gender'),
+        info_gender: this.getGlobal('info_gender'),
+        empat_gender: this.getGlobal('empat_gender'),
+        engineering_gender: this.getGlobal('engineering_gender'),
+        cultural_gender: this.getGlobal('cultural_gender'),
+        janitor_gender: this.getGlobal('janitor_gender'),
       },
       gender: this.getGlobal('gender'),
       ship_name: this.getGlobal('ship_name'),
@@ -246,8 +255,7 @@ module.exports = function(db) {
 
   Ship.prototype.setImportantGlobals = function(globals) {
     this.setGlobal('name', globals.name);
-    this.setGlobal('gender', globals.gender);
-    this.setGlobal('ship_name', globals.ship_name);
+
     this.setGlobal('security', globals.crew.security);
     this.setGlobal('medical', globals.crew.medical);
     this.setGlobal('info', globals.crew.info);
@@ -255,6 +263,17 @@ module.exports = function(db) {
     this.setGlobal('engineering', globals.crew.engineering);
     this.setGlobal('cultural', globals.crew.cultural);
     this.setGlobal('janitor', globals.crew.janitor);
+
+    this.setGlobal('security_gender', globals.crew.security_gender);
+    this.setGlobal('medical_gender', globals.crew.medical_gender);
+    this.setGlobal('info_gender', globals.crew.info_gender);
+    this.setGlobal('empat_gender', globals.crew.empat_gender);
+    this.setGlobal('engineering_gender', globals.crew.engineering_gender);
+    this.setGlobal('cultural_gender', globals.crew.cultural_gender);
+    this.setGlobal('janitor_gender', globals.crew.janitor_gender);
+
+    this.setGlobal('gender', globals.gender);
+    this.setGlobal('ship_name', globals.ship_name);
     this.setGlobal('style', globals.style);
   }
 
@@ -324,45 +343,64 @@ module.exports = function(db) {
     }
   });
 
-  AvatarWrapper.prototype.registerFunction({
-    functionName: 'pronoun'
-    , functionBody: function() {
-
-      if (this.avatar.getGlobal('gender') === 'female') {
-        return {
-          lowercase: 'she'
-          , uppercase: 'She'
-          , object: {
-            lowercase: 'her'
-            , uppercase: 'Her'
-          }
-          , possessive: {
-            lowercase: 'her'
-            , uppercase: 'Her'
-            , adjective: {
-              lowercase: 'hers'
-              , uppercase: 'Hers'
-            }
-          }
-        }
-      } else {
-        return {
-          lowercase: 'he'
-          , uppercase: 'He'
-          , object: {
-            lowercase: 'him'
-            , uppercase: 'Him'
-          }
-          , possessive: {
-            lowercase: 'his'
-            , uppercase: 'His'
-            , adjective: {
-              lowercase: 'his'
-              , uppercase: 'His'
-            }
-          }
+  var genderPronouns = {
+    female : {
+      lowercase: 'she'
+      , uppercase: 'She'
+      , object: {
+        lowercase: 'her'
+        , uppercase: 'Her'
+      }
+      , possessive: {
+        lowercase: 'her'
+        , uppercase: 'Her'
+        , adjective: {
+          lowercase: 'hers'
+          , uppercase: 'Hers'
         }
       }
+    }, male: {
+      lowercase: 'he'
+      , uppercase: 'He'
+      , object: {
+        lowercase: 'him'
+        , uppercase: 'Him'
+      }
+      , possessive: {
+        lowercase: 'his'
+        , uppercase: 'His'
+        , adjective: {
+          lowercase: 'his'
+          , uppercase: 'His'
+        }
+      }
+    }
+  };
+
+  AvatarWrapper.prototype.registerFunction({
+    functionName: 'crew_gender'
+    , functionBody: function(crew, selector) {
+      var global = crew+'_gender';
+      var gender = this.avatar.getGlobal(global);
+
+      if (typeof selector === 'undefined') {
+        return gender;
+      }
+      console.log(gender);
+      return _.get(genderPronouns[gender], selector);
+    }
+  });
+
+  AvatarWrapper.prototype.registerFunction({
+    functionName: 'pronoun'
+    , functionBody: function(selector) {
+      var gender = this.avatar.getGlobal('gender');
+
+      if (typeof selector === 'undefined') {
+        return genderPronouns[gender];
+      }
+      return _.get(genderPronouns[gender], selector);
+
     }
   });
 
