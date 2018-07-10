@@ -92,12 +92,25 @@ module.exports = function(app, db) {
         , cultural: 'Picard'
         , janitor: 'Thurgood'
       }
+      var DEFAULT_GENDER = {
+        security: 'Male'
+        , medical: 'Female'
+        , info: 'Male'
+        , empat: 'Female'
+        , engineering: 'Male'
+        , cultural: 'Male'
+        , janitor: 'Male'
+      }
 
       if (crewChildren[i].name === "") {
         crewChildren[i].name = DEFAULT_NAMES[crew_id];
       }
+      if (crewChildren[i].gender === "") {
+        crewChildren[i].gender = DEFAULT_GENDER[crew_id];
+      }
       // avatarWrapper can access globals
       ship.setGlobal(crew_id, crewChildren[i].name);
+      ship.setGlobal(crew_id+'_gender', crewChildren[i].gender);
       // but save to messageHolder name property as well
       ship.child('crew').child(crew_id).setName(crewChildren[i].name);
     }

@@ -11,6 +11,7 @@ module.exports =  shipNameScreen = Screen.extend({
   events: {
     'keydown .crewInput': 'keyDown',
     'click #startGameButton': 'submit',
+    'click .genderButton': 'genderButtonClicked',
   }
 
   /**
@@ -66,6 +67,24 @@ module.exports =  shipNameScreen = Screen.extend({
 
   }
 
+  , crewGenderButton: function(crew, gender) {
+    return $('[data-crew='+crew+'][data-gender='+gender+']');
+  }
+
+  , genderButtonClicked: function(event) {
+    var $target = $(event.target);
+    var gender = $target.data('gender');
+    var crew = $target.data('crew');
+
+    var nextGender = 'male';
+    if (gender === 'male') {
+      nextGender = 'female';
+    }
+
+    var $nextGender = this.crewGenderButton(crew, nextGender).removeClass('selected');
+    $target.addClass('selected');
+  }
+
   /**
    * submit()
    *
@@ -75,6 +94,16 @@ module.exports =  shipNameScreen = Screen.extend({
   , submit: function() {
     var screen = this;
 
+    var crew = [
+      'security',
+      'medical',
+      'info',
+      'empat',
+      'engineering',
+      'cultural',
+      'janitor'
+    ];
+
     var security = $("#security").val()
       , medical = $("#medical").val()
       , info = $("#info").val()
@@ -83,21 +112,44 @@ module.exports =  shipNameScreen = Screen.extend({
       , cultural = $("#cultural").val()
       , janitor = $("#janitor").val();
 
+    var security_gender =
+      this.crewGenderButton('security', 'male').hasClass('selected') ?
+      'male' : 'female';
+    var medical_gender =
+      this.crewGenderButton('medical', 'male').hasClass('selected') ?
+      'male' : 'female';
+    var info_gender =
+      this.crewGenderButton('info', 'male').hasClass('selected') ?
+      'male' : 'female';
+    var empat_gender =
+      this.crewGenderButton('empat', 'male').hasClass('selected') ?
+      'male' : 'female';
+    var engineering_gender =
+      this.crewGenderButton('engineering', 'male').hasClass('selected') ?
+      'male' : 'female';
+    var cultural_gender =
+      this.crewGenderButton('cultural', 'male').hasClass('selected') ?
+      'male' : 'female';
+    var janitor_gender =
+      this.crewGenderButton('janitor', 'male').hasClass('selected') ?
+      'male' : 'female';
+
+
     this.reset();
     this.model.get('ship').get('crew').getChildById('security')
-      .set('name', security);
+      .set('name', security).set('gender', security_gender);
     this.model.get('ship').get('crew').getChildById('medical')
-      .set('name', medical);
+      .set('name', medical).set('gender', medical_gender);
     this.model.get('ship').get('crew').getChildById('info')
-      .set('name', info);
+      .set('name', info).set('gender', info_gender);
     this.model.get('ship').get('crew').getChildById('empat')
-      .set('name', empat);
+      .set('name', empat).set('gender', empat_gender);
     this.model.get('ship').get('crew').getChildById('engineering')
-      .set('name', engineering);
+      .set('name', engineering).set('gender', engineering_gender);
     this.model.get('ship').get('crew').getChildById('cultural')
-      .set('name', cultural);
+      .set('name', cultural).set('gender', cultural_gender);
     this.model.get('ship').get('crew').getChildById('janitor')
-      .set('name', cultural);
+      .set('name', cultural).set('gender', janitor_gender);
 
     this.model.get('ship').save({
     }
