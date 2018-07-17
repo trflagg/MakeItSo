@@ -24,6 +24,7 @@ module.exports =  shipNameScreen = Screen.extend({
     Screen.prototype.initialize.apply(this);
     this.template = template;
     this.render();
+
   }
 
   /**
@@ -33,6 +34,16 @@ module.exports =  shipNameScreen = Screen.extend({
    * @return {None}
    */
   , activate: function() {
+
+    // set default names and genders
+    var crew = this.model.get('ship').get('crew').get('children').models;
+    for (var i=0; i<crew.length; i++) {
+      var crew_member = crew[i];
+      $('#'+crew_member.get('id')).attr('placeholder', crew_member.get('name'));
+      var $button = this.crewGenderButton(crew_member.get('id'), crew_member.get('data').gender);
+      $button.addClass('selected');
+    }
+
     Screen.prototype.activate();
 
     // fires too soon
@@ -52,6 +63,7 @@ module.exports =  shipNameScreen = Screen.extend({
     $(this.el).html(this.template({
       name: this.model.get('profile').get('name')
     }));
+
 
     return this;
   }

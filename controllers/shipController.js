@@ -7,7 +7,8 @@
   var requireParams = require('../middleware/require-params')
   , idMatchesSession = require('../middleware/id-matches-session')
   , ObjectID = require('mongodb').ObjectID
-  , Decision = require('../models/decision');
+  , Decision = require('../models/decision')
+  , selectName = require('../helpers/select-name')
 
 module.exports = function(app, db) {
   /**
@@ -50,6 +51,24 @@ module.exports = function(app, db) {
       ship.setGlobal('handiness', req.params.profile.handiness);
       await ship.startGame();
 
+      var crew = ['security'
+        , 'medical'
+        , 'info'
+        , 'empat'
+        , 'engineering'
+        , 'cultural'
+        , 'janitor'];
+
+      for (var i=0, ll=crew.length; i<ll; i++) {
+        var crew_id = crew[i];
+        var gender = (Math.random() < 0.5) ? 'female' : 'male';
+        var name = await selectName();
+        ship.setGlobal(crew_id, name);
+        ship.setGlobal(crew_id+'_gender', gender);
+        ship.child('crew').child(crew_id).setName(name);
+        ship.child('crew').child(crew_id).setData('gender', gender);
+      }
+
       await db.save('Ship', ship);
       req.signedCookies.ship;
       res.cookie('ship', ship._id, {
@@ -83,37 +102,12 @@ module.exports = function(app, db) {
     for (var i=0, ll=crewChildren.length; i<ll; i++) {
       var crew_id = crewChildren[i].id;
 
-      // use default if empty
-      var DEFAULT_NAMES = {
-        security: 'Warf'
-        , medical: 'Crusher'
-        , info: 'Data'
-        , empat: 'Troi'
-        , engineering: 'LaForge'
-        , cultural: 'Picard'
-        , janitor: 'Thurgood'
-      }
-      var DEFAULT_GENDER = {
-        security: 'Male'
-        , medical: 'Female'
-        , info: 'Male'
-        , empat: 'Female'
-        , engineering: 'Male'
-        , cultural: 'Male'
-        , janitor: 'Male'
-      }
-
-      if (crewChildren[i].name === "") {
-        crewChildren[i].name = DEFAULT_NAMES[crew_id];
-      }
-      if (crewChildren[i].gender === "") {
-        crewChildren[i].gender = DEFAULT_GENDER[crew_id];
-      }
-      // avatarWrapper can access globals
-      ship.setGlobal(crew_id, crewChildren[i].name);
       ship.setGlobal(crew_id+'_gender', crewChildren[i].gender);
-      // but save to messageHolder name property as well
-      ship.child('crew').child(crew_id).setName(crewChildren[i].name);
+      ship.child('crew').child(crew_id).setData('gender', crewChildren[i].gender);
+      if (crewChildren[i].name) {
+        ship.setGlobal(crew_id, crewChildren[i].name);
+        ship.child('crew').child(crew_id).setName(crewChildren[i].name);
+      }
     }
 
     await db.save('Ship', ship);
