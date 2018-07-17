@@ -47,6 +47,7 @@ module.exports = function(app, db) {
       ship.setGlobal('name', req.params.profile.name);
       ship.setGlobal('gender', req.params.profile.sex);
       ship.setGlobal('ship_name', ship.shipName);
+      ship.setGlobal('handiness', req.params.profile.handiness);
       await ship.startGame();
 
       await db.save('Ship', ship);
