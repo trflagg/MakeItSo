@@ -3,7 +3,7 @@ const exec = util.promisify(require('child_process').exec);
 
 module.exports = async function() {
 
-  var rand = Math.floor(Math.random() * 20000) + 1;
+  var rand = Math.floor(Math.random() * 10000) + 1;
 
   const { stdout, stderr } = await exec("sed '"+rand+"!d' names.txt");
 
