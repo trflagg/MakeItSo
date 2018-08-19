@@ -48,7 +48,6 @@
     "sass-loader": "^6.0.6",
     "stringify": "^5.1.0",
     "style-loader": "^0.18.2",
-    "superagent": "~1.5.0",
     "url-loader": "^1.0.1",
     "webpack": "^4.10.1",
     "webpack-merge": "^4.1.0",
