@@ -1,5 +1,16 @@
 $header_height: 100px;
 
+@keyframes pulse_red {
+  0% {
+    border-color: #F99;
+    color: #F99;
+  }
+  100% {
+    border-color: red;
+    color: red;
+  }
+}
+
 #gameMode {
   display: flex;
   flex-direction: column;
@@ -7,6 +18,37 @@ $header_height: 100px;
   padding: 10px;
   max-width: 1140px;
   min-height: 100vh;
+
+  #bridgeScreen.red-alert {
+    border: 3px solid red;
+    animation: 1s linear 0s infinite alternate pulse_red;
+  }
+
+  .red-alert {
+    #header {
+      color: red;
+      animation: 1s linear 0s infinite alternate pulse_red;
+    }
+
+    div.commandTextDiv {
+      border: 1px solid red;
+      color: red;
+      animation: none;
+    }
+
+    p#dm_button.commandItem {
+      border-color: red;
+      animation: 1s linear 0s infinite alternate pulse_red;
+    }
+
+    p.commandItem {
+      color: red;
+    }
+
+    p.timerString {
+      color: red;
+    }
+  }
 
   #header {
     display: flex;
@@ -33,7 +75,13 @@ $header_height: 100px;
 
   div.commandTextDiv {
     border: 1px solid white;
+
   }
+
+  div.timer {
+    margin: 10px;
+  }
+
 
   p.commandItem {
     cursor: pointer;
@@ -79,6 +127,36 @@ $header_height: 100px;
     }
   }
 
+  .tutorial {
+    border: 2px solid #bbb;
+    margin: 40px;
+    padding: 10px;
+
+    p.outputText {
+      color: #bbb;
+      padding-left: 20px;
+
+      &:first-of-type {
+        margin-top: 15px;
+      }
+
+      &:last-of-type {
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+  .commandName {
+    text-align: center;
+    padding-top: 50px;
+    margin-bottom: -18px;
+
+    p.outputText {
+      font-size: 23px;
+      letter-spacing: -0.6;
+    }
+  }
+
   p.outputText {
       max-width: 1000px;
       margin: auto;
@@ -94,9 +172,10 @@ $header_height: 100px;
       }
 
       .new_message {
-        background: #400;
-        padding: 0px 5px;
+        //color: #ccc; //background: #aaa;
+        //padding: 0px 5px;
       }
+
   }
 
   ul.command-list {
@@ -222,7 +301,7 @@ $header_height: 100px;
         flex-direction: column;
         flex-grow: 1;
         margin-top: 15px;
-        overflow: scroll;
+        overflow-y: auto;
     }
 
 
@@ -278,7 +357,7 @@ $header_height: 100px;
       margin-right: 20px;
       margin-left: 20px;
       flex: 3;
-      overflow: scroll;
+      overflow-y: auto;
     }
 
 
@@ -295,7 +374,7 @@ $header_height: 100px;
       margin-top: 10px;
       min-width: 250px;
       flex: 1;
-      overflow: scroll;
+      overflow-y: auto;
 
       ul {
         display: flex;

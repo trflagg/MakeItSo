@@ -27,16 +27,22 @@ kill-update-fixtures:
 	docker rm -f mis_fixtures
 
 mongo-compose:
-	docker run -it --link makeitso_mongo_1:mongo --rm mongo:3.2 sh -c 'exec mongo "$$MONGO_PORT_27017_TCP_ADDR:$$MONGO_PORT_27017_TCP_PORT"'
+	docker run -it --rm --network=makeitso_default mongo:3.4.7 sh -c 'exec mongo "mongodb://mongo:27017"'
 
 mongo:
 	mongo $(MONGO_HOST_DEV) -u $(MONGO_USERNAME) -p $(MONGO_PASSWORD)
+
+open:
+	chromium-browser "http://$(shell docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' makeitso_mis_1):3000"
+
+open-prod:
+	chromium-browser "http://$(shell docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mis):80"
 
 run:
 	docker-compose up
 
 run-prod:
-	docker run -e "MONGO_URL=$(MONGO_URL)" -p 80:80  mis
+	docker run --rm -e "MONGO_URL=$(MONGO_URL)" -p 80:80 --name mis mis
 
 start-docker:
 	docker-machine start default
@@ -49,8 +55,10 @@ update-default-fixtures:
 	node --harmony node_modules/argie/messageLoader ../../db-environment-default.js
 
 update-compose-fixtures:
-	docker run  --rm --name='mis_fixtures' -e NODE_ENV=docker --link makeitso_mongo_1:mongo -v $(shell pwd):/usr/src/app trflagg/makeitso:latest \
-				node --harmony node_modules/argie/messageLoader ../../db-environment-compose.js
+	docker run  --rm --name='mis_fixtures' -e NODE_ENV=docker -e MONGO_URL -v $(shell pwd):/usr/src/app \
+				--network=makeitso_default \
+				node:9.9.0 \
+				node --harmony /usr/src/app/node_modules/argie/messageLoader ../../db-environment-compose.js
 	make graph-png
 
 update-local-fixtures:

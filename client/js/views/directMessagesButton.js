@@ -1,5 +1,5 @@
     var Backbone = require('backbone')
-    , _ = require('underscore')
+    , _ = require('lodash')
     , template = require('../../templates/directMessagesButton.dot')
 
     module.exports = directMessagesButton = Backbone.View.extend({

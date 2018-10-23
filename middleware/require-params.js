@@ -1,16 +1,16 @@
 
 module.exports = function(params) {
-    return function* (next) {
-        if (!this.request.body) {
-            this.throw(400, 'data required.')
-        }
-
-        for (var i=0, ll=params.length; i<ll; i++) {
-            var param = params[i];
-            if (!this.request.body[param]) {
-                 this.throw(400, "missing '"+param+"'");
-            }
-        }
-        yield* next;
+  return function (req, res, next) {
+    if (!req.body) {
+      res.status(400).send('body data required.');
     }
+
+    for (var i=0, ll=params.length; i<ll; i++) {
+      var param = params[i];
+      if (!req.body[param]) {
+        res.status(400).send("missing '"+param+"'");
+      }
+    }
+    next();
+  }
 }

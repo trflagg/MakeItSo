@@ -1,6 +1,6 @@
 
 var Backbone = require('backbone')
-, _ = require('underscore')
+, _ = require('lodash')
 , GameScreen = require('./gameScreen')
 , template = require('../../../templates/screens/directMessageScreen.dot')
 

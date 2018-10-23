@@ -7,16 +7,16 @@
         top: 0; left: 0; right: 0; bottom: 0;
     }
     #starBackground {
-        background: url(../images/starBackground.png) repeat;
+        background: url(/images/starBackground.png) repeat;
         z-index: -1;
     }
 
     #starMidfield {
-        background: url(../images/starMidfield.png) repeat;
+        background: url(/images/starMidfield.png) repeat;
     }
 
     #starForward {
-        background: url(../images/starForward.png) repeat;
+        background: url(/images/starForward.png) repeat;
     }
 }
 
@@ -30,6 +30,26 @@
     label {
         font-size: 20px;
         font-family: 'Coda', sans-serif;
+    }
+
+    .genderButton {
+      width: initial;
+      padding: 5px 20px;
+      font-size: 20px;
+      margin: 0px;
+      height: 100%;
+
+      &:hover {
+        box-shadow: none;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        text-shadow: none;
+      }
+    }
+
+    .selected {
+      color: rgba(82, 168, 236, 0.8);
+      border-color: rgba(82, 168, 236, 0.8);
     }
 
     #startGameButton {

@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'underscore';
+import _ from 'lodash';
 
 import DMScreen from './dmScreen';
 import Header from './header';
@@ -7,6 +7,7 @@ import SimpleScreen from './simpleScreen';
 import BridgeScreen from './bridgeScreen';
 import CrawlScreen from './crawlScreen';
 import TitleScreen from './titleScreen';
+import RedAlertScreen from './redAlertScreen';
 
 export default class GameMode extends React.Component {
   constructor(props)  {
@@ -39,7 +40,6 @@ export default class GameMode extends React.Component {
   }
 
   get newDMs() {
-    console.dir(this.props.ship.get('directMessages'));
     return this.props.ship.get('directMessages').get('children').detect((message) => (
       message.get('unread')
     ));
@@ -82,6 +82,11 @@ export default class GameMode extends React.Component {
         component: TitleScreen,
         showHeader: false,
       },
+      REDALERT: {
+        component: RedAlertScreen,
+        showHeader: true,
+        redAlert: true,
+      },
     };
     const screen = screenSelector[this.props.ship.get('screen')];
     const ScreenComponent = screen.component;
@@ -96,6 +101,7 @@ export default class GameMode extends React.Component {
             newDMs={this.newDMs}
             dm_button={true}
             onDMToggle={this.dmToggle}
+            redAlert={screen.redAlert}
           />
         }
         <div>

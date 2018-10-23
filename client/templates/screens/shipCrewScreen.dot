@@ -5,31 +5,59 @@
         <table>
             <tr>
                 <td> <label for="security">Security Chief</label></td>
-                <td> <input class='crewInput highlightLabel' id="security", type="text", size=30 placeholder="Warf" autofocus ></td>
+                <td> <input class='crewInput highlightLabel' id="security", type="text", size=30 placeholder="" autofocus ></td>
+                <td>
+                  <button type='button' class='crewInput genderButton' data-crew="security" data-gender="female">Female</button>
+                  <button class='crewInput genderButton ' data-crew="security" data-gender="male">Male</button>
+                </td>
             </tr>
             <tr>
                 <td> <label for="medical">Medical Officer</label></td>
-                <td> <input class='crewInput highlightLabel' id="medical", type="text", size=30 placeholder="Crusher"></td>
+                <td> <input class='crewInput highlightLabel' id="medical", type="text", size=30 placeholder=""></td>
+                <td>
+                  <button type='button' class='crewInput genderButton' data-crew="medical" data-gender="female">Female</button>
+                  <button class='crewInput genderButton' data-crew="medical" data-gender="male">Male</button>
+                </td>
             </tr>
             <tr>
                 <td> <label for="info">Information Chief</label></td>
-                <td> <input class='crewInput highlightLabel' id="info", type="text", size=30 placeholder="Data"></td>
+                <td> <input class='crewInput highlightLabel' id="info", type="text", size=30 placeholder=""></td>
+                <td>
+                  <button type='button' class='crewInput genderButton' data-crew="info" data-gender="female">Female</button>
+                  <button class='crewInput genderButton' data-crew="info" data-gender="male">Male</button>
+                </td>
             </tr>
             <tr>
                 <td> <label for="empat">Empat</label></td>
-                <td> <input class='crewInput highlightLabel' id="empat", type="text", size=30 placeholder="Troi"></td>
+                <td> <input class='crewInput highlightLabel' id="empat", type="text", size=30 placeholder=""></td>
+                <td>
+                  <button type='button' class='crewInput genderButton ' data-crew="empat" data-gender="female">Female</button>
+                  <button class='crewInput genderButton' data-crew="empat" data-gender="male">Male</button>
+                </td>
             </tr>
             <tr>
                 <td> <label for="engineering">Head of Engineering</label></td>
-                <td> <input class='crewInput highlightLabel' id="engineering", type="text", size=30 placeholder="LaForge"></td>
+                <td> <input class='crewInput highlightLabel' id="engineering", type="text", size=30 placeholder=""></td>
+                <td>
+                  <button type='button' class='crewInput genderButton' data-crew="engineering" data-gender="female">Female</button>
+                  <button class='crewInput genderButton ' data-crew="engineering" data-gender="male">Male</button>
+                </td>
             </tr>
             <tr>
                 <td> <label for="cultural">Cultural Advisor</label></td>
-                <td> <input class='crewInput highlightLabel' id="cultural", type="text", size=30 placeholder="Picard"></td>
+                <td> <input class='crewInput highlightLabel' id="cultural", type="text", size=30 placeholder=""></td>
+                <td>
+                  <button type='button' class='crewInput genderButton' data-crew="cultural" data-gender="female">Female</button>
+                  <button class='crewInput genderButton ' data-crew="cultural" data-gender="male">Male</button>
+                </td>
             </tr>
             <tr>
                 <td> <label for="janitor">Janitor</label></td>
-                <td> <input class='crewInput highlightLabel' id="cultural", type="text", size=30 placeholder="Thurgood""></td>
+                <td> <input class='crewInput highlightLabel' id="janitor", type="text", size=30 placeholder=""></td>
+                <td>
+                  <button type='button' class='crewInput genderButton' data-crew="janitor" data-gender="female">Female</button>
+                  <button class='crewInput genderButton ' data-crew="janitor" data-gender="male">Male</button>
+                </td>
             </tr>
         </table>
         <button id="startGameButton">Start Game</button>

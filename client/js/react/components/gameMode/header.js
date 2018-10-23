@@ -11,14 +11,15 @@ export default class Header extends React.Component {
           viewingDMs,
           newDMs,
           onDMToggle,
+          redAlert,
     } = this.props;
 
     return (
-      <div>
+      <div className={redAlert ? "red-alert" : ""}>
         <div id="header">
           <div id="subheader">
             <h1>Cpt. {profile.get('name')} of the {ship.get('shipName')}</h1>
-            <h2>{ ship.location || "Andromedae/Cygni Warp Transfer"}</h2><br/>
+            <h2>{ ship.location || "Andromedae/Cygnum Warp Transfer"}</h2><br/>
             <h2>{ ship.chapter || "Prologue" }</h2>
           </div>
           <div className="controls">

@@ -2,16 +2,13 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: './client/js/main.js',
-  output: {
-    filename: 'main.min.js',
-    path: path.resolve(__dirname, 'client/build/js'),
-  },
   module: {
     rules: [
       {
         test: /.dot$/,
-        use: 'dot-loader',
+        loader: 'dot-loader',
+        options: {
+        },
       },
       {
         test: /.js$/,
@@ -36,6 +33,29 @@ module.exports = {
           loader: "sass-loader" // compiles Sass to CSS
         }],
       },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: [
+          {
+            loader: 'file-loader',
+          }
+        ],
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+          }
+        ],
+      },
+      {
+        test: require.resolve('jquery'),
+        use: [{
+          loader: 'expose-loader',
+          options: '$',
+        }]
+      }
     ]
   },
 };
