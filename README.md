@@ -7,8 +7,7 @@ Uses Node, Koa, &amp; MongoDB.
 
 This is a work in progress!
 
-You can play it here: http://makeitso.hi-scor.es THIS IS AN INCOMPLETE WORK IN PROGRESS!
-
+Unfortunately, MakeItSo is currently offline, but I am working hard to get it back up soon.
 --------------------------------
 
 Development environment can be run with docker-compose:
